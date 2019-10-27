@@ -1,0 +1,18 @@
+.footer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+
+.footer__content {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    color: grey;
+}
+
+.footer__content > span {
+    padding: 0.5em;
+}

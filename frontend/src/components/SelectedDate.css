@@ -1,0 +1,6 @@
+.selected-date {
+  cursor: pointer;
+  padding: 0.4em;
+  font-weight: bold;
+  color: white;
+}

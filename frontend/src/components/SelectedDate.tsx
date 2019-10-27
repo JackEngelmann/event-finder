@@ -3,15 +3,15 @@ import { Moment } from 'moment';
 import './SelectedDate.css'
 
 type Props = {
-    displayCalendar(): void
+    toggleCalendar(): void
     date: Moment
 }
 
 export function SelectedDate(props: Props) {
-    const { displayCalendar, date } = props;
+    const { toggleCalendar, date } = props;
     return (
       <div
-        onClick={displayCalendar}
+        onClick={toggleCalendar}
         className="selected-date"
       >
         {date.format('D. MMMM')}

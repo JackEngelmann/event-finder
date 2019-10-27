@@ -5,30 +5,51 @@ import './Calendar.css'
 import classNames from 'classnames'
 
 type Props = {
-    year: number
-    month: number
+    monthSelection: Moment
     selectedDate: Moment | undefined
     setSelectedDate(selectedDate: Moment): void
+    setMonthSelection(monthSelection: Moment): void
 }
 
 export function Calendar(props: Props) {
-    const { setSelectedDate, selectedDate } = props;
-    const weeksInMonth = getWeeksInMonth(props.year, props.month)
+    const { setSelectedDate, selectedDate, monthSelection, setMonthSelection } = props;
+    const weeksInMonth = getWeeksInMonth(monthSelection.year(), monthSelection.month())
+
+    function renderHeader() {
+        return <div className="calendar__header">
+            <div
+                className="calendar__month-switcher"
+                onClick={() => setMonthSelection(moment(monthSelection).subtract(1, 'month'))}
+            >
+                ←
+            </div>
+            <div>
+                {monthSelection.format('MMMM YYYY')}
+            </div>
+            <div
+                className="calendar__month-switcher"
+                onClick={() => setMonthSelection(moment(monthSelection).add(1, 'month'))}
+            >
+                →
+            </div>
+        </div>
+    }
 
     function renderWeek(week: Moment[]) {
         return (
-            <div className="calendar__week">
+            <div className="calendar__week" key={'week-from-' + week[0].toISOString()}>
                 {week.map(renderDay)}
             </div>
         )
     }
 
     function renderDay(day: Moment) {
-        const isInMonth = day.month() === props.month
+        const isInMonth = day.month() === monthSelection.month()
         const isWeekend = [0, 6].includes(day.weekday())
         const isSelected = selectedDate && selectedDate.isSame(day, 'day')
         return (
             <div
+                key={day.toISOString()}
                 className={classNames('calendar__date', {
                     'calendar__date--weekend': isWeekend,
                     'calendar__date--selected': isSelected
@@ -41,7 +62,14 @@ export function Calendar(props: Props) {
     }
 
     function renderWeekdayHeader() {
-        const renderWeekDay = (weekday: number) => <div className="calendar__weekday">{weekdaysMin()[weekday]}</div>
+        const renderWeekDay = (weekday: number) => (
+            <div
+                className="calendar__weekday"
+                key={weekday}
+            >
+                {weekdaysMin()[weekday]}
+            </div>
+        )
         return (
             <div className="calendar__week">
                 {R.times(renderWeekDay, 7)}
@@ -50,6 +78,7 @@ export function Calendar(props: Props) {
     }
 
     return <div className="calendar__wrapper">
+        {renderHeader()}
         {renderWeekdayHeader()}
         {weeksInMonth.map(renderWeek)}
     </div>

@@ -10,6 +10,7 @@ export type Event = {
     description: string
     date: string
     club: Club
+    imageUrl: string
 }
 
 export function useEvents() {
@@ -19,7 +20,7 @@ export function useEvents() {
         let didCancel = false;
 
         async function fetchEvents() {
-            const events = await fetch('api/getEvents').then(r => r.json())
+            const events = await fetch('api/events').then(r => r.json())
             if (!didCancel) {
                 setEvents(events)
             }
@@ -30,4 +31,44 @@ export function useEvents() {
     }, [])
 
     return events
+}
+
+export function useClubs() {
+    const [clubs, setClubs] = useState<Club[]>([])
+
+    useEffect(() => {
+        let didCancel = false;
+
+        async function fetchEvents() {
+            const clubs = await fetch('api/clubs').then(r => r.json())
+            if (!didCancel) {
+                setClubs(clubs)
+            }
+        }
+
+        fetchEvents()
+        return () => { didCancel = true }
+    }, [])
+
+    return clubs
+}
+
+export function useEvent(eventId: string) {
+    const [event, setEvent] = useState<Event>()
+
+    useEffect(() => {
+        let didCancel = false;
+
+        async function fetchEvents() {
+            const event = await fetch(`api/events/${eventId}`).then(r => r.json())
+            if (!didCancel) {
+                setEvent(event)
+            }
+        }
+
+        fetchEvents()
+        return () => { didCancel = true }
+    }, [eventId])
+
+    return event
 }

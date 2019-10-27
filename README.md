@@ -3,10 +3,8 @@
 ## TODO
 
 next:
-- detail view for events
-- style for desktop
+- description
+- selectd day over calendar, switch month
 
 someday:
 - administrative-view
-- pictures
-- database for backend

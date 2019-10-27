@@ -1,0 +1,15 @@
+.club-list {
+    padding: 1em;
+}
+
+.club-list__header {
+    font-weight: bold;
+    padding-bottom: 0.8em;
+    font-size: 1.1em;
+}
+
+.club-list__see-more {
+    margin-top: 0.7em;
+    color: grey;
+    cursor: pointer;
+}
