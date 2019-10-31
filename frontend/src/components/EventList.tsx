@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react'
-import { Event } from "../api";
+import { Event } from "../types";
 import './EventList.css'
 
-type Props = {
+type Props<Event> = {
     events: Event[]
     renderEvent: (event: Event) => ReactNode
 }
-export function EventList(props: Props) {
+export function EventList<Event>(props: Props<Event>) {
     const { events, renderEvent } = props;
 
     function renderContent() {

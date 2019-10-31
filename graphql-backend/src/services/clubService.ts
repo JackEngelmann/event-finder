@@ -1,9 +1,5 @@
 import { Database } from "sqlite3"
 
-export interface IClubService {
-    getClub(id: number): any // TODO
-}
-
 class ClubService {
     db: Database
 
@@ -24,9 +20,8 @@ class ClubService {
 
     async getAllClubs() {
         const sql = 'SELECT * FROM club'
-        const params = []
         return new Promise((resolve, reject) => {
-            this.db.all(sql, params, (err, rows) => {
+            this.db.all(sql, [], (err, rows) => {
                 if (err) return reject(err)
                 return resolve(rows)
             })

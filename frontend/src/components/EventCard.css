@@ -34,7 +34,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: lightgrey;
     overflow: hidden;
 }
 
@@ -42,16 +41,6 @@
     width: 100% !important;
     border-radius: 0;
 }
-
-/* .event-card__picture {
-    height: 6em;
-    border-top-left-radius: 3px;
-    border-top-right-radius: 4px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: lightgrey;
-} */
 
 .event-card__information {
     flex: 1 1 auto;

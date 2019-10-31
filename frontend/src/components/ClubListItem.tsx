@@ -1,5 +1,5 @@
 import React from 'react'
-import { Club } from '../api'
+import { Club } from '../types'
 import './ClubListItem.css'
 
 type Props = {

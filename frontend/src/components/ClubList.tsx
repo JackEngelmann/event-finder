@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Club } from "../api";
+import { Club } from "../types";
 import { ReactNode } from "react";
 import './ClubList.css'
 import * as R from 'ramda'

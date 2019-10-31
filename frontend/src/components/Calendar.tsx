@@ -71,7 +71,7 @@ export function Calendar(props: Props) {
             </div>
         )
         return (
-            <div className="calendar__week">
+            <div className="calendar__week-header">
                 {R.times(renderWeekDay, 7)}
             </div>
         )

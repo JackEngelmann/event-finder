@@ -1,10 +1,14 @@
 import React from 'react'
-import { Event } from '../api'
+import { Event } from '../types'
 import './EventCard.css'
 import classNames from 'classnames'
 
 type Props = {
-    event: Event
+    event: {
+        name: string
+        imageUrl: string
+        club: { name: string }
+    }
     onClick: () => void
     desktop: boolean
 }
