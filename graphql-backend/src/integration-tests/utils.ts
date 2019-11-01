@@ -61,6 +61,27 @@ export function insertTestData(db: Database) {
                     )
                 `)
             db.run(`
+                    INSERT INTO club (
+                        [name],
+                        [address],
+                        [region],
+                        [contact],
+                        [email],
+                        [specials],
+                        [description],
+                        [link]
+                    ) VALUES (
+                        'name',
+                        'address',
+                        'region',
+                        'contact',
+                        'email',
+                        'specials',
+                        'description',
+                        'link'
+                    )
+                `)
+            db.run(`
                     INSERT INTO event
                     (
                         name,

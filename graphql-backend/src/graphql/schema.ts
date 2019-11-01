@@ -43,8 +43,27 @@ export const typeDefs = gql`
         amountOfFloors: Int
     }
 
+    input UpdateEventInput {
+        id: Int!
+        name: String!
+        description: String
+        date: String!
+        clubId: Int!
+        genreIds: [Int]
+        special: String
+        priceCategory: Int
+        admissionFee: Float
+        admissionFeeWithDiscount: Float
+        minimumAge: Int
+        amountOfFloors: Int
+    }
+
     type CreateEventPayload {
         event: Event
+    }
+
+    type UpdateEventPayload {
+        event: Event!
     }
 
     type Genre {
@@ -67,5 +86,6 @@ export const typeDefs = gql`
 
     type Mutation {
         createEvent(input: CreateEventInput!): CreateEventPayload!
+        updateEvent(input: UpdateEventInput!): UpdateEventPayload!
     }
 `

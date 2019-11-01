@@ -8,6 +8,7 @@ import { queryGenre } from "../queries/genre";
 import { queryGenres } from "../queries/genres";
 import { queryGenresForEvent } from "../queries/genresForEvent";
 import { createEvent } from "../mutations/createEvent";
+import { updateEvent } from "../mutations/updateEvent";
 
 type Source = {
     clubId: number
@@ -30,6 +31,11 @@ export const resolvers: IResolvers<Source, Context> = {
         createEvent: async (obj, args, appContext, info) => {
             const eventId = await createEvent(appContext, args.input)
             const event = await queryEvent(appContext, eventId)
+            return { event }
+        },
+        updateEvent: async (obj, args, appContext, info) => {
+            await updateEvent(appContext, args.input)
+            const event = await queryEvent(appContext, args.input.id)
             return { event }
         },
     },

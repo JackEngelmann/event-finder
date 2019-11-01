@@ -15,8 +15,6 @@ export type CreateEventInput = {
     amountOfFloors?: number
 }
 
-// TODO: use $ for db params
-
 export function createEvent(appContext: AppContext, input: CreateEventInput) {
     const { db } = appContext
     return new Promise<number>((resolve, reject) => {
@@ -83,6 +81,7 @@ function assignGenres(
 ) {
     return new Promise((resolve, reject) => {
         if (genreIds === undefined) return resolve()
+        if (genreIds.length === 0) return resolve()
         const placeholders = genreIds.map(g => '(?, ?)').join(',')
         const values = genreIds.flatMap(genreId => [eventId, genreId])
         db.run(
