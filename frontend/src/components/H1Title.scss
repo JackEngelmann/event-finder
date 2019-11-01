@@ -1,0 +1,17 @@
+.h1-title {
+    width: 100%;
+
+    h1 {
+        padding: 0.5em;
+        font-size: 1.8em;
+        margin: 0;
+    }
+
+    &__divider {
+        width: 100;
+        margin: 1em auto;
+        margin-top: 0;
+        height: 2px;
+        background-color: #f2545b;
+    }
+}

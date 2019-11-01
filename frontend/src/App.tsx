@@ -6,7 +6,8 @@ import { ImpressumPage } from './pages/ImpressumPage';
 import { DataPolicyPage } from './pages/DataPolicyPage';
 import { ContactPage } from './pages/Contact';
 import { ApolloProvider } from '@apollo/react-hooks'
-import { apolloClient } from './graphql/client';
+import { apolloClient } from './api';
+import { ClubDetailPage } from './pages/ClubDetailPage';
 
 const App: React.FC = () => {
   return (
@@ -22,8 +23,11 @@ const App: React.FC = () => {
           <Route path="/contact">
             <ContactPage />
           </Route>
-          <Route path="/:eventId">
+          <Route path="/event/:eventId">
             <EventDetailPage />
+          </Route>
+          <Route path="/club/:clubId">
+            <ClubDetailPage />
           </Route>
           <Route path="/">
             <HomePage />

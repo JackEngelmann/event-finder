@@ -1,7 +1,7 @@
 import * as R from 'ramda'
 import moment, { Moment, weekdaysMin } from 'moment'
 import React from 'react'
-import './Calendar.css'
+import './Calendar.scss'
 import classNames from 'classnames'
 
 type Props = {

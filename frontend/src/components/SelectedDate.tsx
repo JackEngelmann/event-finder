@@ -1,19 +1,16 @@
-import React from 'react'
+import './SelectedDate.scss'
+import classNames from 'classnames'
+import React, { ComponentProps } from 'react'
 import { Moment } from 'moment';
-import './SelectedDate.css'
 
-type Props = {
-    toggleCalendar(): void
-    date: Moment
-}
+type Props = ComponentProps<'div'> & { date: Moment }
+
+const cn = "selected-date"
 
 export function SelectedDate(props: Props) {
-    const { toggleCalendar, date } = props;
+    const { date, ...divProps } = props;
     return (
-      <div
-        onClick={toggleCalendar}
-        className="selected-date"
-      >
+      <div className={classNames(cn, props.onClick && `${cn}--clickable`)} {...divProps}>
         {date.format('D. MMMM')}
       </div>
     )

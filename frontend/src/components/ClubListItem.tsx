@@ -1,15 +1,16 @@
-import React from 'react'
-import { Club } from '../types'
-import './ClubListItem.css'
+import React, { ComponentProps } from 'react'
+import './ClubListItem.scss'
 
-type Props = {
-    club: Club
+
+type Club = {
+    name: string
 }
+type Props = { club: Club } & ComponentProps<'div'>
 
 export function ClubListItem(props: Props) {
-    const { club } = props;
+    const { club, ...divProps } = props;
     return (
-        <div className="club-list-item">
+        <div className="club-list-item" {...divProps}>
             {club.name}
         </div>
     )

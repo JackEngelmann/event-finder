@@ -1,14 +1,14 @@
 import React from 'react'
-import './Footer.css'
-import { useHistory } from 'react-router'
+import './Footer.scss'
 
-export function Footer() {
-    const history = useHistory()
+type Props = {
+    children: React.ReactNode
+}
+
+export function Footer(props: Props) {
     return <footer className="footer">
         <div className="footer__content">
-            <a onClick={() => history.push('/impressum')}>Impressum</a>
-            <a onClick={() => history.push('/data-policy')}>Data Policy</a>
-            <a onClick={() => history.push('/contact')}>Contact</a>
+            {props.children}
         </div>
     </footer>
 }

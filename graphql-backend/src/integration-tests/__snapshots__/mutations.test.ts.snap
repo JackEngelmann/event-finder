@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`create an event with only required information 1`] = `
+Object {
+  "data": Object {
+    "createEvent": Object {
+      "event": Object {
+        "admissionFee": null,
+        "admissionFeeWithDiscount": null,
+        "amountOfFloors": null,
+        "club": Object {
+          "id": 1,
+          "name": "name",
+        },
+        "date": "event-date",
+        "description": null,
+        "genres": Array [],
+        "imageUrl": null,
+        "minimumAge": null,
+        "name": "event-name",
+        "priceCategory": null,
+        "special": null,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

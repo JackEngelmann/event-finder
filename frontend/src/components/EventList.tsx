@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
-import { Event } from "../types";
-import './EventList.css'
+import { Event } from "../api";
+import './EventList.scss'
 
 type Props<Event> = {
     events: Event[]

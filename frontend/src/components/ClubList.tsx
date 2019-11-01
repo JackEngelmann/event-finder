@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Club } from "../types";
+import { Club } from "../api";
 import { ReactNode } from "react";
-import './ClubList.css'
+import './ClubList.scss'
 import * as R from 'ramda'
 
 type Props = {

@@ -1,9 +1,9 @@
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './schema'
-import { db } from '../database'
 import { resolvers } from './resolvers'
 import express from 'express'
 import http, { Server } from 'http'
+import { appContext } from '../appContext'
 
 const PORT = 5000
 
@@ -14,7 +14,7 @@ app.use(express.static('public'))
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: { db },
+    context: appContext,
     playground: true,
     introspection: true
 })

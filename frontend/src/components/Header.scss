@@ -1,0 +1,16 @@
+.header {
+    background-color: #19323C;
+    flex: 0 0 auto;
+    height: 2.5em;
+    width: 100%;
+
+    &__content {
+        align-items: center;
+        color: white;
+        display: flex;;
+        height: 100%;
+        margin: 0 auto;
+        max-width: 1200px;
+        padding-left: 1em;
+    }
+}

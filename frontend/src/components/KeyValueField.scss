@@ -1,0 +1,14 @@
+.key-value-field {
+    padding: 0.4em 0.8em;
+    width: 50%;
+
+    &__key {
+        color: grey;
+        font-size: 0.8em;
+    }
+
+    &__value {
+        font-weight: normal;
+        font-size: 1.2em;
+    }
+}
