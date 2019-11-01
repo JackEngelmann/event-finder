@@ -66,6 +66,10 @@ export const typeDefs = gql`
         event: Event!
     }
 
+    type DeleteEventPayload {
+        id: Int
+    }
+
     type Genre {
         id: Int!
         name: String!
@@ -87,5 +91,6 @@ export const typeDefs = gql`
     type Mutation {
         createEvent(input: CreateEventInput!): CreateEventPayload!
         updateEvent(input: UpdateEventInput!): UpdateEventPayload!
+        deleteEvent(id: Int!): DeleteEventPayload!
     }
 `

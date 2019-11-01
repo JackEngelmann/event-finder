@@ -6,21 +6,26 @@ import { typeDefs } from '../graphql/schema'
 import { resolvers } from '../graphql/resolvers'
 import { CreateEventInput } from "../mutations/createEvent"
 import { UpdateEventInput } from "../mutations/updateEvent"
+import { Database } from "sqlite3"
+import { queryEvent } from "../queries/event"
+import { AppContext } from "../appContext"
+import { deleteEvent } from "../mutations/deleteEvent"
 
 let server: ApolloServerTestClient | undefined = undefined
+let db: Database | undefined = undefined
+let appContext: AppContext = { db: db! }
 
-beforeEach(() => {
+beforeEach(async done => {
+    const db = await createTestDb()
+    appContext = { db }
+    await insertTestData(db)
     const newServer = new ApolloServer({
         typeDefs,
         resolvers,
-        context: async () => {
-            const db = await createTestDb()
-            await insertTestData(db)
-            return { db }
-        },
+        context: { db }
     })
-
     server = createTestClient(newServer)
+    done()
 })
 
 test('create an event with only required information', async done => {
@@ -125,6 +130,29 @@ test('update an event to only have required fields', async done => {
     done()
 })
 
+test('return null for event when updating a non-existent event', async done => {
+    const input: UpdateEventInput = {
+        id: 10000,
+        name: 'updated-name',
+        date: 'updated-date',
+        clubId: 2,
+    }
+    const result = await server!.mutate({
+        mutation: `
+            mutation UpdateEvent($input: UpdateEventInput!) {
+                updateEvent(input: $input) {
+                    event {
+                        ${eventFragment}
+                    }
+                }
+            }
+        `,
+        variables: { input },
+    })
+    expect(result.data).toBeNull()
+    done()
+})
+
 test('update an event with empty genre list', async done => {
     const input: UpdateEventInput = {
         id: 1,
@@ -179,5 +207,27 @@ test('update all fields of an event', async done => {
     })
     expect(result.data).toBeDefined()
     expect(result).toMatchSnapshot()
+    done()
+})
+
+test('delete an event', async done => {
+    const id = 1
+
+    const event = await queryEvent(appContext, id)
+    expect(event).toBeDefined()
+
+    await server!.mutate({
+        mutation: `
+            mutation DeleteEvent($id: Int!) {
+                deleteEvent(id: $id) {
+                    id
+                }
+            }
+        `,
+        variables: { id }
+    })
+
+    const deletedEvent = await queryEvent(appContext, id)
+    expect(deletedEvent).toBeUndefined()
     done()
 })
