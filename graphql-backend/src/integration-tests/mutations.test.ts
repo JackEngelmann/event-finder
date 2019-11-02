@@ -9,7 +9,6 @@ import { UpdateEventInput } from "../mutations/updateEvent"
 import { Database } from "sqlite3"
 import { queryEvent } from "../queries/event"
 import { AppContext } from "../appContext"
-import { deleteEvent } from "../mutations/deleteEvent"
 
 let server: ApolloServerTestClient | undefined = undefined
 let db: Database | undefined = undefined

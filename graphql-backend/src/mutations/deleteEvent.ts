@@ -1,15 +1,18 @@
 import { AppContext } from '../appContext'
+import { EventModel } from '../models/event'
+import { EventGenreModel } from '../models/eventGenre';
 
 export function deleteEvent(appContext: AppContext, id: number) {
     const { db } = appContext
-    return new Promise((resolve, reject) => {
-        db.run('DELETE FROM event WHERE id = $id', { $id: id })
-        db.run(
-            'DELETE FROM eventGenre WHERE eventId = $eventId',
-            {
-                $eventId: id,
-            },
-            err => (err ? reject(err) : resolve(err))
-        )
+    const eventModel = new EventModel(db);
+    const eventGenreModel = new EventGenreModel(db);
+    return new Promise(async (resolve, reject) => {
+        try {
+            await eventModel.deleteEvent(id)
+            await eventGenreModel.deleteAllGenresForEvent(id);
+            resolve()
+        } catch(err) {
+            reject(err)
+        }
     })
 }

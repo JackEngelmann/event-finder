@@ -1,5 +1,6 @@
 import { AppContext } from '../appContext'
-import { Database } from 'sqlite3'
+import { EventModel } from '../models/event'
+import { EventGenreModel } from '../models/eventGenre'
 
 export type CreateEventInput = {
     name: string
@@ -17,77 +18,15 @@ export type CreateEventInput = {
 
 export function createEvent(appContext: AppContext, input: CreateEventInput) {
     const { db } = appContext
-    return new Promise<number>((resolve, reject) => {
-        db.serialize(async () => {
-            const eventId = await insertEventRow(db, input)
-            await assignGenres(db, eventId, input.genreIds)
+    const eventModel = new EventModel(db);
+    const eventGenreModel = new EventGenreModel(db);
+    return new Promise<number>(async (resolve, reject) => {
+        try {
+            const eventId = await eventModel.createEvent(input)
+            await eventGenreModel.setGenresForAnEvent(eventId, input.genreIds)
             resolve(eventId)
-        })
-    })
-}
-
-function insertEventRow(db: Database, input: CreateEventInput) {
-    return new Promise<number>((resolve, reject) => {
-        db.run(
-            `
-                INSERT INTO event (
-                    name,
-                    date,
-                    description,
-                    clubId,
-                    special,
-                    priceCategory,
-                    admissionFee,
-                    admissionFeeWithDiscount,
-                    minimumAge,
-                    amountOfFloors
-                ) VALUES (
-                    $name,
-                    $date,
-                    $description,
-                    $clubId,
-                    $special,
-                    $priceCategory,
-                    $admissionFee,
-                    $admissionFeeWithDiscount,
-                    $minimumAge,
-                    $amountOfFloors
-                )
-            `,
-            {
-                $name: input.name,
-                $date: input.date,
-                $description: input.description,
-                $clubId: input.clubId,
-                $special: input.special,
-                $priceCategory: input.priceCategory,
-                $admissionFee: input.admissionFee,
-                $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                $minimumAge: input.minimumAge,
-                $amountOfFloors: input.amountOfFloors,
-            },
-            function(err) {
-                if (err) reject(err)
-                resolve(this.lastID)
-            }
-        )
-    })
-}
-
-function assignGenres(
-    db: Database,
-    eventId: number,
-    genreIds: number[] | undefined
-) {
-    return new Promise((resolve, reject) => {
-        if (genreIds === undefined) return resolve()
-        if (genreIds.length === 0) return resolve()
-        const placeholders = genreIds.map(g => '(?, ?)').join(',')
-        const values = genreIds.flatMap(genreId => [eventId, genreId])
-        db.run(
-            'insert into eventGenre (eventId, genreId) VALUES ' + placeholders,
-            values,
-            err => err ? reject(err) : resolve(),
-        )
+        } catch (err) {
+            reject(err)
+        }
     })
 }
