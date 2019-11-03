@@ -8,7 +8,7 @@ import { Club, Event } from '../api'
 import { EditableEntity } from '../components/EditableEntity'
 import { LoadingIndicator } from '../components/LoadingIndicator'
 import { useHistory } from 'react-router'
-import { useClubs } from '../containers/useClubs'
+import { useClubs, CLUBS_QUERY } from '../containers/useClubs'
 
 const cn = 'admin-page'
 
@@ -31,11 +31,20 @@ const DELETE_EVENT_MUTATION = gql`
     }
 `
 
+const DELETE_CLUB_MUTATION = gql`
+    mutation AdminDeleteClub($id: Int!) {
+        deleteClub(id: $id) {
+            id
+        }
+    }
+`
+
 export function AdminPage() {
     const clubs = useClubs()[0] || []
     const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
     const events = eventsQueryResult.data && eventsQueryResult.data.events
     const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
+    const [deleteClubMutation] = useMutation(DELETE_CLUB_MUTATION)
     const history = useHistory()
 
     function deleteEvent(id: number) {
@@ -45,16 +54,33 @@ export function AdminPage() {
         })
     }
 
+    function deleteClub(id: number) {
+        deleteClubMutation({
+            variables: { id },
+            refetchQueries: [{ query: CLUBS_QUERY }],
+        })
+    }
+
     return (
         <Page>
             <Content scrollable restrictMaxWidth>
                 <div className={cn}>
                     <div className={`${cn}__column`}>
-                        <div className={`${cn}__column-header`}>Clubs</div>
+                        <div className={`${cn}__column-header`}>Clubs
+                            <button
+                                onClick={() => history.push('/admin/add-club')}
+                            >
+                                Create Club
+                            </button>
+                        </div>
                         <div className={`${cn}__column-content`}>
                             {clubs ? (
                                 clubs.map(c => (
-                                    <EditableEntity key={c.id}>
+                                    <EditableEntity
+                                        key={c.id}
+                                        onDelete={() => deleteClub(c.id)}
+                                        onEdit={() => history.push(`/admin/club/${c.id}`)}
+                                    >
                                         {c.name}
                                     </EditableEntity>
                                 ))
@@ -78,7 +104,9 @@ export function AdminPage() {
                                     <EditableEntity
                                         key={e.id}
                                         onDelete={() => deleteEvent(e.id)}
-                                        onEdit={() => history.push(`/admin/event/${e.id}`)}
+                                        onEdit={() =>
+                                            history.push(`/admin/event/${e.id}`)
+                                        }
                                     >
                                         {e.name}
                                     </EditableEntity>

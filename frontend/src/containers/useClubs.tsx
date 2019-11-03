@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 
-const QUERY = gql`
+export const CLUBS_QUERY = gql`
     {
         clubs {
             id
@@ -17,7 +17,7 @@ type QueryResult = {
 }
 
 export function useClubs() {
-    const queryResult = useQuery<QueryResult>(QUERY)
+    const queryResult = useQuery<QueryResult>(CLUBS_QUERY)
     const clubs = queryResult.data && queryResult.data.clubs
     return [clubs, queryResult] as const
 }

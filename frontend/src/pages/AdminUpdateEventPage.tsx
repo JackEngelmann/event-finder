@@ -8,7 +8,6 @@ import { EventEditorState, EventEditor } from '../components/EventEditor'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import moment from 'moment'
-import { Genre, Club } from '../api'
 import { useGenres } from '../containers/useGenres'
 import { useClubs } from '../containers/useClubs'
 

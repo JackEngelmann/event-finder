@@ -11,6 +11,8 @@ import { ClubDetailPage } from './pages/ClubDetailPage';
 import { AdminPage } from './pages/AdminPage';
 import { AdminAddEventPage } from './pages/AdminAddEventPage';
 import { AdminUpdateEventPage } from './pages/AdminUpdateEventPage';
+import { AdminAddClubPage } from './pages/AdminAddClubPage';
+import { AdminUpdateClubPage } from './pages/AdminUpdateClubPage';
 
 const App: React.FC = () => {
   return (
@@ -25,6 +27,12 @@ const App: React.FC = () => {
           </Route>
           <Route path="/admin/event/:eventId">
             <AdminUpdateEventPage />
+          </Route>
+          <Route path="/admin/add-club">
+            <AdminAddClubPage />
+          </Route>
+          <Route path="/admin/club/:clubId">
+            <AdminUpdateClubPage />
           </Route>
           <Route path="/impressum">
             <ImpressumPage />
