@@ -8,12 +8,24 @@ import { ContactPage } from './pages/Contact';
 import { ApolloProvider } from '@apollo/react-hooks'
 import { apolloClient } from './api';
 import { ClubDetailPage } from './pages/ClubDetailPage';
+import { AdminPage } from './pages/AdminPage';
+import { AdminAddEventPage } from './pages/AdminAddEventPage';
+import { AdminUpdateEventPage } from './pages/AdminUpdateEventPage';
 
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
       <HashRouter>
         <Switch>
+          <Route exact path="/admin">
+            <AdminPage />
+          </Route>
+          <Route path="/admin/add-event">
+            <AdminAddEventPage />
+          </Route>
+          <Route path="/admin/event/:eventId">
+            <AdminUpdateEventPage />
+          </Route>
           <Route path="/impressum">
             <ImpressumPage />
           </Route>

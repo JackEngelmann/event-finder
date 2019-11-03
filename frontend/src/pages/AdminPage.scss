@@ -1,0 +1,12 @@
+.admin-page {
+    display: flex;
+
+    &__column {
+        width: 50%;
+    }
+
+    &__column-header {
+        font-size: 1.2em;
+        margin-bottom: 1em;
+    }
+}

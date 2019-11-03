@@ -11,20 +11,29 @@ type Props = {
     onClick: () => void
     desktop?: boolean
 }
+
+const cn = 'event-card'
+
 export function EventCard(props: Props) {
     const { event, onClick, desktop } = props
     return (
-        <div className={classNames("event-card", { 'event-card--desktop': desktop, 'event-card--mobile': !desktop })} onClick={onClick}>
-            <div className="event-card__picture-wrapper">
-                <img className="event-card__picture" src={'./' + event.imageUrl} alt={`event ${event.name}`} />
+        <div
+            className={classNames(cn, {
+                [`${cn}--desktop`]: desktop,
+                [`${cn}--mobile`]: !desktop,
+            })}
+            onClick={onClick}
+        >
+            <div className={`${cn}__picture-wrapper`}>
+                <img
+                    className={`${cn}__picture`}
+                    src={'./' + event.imageUrl}
+                    alt={`event ${event.name}`}
+                />
             </div>
-            <div className="event-card__information">
-                <div className="event-card__name">
-                    {event.name}
-                </div>
-                <div className="event-card__club-name">
-                    {event.club.name}
-                </div>
+            <div className={`${cn}__information`}>
+                <div className={`${cn}__name`}>{event.name}</div>
+                <div className={`${cn}__club-name`}>{event.club.name}</div>
             </div>
         </div>
     )

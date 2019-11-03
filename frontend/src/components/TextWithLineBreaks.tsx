@@ -5,6 +5,9 @@ type Props = {
 }
 export function TextWithLineBreaks(props: Props) {
     const { text } = props
+    
+    if (!text) return null
+
     const lines = text.split('\n')
 
     function renderLine(line: string, lineIndex: number, allLines: string[]) {

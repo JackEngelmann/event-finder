@@ -5,10 +5,12 @@ type Props = {
     children: React.ReactNode
 }
 
+const cn = 'footer'
+
 export function Footer(props: Props) {
-    return <footer className="footer">
-        <div className="footer__content">
-            {props.children}
-        </div>
-    </footer>
+    return (
+        <footer className={cn}>
+            <div className={`${cn}__content`}>{props.children}</div>
+        </footer>
+    )
 }

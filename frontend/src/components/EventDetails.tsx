@@ -70,7 +70,11 @@ export function EventDetails(props: Props) {
                         />
                         <KeyValueField
                             fieldKey="Minimum Age"
-                            fieldValue={event.minimumAge + '+'}
+                            fieldValue={
+                                event.minimumAge
+                                    ? event.minimumAge + '+'
+                                    : undefined
+                            }
                         />
                         <KeyValueField
                             fieldKey="Amount of Floors"

@@ -18,19 +18,19 @@ export type Genre = {
 }
 
 export type Event = {
-    id: number
-    name: string
-    description: string
-    date: string
-    club: Club
-    imageUrl: string
-    priceCategory: 1 | 2 | 3 | undefined
     admissionFee: number | undefined
     admissionFeeWithDiscount: number | undefined
-    special: string | undefined
-    minimumAge: number | undefined
     amountOfFloors: number | undefined
+    club: Club
+    date: string
+    description: string
     genres: Genre[] | undefined
+    id: number
+    imageUrl: string
+    minimumAge: number | undefined
+    name: string
+    priceCategory: 1 | 2 | 3 | undefined
+    special: string | undefined
 }
 
 export const apolloClient = new ApolloClient()

@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { EventDetails } from "../components/EventDetails";
 import { LoadingIndicator } from "../components/LoadingIndicator";
-import { Event } from '../api';
+import { eventDetailsFragment, EventDetailsEvent } from '../graphqlUtils';
 
 type Props = {
     eventId: number | undefined
@@ -12,29 +12,12 @@ type Props = {
 const QUERY = gql`
     query eventQuery($eventId: Int!) {
         event(id: $eventId) {
-            id
-            name
-            description
-            date
-            imageUrl
-            club {
-                id
-                name
-            }
-            genres {
-                id
-                name
-            }
-            priceCategory
-            admissionFee
-            admissionFeeWithDiscount
-            minimumAge
-            amountOfFloors
+            ...EventDetails
         }
     }
+    ${eventDetailsFragment}
 `
-
-type QueryData = { event: Event }
+type QueryData = { event: EventDetailsEvent }
 
 export function EventDetailsContainer(props: Props) {
     const { eventId } = props;

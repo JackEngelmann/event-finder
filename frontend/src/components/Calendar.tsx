@@ -11,33 +11,54 @@ type Props = {
     setMonthSelection(monthSelection: Moment): void
 }
 
+const cn = 'calendar'
+
 export function Calendar(props: Props) {
-    const { setSelectedDate, selectedDate, monthSelection, setMonthSelection } = props;
-    const weeksInMonth = getWeeksInMonth(monthSelection.year(), monthSelection.month())
+    const {
+        setSelectedDate,
+        selectedDate,
+        monthSelection,
+        setMonthSelection,
+    } = props
+    const weeksInMonth = getWeeksInMonth(
+        monthSelection.year(),
+        monthSelection.month()
+    )
 
     function renderHeader() {
-        return <div className="calendar__header">
-            <div
-                className="calendar__month-switcher"
-                onClick={() => setMonthSelection(moment(monthSelection).subtract(1, 'month'))}
-            >
-                ←
+        return (
+            <div className={`${cn}__header`}>
+                <div
+                    className={`${cn}__month-switcher`}
+                    onClick={() =>
+                        setMonthSelection(
+                            moment(monthSelection).subtract(1, 'month')
+                        )
+                    }
+                >
+                    ←
+                </div>
+                <div>{monthSelection.format('MMMM YYYY')}</div>
+                <div
+                    className={`${cn}__month-switcher`}
+                    onClick={() =>
+                        setMonthSelection(
+                            moment(monthSelection).add(1, 'month')
+                        )
+                    }
+                >
+                    →
+                </div>
             </div>
-            <div>
-                {monthSelection.format('MMMM YYYY')}
-            </div>
-            <div
-                className="calendar__month-switcher"
-                onClick={() => setMonthSelection(moment(monthSelection).add(1, 'month'))}
-            >
-                →
-            </div>
-        </div>
+        )
     }
 
     function renderWeek(week: Moment[]) {
         return (
-            <div className="calendar__week" key={'week-from-' + week[0].toISOString()}>
+            <div
+                className={`${cn}__week`}
+                key={'week-from-' + week[0].toISOString()}
+            >
                 {week.map(renderDay)}
             </div>
         )
@@ -50,9 +71,9 @@ export function Calendar(props: Props) {
         return (
             <div
                 key={day.toISOString()}
-                className={classNames('calendar__date', {
-                    'calendar__date--weekend': isWeekend,
-                    'calendar__date--selected': isSelected
+                className={classNames(`${cn}__date`, {
+                    [`${cn}__date--weekend`]: isWeekend,
+                    [`${cn}__date--selected`]: isSelected,
                 })}
                 onClick={() => setSelectedDate(day)}
             >
@@ -63,39 +84,46 @@ export function Calendar(props: Props) {
 
     function renderWeekdayHeader() {
         const renderWeekDay = (weekday: number) => (
-            <div
-                className="calendar__weekday"
-                key={weekday}
-            >
+            <div className={`${cn}__weekday`} key={weekday}>
                 {weekdaysMin()[weekday]}
             </div>
         )
         return (
-            <div className="calendar__week-header">
+            <div className={`${cn}__week-header`}>
                 {R.times(renderWeekDay, 7)}
             </div>
         )
     }
 
-    return <div className="calendar__wrapper">
-        {renderHeader()}
-        {renderWeekdayHeader()}
-        {weeksInMonth.map(renderWeek)}
-    </div>
+    return (
+        <div className={`${cn}__wrapper`}>
+            {renderHeader()}
+            {renderWeekdayHeader()}
+            {weeksInMonth.map(renderWeek)}
+        </div>
+    )
 }
 
 function getWeeksInMonth(year: number, month: number) {
-    const firstDayOfFirstWeek = moment().year(year).month(month).startOf('month').startOf('week');
+    const firstDayOfFirstWeek = moment()
+        .year(year)
+        .month(month)
+        .startOf('month')
+        .startOf('week')
     const daysInWeeks: Moment[][] = []
     let day: Moment = moment(firstDayOfFirstWeek)
-    const lastDayOfLastWeek = moment().year(year).month(month).endOf('month').endOf('week')
+    const lastDayOfLastWeek = moment()
+        .year(year)
+        .month(month)
+        .endOf('month')
+        .endOf('week')
     while (true) {
         const isMonday = day.weekday() === 0
         if (day.isAfter(lastDayOfLastWeek)) break
         if (isMonday) {
             daysInWeeks.push([day])
         } else {
-            const lastWeek = daysInWeeks[daysInWeeks.length - 1];
+            const lastWeek = daysInWeeks[daysInWeeks.length - 1]
             lastWeek.push(day)
         }
         day = moment(day).add(1, 'day')
