@@ -30,17 +30,17 @@ export const typeDefs = gql`
     }
 
     input CreateEventInput {
-        name: String!
-        description: String
-        date: String!
-        clubId: Int!
-        genreIds: [Int]
-        special: String
-        priceCategory: Int
         admissionFee: Float
         admissionFeeWithDiscount: Float
-        minimumAge: Int
         amountOfFloors: Int
+        clubId: Int!
+        date: String!
+        description: String
+        genreIds: [Int]
+        minimumAge: Int
+        name: String!
+        priceCategory: Int
+        special: String
     }
 
     input UpdateEventInput {
