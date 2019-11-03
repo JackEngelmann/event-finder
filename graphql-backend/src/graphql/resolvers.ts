@@ -10,6 +10,9 @@ import { queryGenresForEvent } from "../queries/genresForEvent";
 import { createEvent } from "../mutations/createEvent";
 import { updateEvent } from "../mutations/updateEvent";
 import { deleteEvent } from "../mutations/deleteEvent";
+import { createClub } from "../mutations/createClub";
+import { updateClub } from "../mutations/updateClub";
+import { deleteClub } from "../mutations/deleteClub";
 
 type Source = {
     clubId: number
@@ -43,6 +46,20 @@ export const resolvers: IResolvers<Source, Context> = {
             await deleteEvent(appContext, args.id)
             return { id: args.id }
         },
+        createClub: async (obj, args, appContext, info) => {
+            const clubId = await createClub(appContext, args.input)
+            const club = await queryClub(appContext, clubId)
+            return { club }
+        },
+        updateClub: async (obj, args, appContext, info) => {
+            await updateClub(appContext, args.input)
+            const club = await queryClub(appContext, args.input.id)
+            return { club }
+        },
+        deleteClub: async (obj, args, appContext, info) => {
+            await deleteClub(appContext, args.id)
+            return { id: args.id }
+        }
     },
     Event: {
         club: (event, args, appContext, info) => queryClub(appContext, event.clubId),

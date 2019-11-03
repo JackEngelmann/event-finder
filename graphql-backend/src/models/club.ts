@@ -1,4 +1,5 @@
 import { Database } from 'sqlite3'
+import { Logger } from '../logger'
 
 export class ClubDataModel {
     id: number
@@ -30,6 +31,108 @@ export class ClubModel {
         this.db = db
     }
 
+    createClub(input: {
+        address?: string
+        contact?: string
+        description?: string
+        email?: string
+        link?: string
+        name: string
+        region?: string
+        specials?: string
+    }) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.run(
+                `
+                INSERT INTO club (
+                    address,
+                    contact,
+                    description,
+                    email,
+                    link,
+                    name,
+                    region,
+                    specials
+                ) VALUES (
+                    $address,
+                    $contact,
+                    $description,
+                    $email,
+                    $link,
+                    $name,
+                    $region,
+                    $specials
+                )
+                `,
+                {
+                    $address: input.address,
+                    $contact: input.contact,
+                    $description: input.description,
+                    $email: input.email,
+                    $link: input.link,
+                    $name: input.name,
+                    $region: input.region,
+                    $specials: input.specials,
+                },
+                function(err) {
+                    if (err) {
+                        console.error(err)
+                        return reject(err)
+                    }
+                    resolve(this.lastID)
+                }
+            )
+        })
+    }
+
+    updateClub(input: {
+        address?: string
+        contact?: string
+        description?: string
+        email?: string
+        id: number
+        link?: string
+        name: string
+        region?: string
+        specials?: string
+    }) {
+        return new Promise<number>((resolve, reject) => {
+            this.db.run(
+                `
+                    UPDATE club
+                    SET
+                        address = $address,
+                        contact = $contact,
+                        description = $description,
+                        email = $email,
+                        link = $link,
+                        name = $name,
+                        region = $region,
+                        specials = $specials
+                    WHERE id = $id
+                `,
+                {
+                    $address: input.address,
+                    $contact: input.contact,
+                    $description: input.description,
+                    $email: input.email,
+                    $id: input.id,
+                    $link: input.link,
+                    $name: input.name,
+                    $region: input.region,
+                    $specials: input.specials,
+                },
+                err => {
+                    if (err) {
+                        console.error(err)
+                        reject(err)
+                    }
+                    resolve()
+                }
+            )
+        })
+    }
+
     getClub(id: number) {
         const sql = 'SELECT * FROM club WHERE id = ?'
         const params = [id]
@@ -52,6 +155,19 @@ export class ClubModel {
                 if (err) return reject(err)
                 const clubs = rows.map(r => new ClubDataModel(r))
                 return resolve(clubs)
+            })
+        })
+    }
+
+    deleteClub(id: number) {
+        return new Promise<void>((resolve, reject) => {
+            this.db.run('DELETE FROM club WHERE id = $id', { $id: id }, err => {
+                if (err) {
+                    const logger = new Logger()
+                    logger.error(err)
+                    reject(err)
+                }
+                resolve()
             })
         })
     }

@@ -130,6 +130,17 @@ export class EventModel {
         })
     }
 
+    getEventsFromClub(clubId: number) {
+        const sql = 'SELECT * FROM event WHERE clubId = $clubId'
+        return new Promise<EventDataModel[]>((resolve, reject) => {
+            this.db.all(sql, { $clubId: clubId }, async (err, rows) => {
+                if (err) return reject(err)
+                const events = rows.map(r => new EventDataModel(r))
+                resolve(events)
+            })
+        })
+    }
+
     updateEvent(input: {
         id: number
         name: string

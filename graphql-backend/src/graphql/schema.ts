@@ -58,12 +58,47 @@ export const typeDefs = gql`
         amountOfFloors: Int
     }
 
+    input CreateClubInput {
+        address: String
+        contact: String
+        description: String
+        email: String
+        link: String
+        name: String!
+        region: String
+        specials: String
+    }
+
+    input UpdateClubInput {
+        address: String
+        contact: String
+        description: String
+        email: String
+        id: Int!
+        link: String
+        name: String!
+        region: String
+        specials: String
+    }
+
+    type UpdateClubPayload {
+        club: Club
+    }
+
+    type CreateClubPayload {
+        club: Club
+    }
+
+    type DeleteClubPayload {
+        id: Int
+    }
+
     type CreateEventPayload {
         event: Event
     }
 
     type UpdateEventPayload {
-        event: Event!
+        event: Event
     }
 
     type DeleteEventPayload {
@@ -92,5 +127,9 @@ export const typeDefs = gql`
         createEvent(input: CreateEventInput!): CreateEventPayload!
         updateEvent(input: UpdateEventInput!): UpdateEventPayload!
         deleteEvent(id: Int!): DeleteEventPayload!
+
+        createClub(input: CreateClubInput!): CreateClubPayload!
+        updateClub(input: UpdateClubInput!): UpdateClubPayload!
+        deleteClub(id: Int!): DeleteClubPayload!
     }
 `

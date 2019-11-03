@@ -13,6 +13,7 @@ export const eventFragment = `
     name,
     description,
     date,
+    id
     imageUrl,
     priceCategory,
     admissionFee,
@@ -26,14 +27,15 @@ export const eventFragment = `
 `
 
 export const clubFragment = `
-    name
     address
-    region
     contact
-    email
-    specials
     description
+    email
+    id
     link
+    name
+    region
+    specials
 `
 
 export function insertTestData(db: Database) {
