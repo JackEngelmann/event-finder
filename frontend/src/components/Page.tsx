@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import './Page.scss'
 import React, { ComponentProps } from 'react';
 
@@ -8,7 +9,10 @@ const cn = 'page'
 export function Page(props: Props) {
     const { children, ...divProps } = props
     return (
-        <div className={cn} {...divProps}>
+        <div
+            {...divProps}
+            className={classNames(cn, props.className)}
+        >
             {children}
         </div>
     )

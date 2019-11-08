@@ -2,8 +2,11 @@ import './EventEditor.scss'
 import React from 'react'
 import { Calendar } from './Calendar'
 import moment, { Moment } from 'moment'
-import { H1Title } from './H1Title'
 import { LabeledInput } from './LabeledInput'
+import { Input } from './Input'
+import { Textarea } from './Textarea'
+import { Select } from './Select'
+import { Option } from './Option'
 
 export type EventEditorState = {
     admissionFee?: number
@@ -56,20 +59,18 @@ export function EventEditor(props: Props) {
     } = props
     return (
         <div className={cn}>
-            <H1Title>
-                <LabeledInput label="Name">
-                    <input
-                        placeholder="name"
-                        value={state.name || ''}
-                        onChange={e =>
-                            setState({
-                                ...state,
-                                name: e.target.value,
-                            })
-                        }
-                    />
-                </LabeledInput>
-            </H1Title>
+            <LabeledInput label="Name">
+                <Input
+                    placeholder="name"
+                    value={state.name || ''}
+                    onChange={e =>
+                        setState({
+                            ...state,
+                            name: e.target.value,
+                        })
+                    }
+                />
+            </LabeledInput>
             <LabeledInput label="Date">
                 <div className={`${cn}__calendar-wrapper`}>
                     <Calendar
@@ -88,7 +89,7 @@ export function EventEditor(props: Props) {
                 </div>
             </LabeledInput>
             <LabeledInput label="Club">
-                <select
+                <Select
                     value={state.club ? state.club.id : ''}
                     onChange={e =>
                         setState({
@@ -99,16 +100,16 @@ export function EventEditor(props: Props) {
                         })
                     }
                 >
-                    <option disabled value="">
+                    <Option disabled value="">
                         --select--
-                    </option>
+                    </Option>
                     {clubs.map(c => (
-                        <option value={c.id}>{c.name}</option>
+                        <Option value={c.id}>{c.name}</Option>
                     ))}
-                </select>
+                </Select>
             </LabeledInput>
             <LabeledInput label="Admission Fee">
-                <input
+                <Input
                     value={state.admissionFee || ''}
                     min={0}
                     type="number"
@@ -122,7 +123,7 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Admission Fee With Discount">
-                <input
+                <Input
                     value={state.admissionFeeWithDiscount || ''}
                     min={0}
                     type="number"
@@ -138,7 +139,7 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Amount of Floors">
-                <input
+                <Input
                     value={state.amountOfFloors || ''}
                     min={0}
                     type="number"
@@ -151,7 +152,8 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Description">
-                <textarea
+                <Textarea
+                    width="20em"
                     value={state.description || ''}
                     onChange={e =>
                         setState({
@@ -162,7 +164,8 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Special">
-                <textarea
+                <Textarea
+                    width="20em"
                     value={state.special || ''}
                     onChange={e =>
                         setState({
@@ -173,7 +176,7 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Minimum Age">
-                <input
+                <Input
                     value={state.minimumAge || ''}
                     min={0}
                     type="number"
@@ -186,7 +189,7 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Price Category">
-                <input
+                <Input
                     value={state.priceCategory || ''}
                     min={0}
                     max={3}
@@ -206,7 +209,7 @@ export function EventEditor(props: Props) {
                 <div>
                     {genres.map(g => (
                         <div>
-                            <input
+                            <Input
                                 name={g.name}
                                 type="checkbox"
                                 checked={

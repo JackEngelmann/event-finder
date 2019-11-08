@@ -6,6 +6,9 @@ import { useHistory, useParams } from 'react-router'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { useClubWithDetails } from '../containers/useClubWithDetails'
+import { Button } from '../components/Button'
+import { H1Title } from '../components/H1Title'
+import { Spacer } from '../components/Spacer'
 
 type Params = {
     clubId: string
@@ -37,6 +40,7 @@ export function AdminUpdateClubPage() {
                 contact: clubEditorState.contact,
                 description: clubEditorState.description,
                 email: clubEditorState.email,
+                id: parseInt(clubId),
                 link: clubEditorState.link,
                 name: clubEditorState.name,
                 region: clubEditorState.region,
@@ -48,20 +52,26 @@ export function AdminUpdateClubPage() {
 
     async function updateClub() {
         const createClubMutationResult = await updateClubMutation()
-        const clubId = createClubMutationResult.data.createClub.club.id
+        const clubId = createClubMutationResult.data.updateClub.club.id
         history.push(`/club/${clubId}`)
     }
 
     return (
         <Page>
             <Content restrictMaxWidth scrollable>
+                <H1Title>Edit Club</H1Title>
                 <ClubEditor
                     state={clubEditorState}
                     setState={setClubEditorState}
                 />
-                <button disabled={!canSave} onClick={updateClub}>
+                <Spacer />
+                <Button primary disabled={!canSave} onClick={updateClub}>
                     Save
-                </button>
+                </Button>
+                <Button secondary onClick={() => history.push('/admin')}>
+                    Cancel
+                </Button>
+                <Spacer />
             </Content>
         </Page>
     )

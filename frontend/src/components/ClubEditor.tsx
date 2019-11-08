@@ -1,7 +1,8 @@
 import React from 'react'
 import './ClubEditor.scss'
-import { H1Title } from './H1Title'
 import { LabeledInput } from './LabeledInput'
+import { Input } from './Input'
+import { Textarea } from './Textarea'
 
 export type ClubEditorState = {
     address?: string
@@ -26,22 +27,20 @@ export function ClubEditor(props: Props) {
     const { state, setState } = props
     return (
         <div className={cn}>
-            <H1Title>
-                <LabeledInput label="Name">
-                    <input
-                        placeholder="name"
-                        value={state.name || ''}
-                        onChange={e =>
-                            setState({
-                                ...state,
-                                name: e.target.value,
-                            })
-                        }
-                    />
-                </LabeledInput>
-            </H1Title>
+            <LabeledInput label="Name">
+                <Input
+                    placeholder="name"
+                    value={state.name || ''}
+                    onChange={e =>
+                        setState({
+                            ...state,
+                            name: e.target.value,
+                        })
+                    }
+                />
+            </LabeledInput>
             <LabeledInput label="Address">
-                <input
+                <Input
                     value={state.address || ''}
                     onChange={e =>
                         setState({
@@ -52,7 +51,7 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Contact">
-                <input
+                <Input
                     value={state.contact || ''}
                     onChange={e =>
                         setState({
@@ -63,7 +62,8 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Description">
-                <textarea
+                <Textarea
+                    width="20em"
                     value={state.description || ''}
                     onChange={e =>
                         setState({
@@ -74,7 +74,7 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Email">
-                <input
+                <Input
                     value={state.email || ''}
                     onChange={e =>
                         setState({
@@ -85,7 +85,7 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Link">
-                <input
+                <Input
                     value={state.link || ''}
                     onChange={e =>
                         setState({
@@ -96,7 +96,7 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Region">
-                <input
+                <Input
                     value={state.region || ''}
                     onChange={e =>
                         setState({
@@ -107,7 +107,7 @@ export function ClubEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Specials">
-                <input
+                <Input
                     value={state.specials || ''}
                     onChange={e =>
                         setState({

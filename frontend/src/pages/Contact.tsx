@@ -18,7 +18,6 @@ export function ContactPage() {
                 <H1Title>Contact</H1Title>
                 ...
             </Content>
-            <FooterContainer />
         </Page>
     )
 }

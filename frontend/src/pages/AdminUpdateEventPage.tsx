@@ -10,6 +10,9 @@ import { Content } from '../components/Content'
 import moment from 'moment'
 import { useGenres } from '../containers/useGenres'
 import { useClubs } from '../containers/useClubs'
+import { Button } from '../components/Button'
+import { H1Title } from '../components/H1Title'
+import { Spacer } from '../components/Spacer'
 
 type Params = {
     eventId: string
@@ -94,6 +97,7 @@ export function AdminUpdateEventPage(props: any) {
     return (
         <Page>
             <Content restrictMaxWidth scrollable>
+                <H1Title>Edit Event</H1Title>
                 <EventEditor
                     clubs={clubs}
                     genres={genres}
@@ -102,9 +106,14 @@ export function AdminUpdateEventPage(props: any) {
                     state={eventEditorState}
                     setState={setEventEditorState}
                 />
-                <button disabled={!canSave} onClick={updateEvent}>
+                <Spacer />
+                <Button primary disabled={!canSave} onClick={updateEvent}>
                     Save
-                </button>
+                </Button>
+                <Button secondary onClick={() => history.push('/admin')}>
+                    Cancel
+                </Button>
+                <Spacer />
             </Content>
         </Page>
     )

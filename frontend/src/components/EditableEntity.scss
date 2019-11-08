@@ -1,8 +1,8 @@
 .editable-entity {
     display: flex;
     padding: 0.2em 0;
-
-    button {
-        margin-right: 0.6em;
+    align-items: center;
+    &__entity-name {
+        margin-left: 0.5em;
     }
 }

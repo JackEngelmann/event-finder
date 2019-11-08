@@ -1,14 +1,18 @@
+import * as R from 'ramda'
 import './AdminPage.scss'
 import React from 'react'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-import { Club, Event } from '../api'
+import { Event } from '../api'
 import { EditableEntity } from '../components/EditableEntity'
 import { LoadingIndicator } from '../components/LoadingIndicator'
 import { useHistory } from 'react-router'
 import { useClubs, CLUBS_QUERY } from '../containers/useClubs'
+import { Button } from '../components/Button'
+import { H1Title } from '../components/H1Title'
+import { Icon } from '../components/Icon'
 
 const cn = 'admin-page'
 
@@ -40,14 +44,18 @@ const DELETE_CLUB_MUTATION = gql`
 `
 
 export function AdminPage() {
-    const clubs = useClubs()[0] || []
+    const clubs = R.sortBy(R.prop('name'), useClubs()[0] || [])
     const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
-    const events = eventsQueryResult.data && eventsQueryResult.data.events
+    const events =
+        eventsQueryResult.data &&
+        R.sortBy(R.prop('name'), eventsQueryResult.data.events)
     const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
     const [deleteClubMutation] = useMutation(DELETE_CLUB_MUTATION)
     const history = useHistory()
 
     function deleteEvent(id: number) {
+        const isSure = window.confirm('Sure?')
+        if (!isSure) return
         deleteEventMutation({
             variables: { id },
             refetchQueries: [{ query: EVENTS_QUERY }],
@@ -55,6 +63,8 @@ export function AdminPage() {
     }
 
     function deleteClub(id: number) {
+        const isSure = window.confirm('Sure?')
+        if (!isSure) return
         deleteClubMutation({
             variables: { id },
             refetchQueries: [{ query: CLUBS_QUERY }],
@@ -63,15 +73,19 @@ export function AdminPage() {
 
     return (
         <Page>
-            <Content scrollable restrictMaxWidth>
-                <div className={cn}>
+            <div className={cn}>
+                <H1Title>Administration</H1Title>
+                <div className={`${cn}__content`}>
                     <div className={`${cn}__column`}>
-                        <div className={`${cn}__column-header`}>Clubs
-                            <button
+                        <div className={`${cn}__column-header`}>
+                            <h2>Clubs</h2>
+                            <Button
+                                borderless
+                                secondary
                                 onClick={() => history.push('/admin/add-club')}
                             >
-                                Create Club
-                            </button>
+                                <Icon icon="plus" />
+                            </Button>
                         </div>
                         <div className={`${cn}__column-content`}>
                             {clubs ? (
@@ -79,7 +93,9 @@ export function AdminPage() {
                                     <EditableEntity
                                         key={c.id}
                                         onDelete={() => deleteClub(c.id)}
-                                        onEdit={() => history.push(`/admin/club/${c.id}`)}
+                                        onEdit={() =>
+                                            history.push(`/admin/club/${c.id}`)
+                                        }
                                     >
                                         {c.name}
                                     </EditableEntity>
@@ -91,12 +107,14 @@ export function AdminPage() {
                     </div>
                     <div className={`${cn}__column`}>
                         <div className={`${cn}__column-header`}>
-                            Events{' '}
-                            <button
+                            <h2>Events</h2>
+                            <Button
                                 onClick={() => history.push('/admin/add-event')}
+                                secondary
+                                borderless
                             >
-                                Create Event
-                            </button>
+                                <Icon icon="plus" />
+                            </Button>
                         </div>
                         <div className={`${cn}__column-content`}>
                             {events ? (
@@ -117,7 +135,7 @@ export function AdminPage() {
                         </div>
                     </div>
                 </div>
-            </Content>
+            </div>
         </Page>
     )
 }

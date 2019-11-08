@@ -36,13 +36,12 @@
     }
 
     &__date--selected {
-        background-color: #8c5e58;
+        background-color: #264653;
         color: white;
-        font-weight: bold;
     }
 
     &__date--selected:hover {
-        background-color: #774e49;
+        background-color: darken(#264653, 5%);
     }
 
     &__weekday {

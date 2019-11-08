@@ -3,11 +3,14 @@ import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { EventEditorState, EventEditor } from '../components/EventEditor'
 import gql from 'graphql-tag'
-import { useMutation, useQuery } from '@apollo/react-hooks'
+import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router'
 import moment from 'moment'
 import { useGenres } from '../containers/useGenres'
 import { useClubs } from '../containers/useClubs'
+import { Button } from '../components/Button'
+import { H1Title } from '../components/H1Title'
+import { Spacer } from '../components/Spacer'
 
 const CREATE_EVENT_MUTATION = gql`
     mutation CreateEvent($input: CreateEventInput!) {
@@ -60,6 +63,9 @@ export function AdminAddEventPage() {
     return (
         <Page>
             <Content restrictMaxWidth scrollable>
+                <H1Title>
+                    Create Event
+                </H1Title>
                 <EventEditor
                     monthSelection={monthSelection}
                     setMonthSelection={setMonthSelection}
@@ -68,9 +74,14 @@ export function AdminAddEventPage() {
                     state={eventEditorState}
                     setState={setEventEditorState}
                 />
-                <button disabled={!canCreate} onClick={createEvent}>
+                <Spacer />
+                <Button primary disabled={!canCreate} onClick={createEvent}>
                     Create
-                </button>
+                </Button>
+                <Button secondary onClick={() => history.push('/admin')}>
+                    Cancel
+                </Button>
+                <Spacer />
             </Content>
         </Page>
     )

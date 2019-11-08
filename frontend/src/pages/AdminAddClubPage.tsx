@@ -5,6 +5,9 @@ import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router'
+import { Button } from '../components/Button'
+import { H1Title } from '../components/H1Title'
+import { Spacer } from '../components/Spacer'
 
 const CREATE_CLUB_MUTATION = gql`
     mutation CreateClub($input: CreateClubInput!) {
@@ -44,13 +47,19 @@ export function AdminAddClubPage() {
     return (
         <Page>
             <Content restrictMaxWidth scrollable>
+                <H1Title>Create Club</H1Title>
                 <ClubEditor
                     state={clubEditorState}
                     setState={setClubEditorState}
                 />
-                <button disabled={!canCreate} onClick={createClub}>
+                <Spacer />
+                <Button primary disabled={!canCreate} onClick={createClub}>
                     Create
-                </button>
+                </Button>
+                <Button secondary onClick={() => history.push('/admin')}>
+                    Cancel
+                </Button>
+                <Spacer />
             </Content>
         </Page>
     )

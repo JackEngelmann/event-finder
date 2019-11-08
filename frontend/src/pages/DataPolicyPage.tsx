@@ -253,7 +253,6 @@ export function DataPolicyPage() {
                     Quelle: e-recht24.de
                 </FormattedHtml>
             </Content>
-            <FooterContainer />
         </Page>
     )
 }

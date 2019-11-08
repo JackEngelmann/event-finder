@@ -1,12 +1,48 @@
 .admin-page {
+    margin: 0 auto;
+    width: 100%;
     display: flex;
+    max-width: 1200px;
+    height: 100%;
+    flex-direction: column;
+    padding-bottom: 1em;
+
+    &__content {
+        flex: 1 1 auto;
+        display: flex;
+        justify-content: space-evenly;
+    }
 
     &__column {
-        width: 50%;
+        width: 45%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__column-content {
+        padding: 0.5em;
+        flex: 1 1 auto;
+        overflow-y: auto;
     }
 
     &__column-header {
-        font-size: 1.2em;
-        margin-bottom: 1em;
+        flex: 0 0 auto;
+        align-items: center;
+        background-color:lighten(#264653, 60%);
+        color: black;
+        border-top-left-radius: 3px;
+        border-top-right-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5em 0.6em;
+
+        h2 {
+            font-size: 1.3em;
+        }
+
+        .button {
+            margin-left: 1em;
+        }
     }
 }

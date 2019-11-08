@@ -1,0 +1,11 @@
+.select {
+    appearance: none;
+    padding: 0.35em 0.7em;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    font-size: 1em;
+    background-color: transparent;
+    &:focus {
+        outline: 1px solid #ccc;
+    }
+}

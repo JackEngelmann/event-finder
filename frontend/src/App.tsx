@@ -13,12 +13,16 @@ import { AdminAddEventPage } from './pages/AdminAddEventPage';
 import { AdminUpdateEventPage } from './pages/AdminUpdateEventPage';
 import { AdminAddClubPage } from './pages/AdminAddClubPage';
 import { AdminUpdateClubPage } from './pages/AdminUpdateClubPage';
+import { ComponentLibraryPage } from './pages/ComponentLibrary';
 
 const App: React.FC = () => {
   return (
     <ApolloProvider client={apolloClient}>
       <HashRouter>
         <Switch>
+          <Route path="/component-library">
+            <ComponentLibraryPage />
+          </Route>
           <Route exact path="/admin">
             <AdminPage />
           </Route>

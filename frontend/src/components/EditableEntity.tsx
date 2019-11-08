@@ -1,5 +1,7 @@
 import './EditableEntity.scss'
 import React, { ReactNode } from 'react'
+import { Button } from './Button'
+import { Icon } from './Icon'
 
 type Props = {
     onEdit?: (() => void) | undefined
@@ -14,12 +16,12 @@ export function EditableEntity(props: Props) {
     return (
         <div className={cn}>
             <div className={`${cn}__entity-actions`}>
-                <button onClick={onEdit} disabled={!onEdit}>
-                    Edit
-                </button>
-                <button onClick={onDelete} disabled={!onDelete}>
-                    Delete
-                </button>
+                <Button onClick={onEdit} disabled={!onEdit} secondary>
+                    <Icon icon="pen"/>
+                </Button>
+                <Button onClick={onDelete} disabled={!onDelete} danger>
+                    <Icon icon="trash-alt" />
+                </Button>
             </div>
             <div className={`${cn}__entity-name`}>{children}</div>
         </div>

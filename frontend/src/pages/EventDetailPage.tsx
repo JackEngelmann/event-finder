@@ -30,7 +30,6 @@ export function EventDetailPage(props: Props) {
                     eventId={eventId ? parseInt(eventId, 10) : undefined}
                 />
             </Content>
-            <FooterContainer />
         </Page>
     )
 }

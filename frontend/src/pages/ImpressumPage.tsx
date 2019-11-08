@@ -55,7 +55,6 @@ export function ImpressumPage() {
                     Mehr Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Google: https://www.google.de/intl/de/policies/privacy 
                 </FormattedHtml>
             </Content>
-            <FooterContainer />
         </Page>
     )
 }

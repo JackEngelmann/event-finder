@@ -1,0 +1,12 @@
+.textarea {
+    border: 1px solid #ddd;
+    resize: none;
+    padding: 0.35em 0.7em;
+    outline: none;
+    height: 10em;
+    font-size: 1em;
+    overflow-y: auto;
+    &:focus {
+        outline: 1px solid #ccc;
+    }
+}

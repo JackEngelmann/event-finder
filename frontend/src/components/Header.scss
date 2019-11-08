@@ -1,5 +1,10 @@
+@media only screen and (min-width: 800px) {
+    .header {
+        display: none;
+    }
+}
 .header {
-    background-color: #19323C;
+    background-color: #264653;
     flex: 0 0 auto;
     height: 2.5em;
     width: 100%;

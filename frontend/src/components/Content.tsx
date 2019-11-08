@@ -1,6 +1,7 @@
 import './Content.scss'
 import classNames from 'classnames'
 import React, { ComponentProps } from 'react'
+import { FooterContainer } from '../containers/FooterContainer'
 
 type Props = ComponentProps<'div'> & {
     scrollable?: boolean
@@ -17,9 +18,17 @@ export function Content(props: Props) {
             {...divProps}
         >
             {restrictMaxWidth ? (
-                <div className={`${cn}__max-width-wrapper`}>{children}</div>
+                <div className={`${cn}__scrollable-content`}>
+                    <div className={`${cn}__max-width-wrapper`}>
+                        {children}
+                    </div>
+                    <FooterContainer />
+                </div>
             ) : (
-                children
+                <div className={`${cn}__scrollable-content`}>
+                    {children}
+                    <FooterContainer />
+                </div>
             )}
         </div>
     )
