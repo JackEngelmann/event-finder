@@ -6,9 +6,13 @@
   "author": "Jack Engelmann <engejack@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build-frontend": "cd client && yarn build",
-    "build-backend": "cd backend && yarn build",
+    "build-frontend": "cd client && yarn && yarn build",
+    "build-backend": "cd backend && yarn && yarn build",
     "postinstall": "(cd client && yarn);(cd backend && yarn);",
     "build": "yarn build-frontend && yarn build-backend && cp -r client/build/* backend/public/"
+  },
+  "engines": {
+    "node": "^10.16.1",
+    "yarn": "^1.19.1"
   }
 }
