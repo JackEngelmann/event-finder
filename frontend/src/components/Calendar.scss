@@ -1,10 +1,12 @@
 .calendar {
+    
     &__date {
         width: calc(100% / 7);
         height: 2em;
         display: flex;
         align-items: center;
         justify-content: center;
+        color: white;
     }
 
     &__date:hover {
@@ -18,6 +20,7 @@
         font-weight: bold;
         align-items: center;
         margin-bottom: 0.5em;
+        color: white;
     }
 
     &__month-switcher {
@@ -61,6 +64,7 @@
     &__week-header {
         display: flex;
         border-bottom: 1px solid lightgrey;
+        color: white;
     }
 
     &__wrapper {
