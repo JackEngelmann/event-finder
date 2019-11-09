@@ -14,17 +14,17 @@ export class EventDataModel {
     priceCategory?: 1 | 2 | 3
     special?: string
     constructor(row: any) {
-        this.admissionFee = row.admissionFee
-        this.admissionFeeWithDiscount = row.admissionFeeWithDiscount
-        this.amountOfFloors = row.amountOfFloors
-        this.clubId = row.clubId
+        this.admissionFee = row.admissionfee
+        this.admissionFeeWithDiscount = row.admissionfeewithdiscount
+        this.amountOfFloors = row.amountoffloors
+        this.clubId = row.clubid
         this.date = row.date
         this.description = row.description
         this.id = row.id
-        this.imageUrl = row.imageUrl
-        this.minimumAge = row.minimumAge
+        this.imageUrl = row.imageurl
+        this.minimumAge = row.minimumage
         this.name = row.name
-        this.priceCategory = row.priceCategory
+        this.priceCategory = row.pricecategory
         this.special = row.special
     }
 }
@@ -36,7 +36,7 @@ export class EventModel {
         this.db = db
     }
 
-    createEvent(input: {
+    async createEvent(input: {
         name: string
         description?: String
         date: string
@@ -49,8 +49,9 @@ export class EventModel {
         minimumAge?: number
         amountOfFloors?: number
     }) {
-        return this.db.run(
-            `
+        return this.db
+            .get(
+                `
                 INSERT INTO event (
                     name,
                     date,
@@ -73,33 +74,35 @@ export class EventModel {
                     $admissionFeeWithDiscount,
                     $minimumAge,
                     $amountOfFloors
-                )
+                ) RETURNING Id
             `,
-            {
-                $name: input.name,
-                $date: input.date,
-                $description: input.description,
-                $clubId: input.clubId,
-                $special: input.special,
-                $priceCategory: input.priceCategory,
-                $admissionFee: input.admissionFee,
-                $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                $minimumAge: input.minimumAge,
-                $amountOfFloors: input.amountOfFloors,
-            }
-        )
+                {
+                    $name: input.name,
+                    $date: input.date,
+                    $description: input.description,
+                    $clubId: input.clubId,
+                    $special: input.special,
+                    $priceCategory: input.priceCategory,
+                    $admissionFee: input.admissionFee,
+                    $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
+                    $minimumAge: input.minimumAge,
+                    $amountOfFloors: input.amountOfFloors,
+                }
+            )
+            .then(res => res.id)
     }
 
     deleteEvent(id: number) {
-        return this.db.run('DELETE FROM event WHERE id = $id', { $id: id })
+        return this.db.run('DELETE FROM event WHERE id = $1', [id])
     }
 
     async getEvent(id: number) {
-        const sql = 'SELECT * FROM event WHERE id = ?'
+        const sql = 'SELECT * FROM event WHERE id = $1'
         const params = [id]
         const row = await this.db.get(sql, params)
         if (!row) return undefined
-        return new EventDataModel(row)
+        const event = new EventDataModel(row)
+        return event
     }
 
     async getEvents() {
@@ -109,8 +112,8 @@ export class EventModel {
     }
 
     async getEventsFromClub(clubId: number) {
-        const sql = 'SELECT * FROM event WHERE clubId = $clubId'
-        const rows = await this.db.all(sql, { $clubId: clubId })
+        const sql = 'SELECT * FROM event WHERE clubId = $1'
+        const rows = await this.db.all(sql, [clubId])
         return rows.map(r => new EventDataModel(r))
     }
 
@@ -132,31 +135,31 @@ export class EventModel {
             `
                 UPDATE event 
                 SET
-                    admissionFee = $admissionFee,
-                    admissionFeeWithDiscount = $admissionFeeWithDiscount,
-                    amountOfFloors = $amountOfFloors,
-                    clubId = $clubId,
-                    date = $date,
-                    description = $description,
-                    minimumAge = $minimumAge,
-                    name = $name,
-                    priceCategory = $priceCategory,
-                    special = $special
-                WHERE id = $id
+                    admissionFee = $1,
+                    admissionFeeWithDiscount = $2,
+                    amountOfFloors = $3,
+                    clubId = $4,
+                    date = $5,
+                    description = $6,
+                    minimumAge = $7,
+                    name = $8,
+                    priceCategory = $9,
+                    special = $10
+                WHERE id = $11
             `,
-            {
-                $admissionFee: input.admissionFee,
-                $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                $amountOfFloors: input.amountOfFloors,
-                $clubId: input.clubId,
-                $date: input.date,
-                $description: input.description,
-                $id: input.id,
-                $minimumAge: input.minimumAge,
-                $name: input.name,
-                $priceCategory: input.priceCategory,
-                $special: input.special,
-            }
+            [
+                input.admissionFee,
+                input.admissionFeeWithDiscount,
+                input.amountOfFloors,
+                input.clubId,
+                input.date,
+                input.description,
+                input.minimumAge,
+                input.name,
+                input.priceCategory,
+                input.special,
+                input.id,
+            ]
         )
     }
 }

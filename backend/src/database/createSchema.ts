@@ -2,24 +2,24 @@ import { Database } from './database'
 
 export async function createSchema(db: Database) {
     await db.run(`
-            CREATE TABLE IF NOT EXISTS club (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name text NOT NULL,
-                address text,
-                region text,
-                contact text,
-                email text,
-                specials text,
-                description text,
-                link text
-            )
-        `)
+        CREATE TABLE IF NOT EXISTS club (
+            id SERIAL PRIMARY KEY,
+            name text NOT NULL,
+            address text,
+            region text,
+            contact text,
+            email text,
+            specials text,
+            description text,
+            link text
+        )
+    `)
     await db.run(`
             CREATE TABLE IF NOT EXISTS event (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                [name] text NOT NULL,
-                [description] text,
-                [date] string,
+                id SERIAL PRIMARY KEY,
+                name text NOT NULL,
+                description text,
+                date text,
                 clubId integer,
                 imageUrl text,
                 priceCategory integer,
@@ -32,14 +32,14 @@ export async function createSchema(db: Database) {
         `)
     await db.run(`
             CREATE TABLE IF NOT EXISTS genre (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name test NOT NULL
+                id SERIAL PRIMARY KEY,
+                name text NOT NULL
             );
         `)
     return await db.run(
         `
             CREATE TABLE IF NOT EXISTS eventGenre (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id SERIAL PRIMARY KEY,
                 eventId INTEGER NOT NULL,
                 genreId INTEGER NOT NULL
             )

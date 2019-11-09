@@ -31,7 +31,7 @@ export class ClubModel {
         this.db = db
     }
 
-    createClub(input: {
+    async createClub(input: {
         address?: string
         contact?: string
         description?: string
@@ -41,8 +41,9 @@ export class ClubModel {
         region?: string
         specials?: string
     }) {
-        return this.db.run(
-            `
+        return this.db
+            .get(
+                `
                 INSERT INTO club (
                     address,
                     contact,
@@ -53,27 +54,28 @@ export class ClubModel {
                     region,
                     specials
                 ) VALUES (
-                    $address,
-                    $contact,
-                    $description,
-                    $email,
-                    $link,
-                    $name,
-                    $region,
-                    $specials
-                )
+                    $1,
+                    $2,
+                    $3,
+                    $4,
+                    $5,
+                    $6,
+                    $7,
+                    $8
+                ) RETURNING Id
             `,
-            {
-                $address: input.address,
-                $contact: input.contact,
-                $description: input.description,
-                $email: input.email,
-                $link: input.link,
-                $name: input.name,
-                $region: input.region,
-                $specials: input.specials,
-            }
-        )
+                [
+                    input.address,
+                    input.contact,
+                    input.description,
+                    input.email,
+                    input.link,
+                    input.name,
+                    input.region,
+                    input.specials,
+                ]
+            )
+            .then(res => res.id)
     }
 
     updateClub(input: {
@@ -91,32 +93,32 @@ export class ClubModel {
             `
                 UPDATE club
                 SET
-                    address = $address,
-                    contact = $contact,
-                    description = $description,
-                    email = $email,
-                    link = $link,
-                    name = $name,
-                    region = $region,
-                    specials = $specials
-                WHERE id = $id
+                    address = $1,
+                    contact = $2,
+                    description = $3,
+                    email = $4,
+                    link = $5,
+                    name = $6,
+                    region = $7,
+                    specials = $8
+                WHERE id = $9
             `,
-            {
-                $address: input.address,
-                $contact: input.contact,
-                $description: input.description,
-                $email: input.email,
-                $id: input.id,
-                $link: input.link,
-                $name: input.name,
-                $region: input.region,
-                $specials: input.specials,
-            }
+            [
+                input.address,
+                input.contact,
+                input.description,
+                input.email,
+                input.link,
+                input.name,
+                input.region,
+                input.specials,
+                input.id
+            ]
         )
     }
 
     async getClub(id: number) {
-        const sql = 'SELECT * FROM club WHERE id = ?'
+        const sql = 'SELECT * FROM club WHERE id = $1'
         const params = [id]
         const row = await this.db.get(sql, params)
         if (!row) return undefined
@@ -131,6 +133,6 @@ export class ClubModel {
     }
 
     deleteClub(id: number) {
-        return this.db.run('DELETE FROM club WHERE id = $id', { $id: id })
+        return this.db.run('DELETE FROM club WHERE id = $1', [id])
     }
 }

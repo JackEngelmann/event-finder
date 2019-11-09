@@ -6,8 +6,8 @@ export class EventGenreDataModel {
     genreId: number
     constructor(row: any) {
         this.id = row.id
-        this.eventId = row.eventId
-        this.genreId = row.genreId
+        this.eventId = row.eventid
+        this.genreId = row.genreid
     }
 }
 
@@ -25,21 +25,18 @@ export class EventGenreModel {
     }
 
     private insertGenresForEvent(eventId: number, genreIds: number[]) {
-        const placeholders = genreIds.map(g => '(?, ?)').join(',')
+        const placeholders = genreIds.map((g, i) => `($${i * 2 + 1}, $${i * 2 + 2})`).join(',')
         const values = genreIds.flatMap(genreId => [eventId, genreId])
         return this.db.run(
-            'insert into eventGenre (eventId, genreId) VALUES ' +
-                placeholders,
+            `insert into eventGenre (eventId, genreId) VALUES ${placeholders}`,
             values,
         )
     }
 
     deleteAllGenresForEvent(eventId: number) {
         return this.db.run(
-            `DELETE FROM eventGenre WHERE eventId = $eventId`,
-            {
-                $eventId: eventId,
-            },
+            `DELETE FROM eventGenre WHERE eventId = $1`,
+            [eventId]
         )
     }
 }

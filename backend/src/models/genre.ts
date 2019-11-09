@@ -33,7 +33,7 @@ export class GenreModel {
 
     async getGenresForEvent(eventId: number) {
         const sql =
-            'SELECT genre.* from genre INNER JOIN eventGenre ON eventGenre.genreId = genre.id WHERE eventId = ?'
+            'SELECT genre.* from genre INNER JOIN eventGenre ON eventGenre.genreId = genre.id WHERE eventId = $1'
         const params = [eventId]
         const rows = await this.db.all(sql, params)
         return rows.map(r => new GenreDataModel(r))

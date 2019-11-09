@@ -1,4 +1,4 @@
-INSERT INTO genre ([name]) VALUES
+INSERT INTO genre (name) VALUES
     ('Hip-Hop'),
     ('Deutsch-Rap'),
     ('House'),

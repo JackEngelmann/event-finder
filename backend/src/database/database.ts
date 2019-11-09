@@ -2,21 +2,31 @@ import sqlite3 from 'sqlite3'
 import { createSchema } from './createSchema'
 import { applySeeds } from './applySeeds'
 import pg, { Client } from 'pg'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export interface Database {
     get<Row = any>(text: string, values?: any): Promise<Row | undefined>
     all<Row = any>(text: string, values?: any): Promise<Row[]>
-    run(text: string, values?: any): Promise<number>
+    run(text: string, values?: any): Promise<void>
 }
+
+console.log(process.env.DATABASE_URL)
 
 class PostgresDatabase implements Database {
     db: pg.Client
     constructor() {
         this.db = new Client({
             connectionString: process.env.DATABASE_URL,
-            ssl: true,
         })
         this.db.connect()
+        this.init()
+    }
+
+    async init() {
+        await createSchema(this)
+        await applySeeds(this)
     }
 
     async get<Row>(text: string, values = []) {
@@ -27,8 +37,13 @@ class PostgresDatabase implements Database {
         return this.db.query<Row>(text, values).then(res => res.rows)
     }
 
-    async run(text: string, values = []) {
-        return this.db.query(text, values).then(res => res.rows[0].id)
+    async run(text: string, values?: any) {
+        return this.db.query(text, values).then(res => undefined).catch(err => {
+            console.error('---')
+            console.error(text)
+            console.error(err)
+            console.error('---')
+        })
     }
 }
 
@@ -58,10 +73,16 @@ class SqliteDatabase implements Database {
     }
 
     run(text: string, values = [])  {
-        return new Promise<number>((resolve, reject) => {
+        return new Promise<void>((resolve, reject) => {
             this.db.run(text, values, function(err) {
-                if (err) reject(err)
-                resolve(this.lastID)
+                if (err) {
+                    console.error('-----')
+                    console.error(text)
+                    console.error(err)
+                    console.error('-----')
+                    reject(err)
+                }
+                resolve()
             })
         })
     }
@@ -69,7 +90,6 @@ class SqliteDatabase implements Database {
 }
 
 export const db = new PostgresDatabase()
-applySeeds(db)
 
 export const createTestDb = async() => new Promise<Database>(async resolve => {
     const db = new SqliteDatabase()

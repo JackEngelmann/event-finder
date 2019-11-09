@@ -1,7 +1,9 @@
 .editable-entity {
+    align-items: center;
+    color: white;
     display: flex;
     padding: 0.2em 0;
-    align-items: center;
+
     &__entity-name {
         margin-left: 0.5em;
     }

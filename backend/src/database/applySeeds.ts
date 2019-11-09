@@ -6,12 +6,12 @@ const SEEDS_PATH = './seeds'
 
 export async function applySeeds(db: Database) {
     db.run(`
-        CREATE TABLE IF NOT EXISTS appliedSeeds (
+        CREATE TABLE IF NOT EXISTS appliedseeds (
             fileName text
         )
     `)
     const location = path.resolve(SEEDS_PATH)
-    const appliedSeedFileNames = (await db.all('SELECT fileName from appliedSeeds')).map(r => r.fileName)
+    const appliedSeedFileNames = (await db.all('SELECT filename from appliedSeeds')).map(r => r.filename)
     const pendingSeedFileNames: string[] = await new Promise((resolve, reject) => {
         fs.readdir(location, (err, files) => {
             if (err) {
@@ -31,7 +31,7 @@ export async function applySeeds(db: Database) {
         const sql = fs.readFileSync(path.join(SEEDS_PATH, fileName)).toString()
         console.log(`running seed: ${fileName}`)
         await db.run(sql)
-        return await db.run('INSERT INTO appliedSeeds (fileName) VALUES (?)', [fileName])
+        return await db.run('INSERT INTO appliedSeeds (filename) VALUES ($1)', [fileName])
     });
     return await Promise.all(promises)
 }
