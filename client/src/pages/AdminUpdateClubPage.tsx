@@ -18,7 +18,15 @@ const UPDATE_CLUB_MUTATION = gql`
     mutation UpdateClub($input: UpdateClubInput!) {
         updateClub(input: $input) {
             club {
+                address
+                contact
+                description
+                email
                 id
+                link
+                name
+                region
+                specials
             }
         }
     }

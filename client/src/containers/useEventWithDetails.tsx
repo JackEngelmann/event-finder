@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Club, Genre, Event } from "../api";
 
-const QUERY = gql`
+export const EVENT_WITH_DETAILS_QUERY = gql`
     query eventQuery($eventId: Int!) {
         event(id: $eventId) {
             admissionFee
@@ -51,7 +51,7 @@ type QueryData = {
 }
 
 export function useEventWithDetails(eventId: number) {
-    const queryResult = useQuery<QueryData>(QUERY, {
+    const queryResult = useQuery<QueryData>(EVENT_WITH_DETAILS_QUERY, {
         variables: { eventId: eventId }
     })
     const event = queryResult.data && queryResult.data.event
