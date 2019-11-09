@@ -1,0 +1,40 @@
+{
+  "name": "graphql-backend",
+  "version": "1.0.0",
+  "main": "src/qraphql/server.ts",
+  "license": "MIT",
+  "scripts": {
+    "build-develop": "webpack --config webpack.development.js",
+    "start": "node dist/server",
+    "build": "webpack --config webpack.production.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.1",
+    "@types/moment": "^2.13.0",
+    "@types/sqlite3": "^3.1.5",
+    "apollo-server-express": "^2.9.7",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "moment": "^2.24.0",
+    "pg": "^7.12.1",
+    "sqlite3": "^4.1.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.21",
+    "@types/node": "^12.12.3",
+    "@types/webpack-env": "^1.14.1",
+    "apollo-server-testing": "^2.9.7",
+    "clean-webpack-plugin": "^3.0.0",
+    "jest": "^24.9.0",
+    "prettier": "1.18.2",
+    "ts-jest": "^24.1.0",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.6.4",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
+    "webpack-merge": "^4.2.2",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
