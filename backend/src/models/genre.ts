@@ -1,4 +1,4 @@
-import { Database } from 'sqlite3'
+import { Database } from "../database/database"
 
 export class GenreDataModel {
     id: number
@@ -16,42 +16,26 @@ export class GenreModel {
         this.db = db
     }
 
-    getGenre(id: number) {
+    async getGenre(id: number) {
         const sql = 'SELECT * FROM genre WHERE id = ?'
         const params = [id]
-        return new Promise<GenreDataModel | undefined>((resolve, reject) => {
-            this.db.get(sql, params, (err, row) => {
-                if (err) return reject(err)
-                if (!row) {
-                    return resolve(undefined)
-                }
-                const genre = new GenreDataModel(row)
-                return resolve(genre)
-            })
-        })
+        const row = await this.db.get(sql, params)
+        if (!row) return undefined
+        return new GenreDataModel(row)
     }
 
-    getGenres() {
+    async getGenres() {
         const sql = 'SELECT * FROM genre'
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, [], (err, rows) => {
-                if (err) return reject(err)
-                const genres = rows.map(r => new GenreDataModel(r))
-                return resolve(genres)
-            })
-        })
+        const rows = await this.db.all(sql, [])
+        const genres = rows.map(r => new GenreDataModel(r))
+        return genres
     }
 
-    getGenresForEvent(eventId: number) {
+    async getGenresForEvent(eventId: number) {
         const sql =
             'SELECT genre.* from genre INNER JOIN eventGenre ON eventGenre.genreId = genre.id WHERE eventId = ?'
         const params = [eventId]
-        return new Promise((resolve, reject) => {
-            this.db.all(sql, params, (err, rows) => {
-                if (err) return reject(err)
-                const genres = rows.map(r => new GenreDataModel(r))
-                return resolve(genres)
-            })
-        })
+        const rows = await this.db.all(sql, params)
+        return rows.map(r => new GenreDataModel(r))
     }
 }

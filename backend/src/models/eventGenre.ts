@@ -1,4 +1,4 @@
-import { Database } from 'sqlite3'
+import { Database } from "../database/database"
 
 export class EventGenreDataModel {
     id: number
@@ -18,41 +18,28 @@ export class EventGenreModel {
         this.db = db
     }
 
-    setGenresForAnEvent(eventId: number, genreIds = [] as number[]) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                await this.deleteAllGenresForEvent(eventId)
-                if (genreIds.length === 0) return resolve()
-                await this.insertGenresForEvent(eventId, genreIds)
-                resolve()
-            } catch (err) {
-                reject(err)
-            }
-        })
+    async setGenresForAnEvent(eventId: number, genreIds = [] as number[]) {
+        await this.deleteAllGenresForEvent(eventId)
+        if (genreIds.length === 0) return
+        return await this.insertGenresForEvent(eventId, genreIds)
     }
 
     private insertGenresForEvent(eventId: number, genreIds: number[]) {
-        return new Promise((resolve, reject) => {
-            const placeholders = genreIds.map(g => '(?, ?)').join(',')
-            const values = genreIds.flatMap(genreId => [eventId, genreId])
-            this.db.run(
-                'insert into eventGenre (eventId, genreId) VALUES ' +
-                    placeholders,
-                values,
-                err => (err ? reject(err) : resolve())
-            )
-        })
+        const placeholders = genreIds.map(g => '(?, ?)').join(',')
+        const values = genreIds.flatMap(genreId => [eventId, genreId])
+        return this.db.run(
+            'insert into eventGenre (eventId, genreId) VALUES ' +
+                placeholders,
+            values,
+        )
     }
 
     deleteAllGenresForEvent(eventId: number) {
-        return new Promise((resolve, reject) => {
-            this.db.run(
-                `DELETE FROM eventGenre WHERE eventId = $eventId`,
-                {
-                    $eventId: eventId,
-                },
-                err => (err ? reject(err) : resolve())
-            )
-        })
+        return this.db.run(
+            `DELETE FROM eventGenre WHERE eventId = $eventId`,
+            {
+                $eventId: eventId,
+            },
+        )
     }
 }

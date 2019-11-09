@@ -1,9 +1,7 @@
-import { Database } from 'sqlite3'
+import { Database } from './database'
 
-export function createSchema(db: Database) {
-    return new Promise(resolve => {
-        db.serialize(() => {
-            db.run(`
+export async function createSchema(db: Database) {
+    await db.run(`
             CREATE TABLE IF NOT EXISTS club (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name text NOT NULL,
@@ -16,7 +14,7 @@ export function createSchema(db: Database) {
                 link text
             )
         `)
-            db.run(`
+    await db.run(`
             CREATE TABLE IF NOT EXISTS event (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 [name] text NOT NULL,
@@ -32,22 +30,19 @@ export function createSchema(db: Database) {
                 amountOfFloors integer
             )
         `)
-            db.run(`
+    await db.run(`
             CREATE TABLE IF NOT EXISTS genre (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name test NOT NULL
             );
         `)
-            db.run(
-                `
+    return await db.run(
+        `
             CREATE TABLE IF NOT EXISTS eventGenre (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 eventId INTEGER NOT NULL,
                 genreId INTEGER NOT NULL
             )
-        `,
-                () => resolve()
-            )
-        })
-    })
+        `
+    )
 }

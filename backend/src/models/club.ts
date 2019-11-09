@@ -1,5 +1,5 @@
-import { Database } from 'sqlite3'
 import { Logger } from '../logger'
+import { Database } from '../database/database'
 
 export class ClubDataModel {
     id: number
@@ -41,9 +41,8 @@ export class ClubModel {
         region?: string
         specials?: string
     }) {
-        return new Promise<number>((resolve, reject) => {
-            this.db.run(
-                `
+        return this.db.run(
+            `
                 INSERT INTO club (
                     address,
                     contact,
@@ -63,26 +62,18 @@ export class ClubModel {
                     $region,
                     $specials
                 )
-                `,
-                {
-                    $address: input.address,
-                    $contact: input.contact,
-                    $description: input.description,
-                    $email: input.email,
-                    $link: input.link,
-                    $name: input.name,
-                    $region: input.region,
-                    $specials: input.specials,
-                },
-                function(err) {
-                    if (err) {
-                        console.error(err)
-                        return reject(err)
-                    }
-                    resolve(this.lastID)
-                }
-            )
-        })
+            `,
+            {
+                $address: input.address,
+                $contact: input.contact,
+                $description: input.description,
+                $email: input.email,
+                $link: input.link,
+                $name: input.name,
+                $region: input.region,
+                $specials: input.specials,
+            }
+        )
     }
 
     updateClub(input: {
@@ -96,79 +87,50 @@ export class ClubModel {
         region?: string
         specials?: string
     }) {
-        return new Promise<number>((resolve, reject) => {
-            this.db.run(
-                `
-                    UPDATE club
-                    SET
-                        address = $address,
-                        contact = $contact,
-                        description = $description,
-                        email = $email,
-                        link = $link,
-                        name = $name,
-                        region = $region,
-                        specials = $specials
-                    WHERE id = $id
-                `,
-                {
-                    $address: input.address,
-                    $contact: input.contact,
-                    $description: input.description,
-                    $email: input.email,
-                    $id: input.id,
-                    $link: input.link,
-                    $name: input.name,
-                    $region: input.region,
-                    $specials: input.specials,
-                },
-                err => {
-                    if (err) {
-                        console.error(err)
-                        reject(err)
-                    }
-                    resolve()
-                }
-            )
-        })
+        return this.db.run(
+            `
+                UPDATE club
+                SET
+                    address = $address,
+                    contact = $contact,
+                    description = $description,
+                    email = $email,
+                    link = $link,
+                    name = $name,
+                    region = $region,
+                    specials = $specials
+                WHERE id = $id
+            `,
+            {
+                $address: input.address,
+                $contact: input.contact,
+                $description: input.description,
+                $email: input.email,
+                $id: input.id,
+                $link: input.link,
+                $name: input.name,
+                $region: input.region,
+                $specials: input.specials,
+            }
+        )
     }
 
-    getClub(id: number) {
+    async getClub(id: number) {
         const sql = 'SELECT * FROM club WHERE id = ?'
         const params = [id]
-        return new Promise<ClubDataModel | undefined>((resolve, reject) => {
-            this.db.get(sql, params, (err, row) => {
-                if (err) return reject(err)
-                if (!row) {
-                    return resolve(undefined)
-                }
-                const club = new ClubDataModel(row)
-                return resolve(club)
-            })
-        })
+        const row = await this.db.get(sql, params)
+        if (!row) return undefined
+        return new ClubDataModel(row)
     }
 
-    getClubs() {
+    async getClubs() {
         const sql = 'SELECT * FROM club'
-        return new Promise<ClubDataModel[]>((resolve, reject) => {
-            this.db.all(sql, [], (err, rows) => {
-                if (err) return reject(err)
-                const clubs = rows.map(r => new ClubDataModel(r))
-                return resolve(clubs)
-            })
-        })
+        const rows = await this.db.all(sql, [])
+        const clubs = rows.map(r => new ClubDataModel(r))
+        return clubs
     }
 
     deleteClub(id: number) {
-        return new Promise<void>((resolve, reject) => {
-            this.db.run('DELETE FROM club WHERE id = $id', { $id: id }, err => {
-                if (err) {
-                    const logger = new Logger()
-                    logger.error(err)
-                    reject(err)
-                }
-                resolve()
-            })
-        })
+        return this.db.run('DELETE FROM club WHERE id = $id', { $id: id })
     }
 }

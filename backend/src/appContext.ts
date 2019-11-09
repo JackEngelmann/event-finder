@@ -1,5 +1,4 @@
-import { Database } from "sqlite3";
-import { db } from './database/database'
+import { db, Database } from './database/database'
 
 export type AppContext = {
     db: Database

@@ -1,5 +1,4 @@
 import { IResolvers } from "graphql-tools";
-import { Database } from "sqlite3";
 import { queryEvent } from "../queries/event";
 import { queryEvents } from "../queries/events";
 import { queryClubs } from "../queries/clubs";
@@ -13,6 +12,7 @@ import { deleteEvent } from "../mutations/deleteEvent";
 import { createClub } from "../mutations/createClub";
 import { updateClub } from "../mutations/updateClub";
 import { deleteClub } from "../mutations/deleteClub";
+import { Database } from "../database/database";
 
 type Source = {
     clubId: number

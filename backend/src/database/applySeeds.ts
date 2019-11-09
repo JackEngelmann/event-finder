@@ -1,6 +1,6 @@
 import path from 'path'
 import fs from 'fs'
-import { Database } from "sqlite3"
+import { Database } from './database'
 
 const SEEDS_PATH = './seeds'
 
@@ -11,15 +11,7 @@ export async function applySeeds(db: Database) {
         )
     `)
     const location = path.resolve(SEEDS_PATH)
-    const appliedSeedFileNames: string[] = await new Promise((resolve, reject) => {
-        db.all('SELECT fileName from appliedSeeds', (err, rows) => {
-            if (err) {
-                reject(err)
-            } else {
-                resolve(rows.map(r => r.fileName))
-            }
-        })
-    })
+    const appliedSeedFileNames = (await db.all('SELECT fileName from appliedSeeds')).map(r => r.fileName)
     const pendingSeedFileNames: string[] = await new Promise((resolve, reject) => {
         fs.readdir(location, (err, files) => {
             if (err) {
@@ -35,20 +27,11 @@ export async function applySeeds(db: Database) {
             }
         })
     })
-    let promises: Promise<any>[] = []
-    db.serialize(() => {
-        promises = pendingSeedFileNames.map(fileName => {
-            return new Promise((resolve, reject) => {
-                const sql = fs.readFileSync(path.join(SEEDS_PATH, fileName)).toString()
-                db.run(sql, err => {
-                    console.log(`running seed: ${fileName}`)
-                    if (err) throw err
-                    db.run('INSERT INTO appliedSeeds (fileName) VALUES (?)', [fileName], () => {
-                        resolve()
-                    })
-                })
-            })
-        });
-    })
+    let promises = pendingSeedFileNames.map(async fileName => {
+        const sql = fs.readFileSync(path.join(SEEDS_PATH, fileName)).toString()
+        console.log(`running seed: ${fileName}`)
+        await db.run(sql)
+        return await db.run('INSERT INTO appliedSeeds (fileName) VALUES (?)', [fileName])
+    });
     return await Promise.all(promises)
 }

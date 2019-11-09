@@ -1,4 +1,4 @@
-import { Database } from 'sqlite3'
+import { Database } from '../database/database'
 
 export class EventDataModel {
     admissionFee?: number
@@ -49,9 +49,8 @@ export class EventModel {
         minimumAge?: number
         amountOfFloors?: number
     }) {
-        return new Promise<number>((resolve, reject) => {
-            this.db.run(
-                `
+        return this.db.run(
+            `
                 INSERT INTO event (
                     name,
                     date,
@@ -76,69 +75,43 @@ export class EventModel {
                     $amountOfFloors
                 )
             `,
-                {
-                    $name: input.name,
-                    $date: input.date,
-                    $description: input.description,
-                    $clubId: input.clubId,
-                    $special: input.special,
-                    $priceCategory: input.priceCategory,
-                    $admissionFee: input.admissionFee,
-                    $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                    $minimumAge: input.minimumAge,
-                    $amountOfFloors: input.amountOfFloors,
-                },
-                function(err) {
-                    if (err) reject(err)
-                    resolve(this.lastID)
-                }
-            )
-        })
+            {
+                $name: input.name,
+                $date: input.date,
+                $description: input.description,
+                $clubId: input.clubId,
+                $special: input.special,
+                $priceCategory: input.priceCategory,
+                $admissionFee: input.admissionFee,
+                $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
+                $minimumAge: input.minimumAge,
+                $amountOfFloors: input.amountOfFloors,
+            }
+        )
     }
 
     deleteEvent(id: number) {
-        return new Promise<void>((resolve, reject) => {
-            this.db.run('DELETE FROM event WHERE id = $id', { $id: id }, err =>
-                err ? reject(err) : resolve()
-            )
-        })
+        return this.db.run('DELETE FROM event WHERE id = $id', { $id: id })
     }
 
-    getEvent(id: number) {
+    async getEvent(id: number) {
         const sql = 'SELECT * FROM event WHERE id = ?'
         const params = [id]
-        return new Promise<EventDataModel | undefined>((resolve, reject) => {
-            this.db.get(sql, params, async (err, row) => {
-                if (err) return reject(err)
-                if (!row) {
-                    return resolve(undefined)
-                }
-                const event = new EventDataModel(row)
-                resolve(event)
-            })
-        })
+        const row = await this.db.get(sql, params)
+        if (!row) return undefined
+        return new EventDataModel(row)
     }
 
-    getEvents() {
+    async getEvents() {
         const sql = 'SELECT * FROM event'
-        return new Promise<EventDataModel[]>((resolve, reject) => {
-            this.db.all(sql, [], async (err, rows) => {
-                if (err) return reject(err)
-                const events = rows.map(r => new EventDataModel(r))
-                resolve(events)
-            })
-        })
+        const rows = await this.db.all(sql, [])
+        return rows.map(r => new EventDataModel(r))
     }
 
-    getEventsFromClub(clubId: number) {
+    async getEventsFromClub(clubId: number) {
         const sql = 'SELECT * FROM event WHERE clubId = $clubId'
-        return new Promise<EventDataModel[]>((resolve, reject) => {
-            this.db.all(sql, { $clubId: clubId }, async (err, rows) => {
-                if (err) return reject(err)
-                const events = rows.map(r => new EventDataModel(r))
-                resolve(events)
-            })
-        })
+        const rows = await this.db.all(sql, { $clubId: clubId })
+        return rows.map(r => new EventDataModel(r))
     }
 
     updateEvent(input: {
@@ -155,9 +128,8 @@ export class EventModel {
         minimumAge?: number
         amountOfFloors?: number
     }) {
-        return new Promise<number>((resolve, reject) => {
-            this.db.run(
-                `
+        return this.db.run(
+            `
                 UPDATE event 
                 SET
                     admissionFee = $admissionFee,
@@ -172,24 +144,19 @@ export class EventModel {
                     special = $special
                 WHERE id = $id
             `,
-                {
-                    $admissionFee: input.admissionFee,
-                    $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                    $amountOfFloors: input.amountOfFloors,
-                    $clubId: input.clubId,
-                    $date: input.date,
-                    $description: input.description,
-                    $id: input.id,
-                    $minimumAge: input.minimumAge,
-                    $name: input.name,
-                    $priceCategory: input.priceCategory,
-                    $special: input.special,
-                },
-                function(err) {
-                    if (err) reject(err)
-                    resolve(this.lastID)
-                }
-            )
-        })
+            {
+                $admissionFee: input.admissionFee,
+                $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
+                $amountOfFloors: input.amountOfFloors,
+                $clubId: input.clubId,
+                $date: input.date,
+                $description: input.description,
+                $id: input.id,
+                $minimumAge: input.minimumAge,
+                $name: input.name,
+                $priceCategory: input.priceCategory,
+                $special: input.special,
+            }
+        )
     }
 }

@@ -1,19 +1,16 @@
 import { ApolloServer } from 'apollo-server-express'
-import { createTestDb } from '../database/database'
+import { createTestDb, Database } from '../database/database'
 import { insertTestData, eventFragment, clubFragment } from './utils'
 import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
 import { typeDefs } from '../graphql/schema'
 import { resolvers } from '../graphql/resolvers'
 import { CreateEventInput, createEvent } from '../mutations/createEvent'
 import { UpdateEventInput } from '../mutations/updateEvent'
-import { Database } from 'sqlite3'
 import { queryEvent } from '../queries/event'
 import { AppContext } from '../appContext'
 import { CreateClubInput, createClub } from '../mutations/createClub'
 import { UpdateClubInput } from '../mutations/updateClub'
 import { queryClub } from '../queries/club'
-import { deleteEvent } from '../mutations/deleteEvent'
-import { deleteClub } from '../mutations/deleteClub'
 
 let server: ApolloServerTestClient | undefined = undefined
 let db: Database | undefined = undefined
