@@ -33,9 +33,13 @@ export const resolvers: IResolvers<Source, Context> = {
     },
     Mutation: {
         createEvent: async (obj, args, appContext, info) => {
-            const eventId = await createEvent(appContext, args.input)
-            const event = await queryEvent(appContext, eventId)
-            return { event }
+            try {
+                const eventId = await createEvent(appContext, args.input)
+                const event = await queryEvent(appContext, eventId)
+                return { event }
+            } catch (err) {
+                console.log(err)
+            }
         },
         updateEvent: async (obj, args, appContext, info) => {
             await updateEvent(appContext, args.input)

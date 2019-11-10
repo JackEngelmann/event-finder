@@ -1,7 +1,3 @@
-import { db, Database } from './database/database'
+import { Database } from "./database/database";
 
-export type AppContext = {
-    db: Database
-}
-
-export const appContext = { db }
+export type AppContext = { db: Database }

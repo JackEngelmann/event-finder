@@ -1,4 +1,3 @@
-import sqlite3 from 'sqlite3'
 import { createSchema } from './createSchema'
 import { applySeeds } from './applySeeds'
 import pg, { Client } from 'pg'
@@ -12,25 +11,24 @@ export interface Database {
     run(text: string, values?: any): Promise<void>
 }
 
-console.log(process.env.DATABASE_URL)
-
 class PostgresDatabase implements Database {
     db: pg.Client
-    constructor() {
+    constructor(connectionString: string, callback?: any) {
         this.db = new Client({
-            connectionString: process.env.DATABASE_URL,
+            connectionString,
         })
-        this.db.connect()
-        this.init()
-    }
-
-    async init() {
-        await createSchema(this)
-        await applySeeds(this)
+        this.db.connect().then(callback)
     }
 
     async get<Row>(text: string, values = []) {
-        return this.db.query<Row>(text, values).then(res => res.rows[0])
+        return this.db.query<Row>(text, values).then(res => res.rows[0]).catch((err) => {
+            console.error('---------')
+            console.error(text)
+            console.error('---')
+            console.error(err)
+            console.error('---------')
+            return err
+        })
     }
 
     async all<Row>(text: string, values = []) {
@@ -47,59 +45,42 @@ class PostgresDatabase implements Database {
     }
 }
 
-class SqliteDatabase implements Database {
-    db: sqlite3.Database
-    constructor() {
-        sqlite3.verbose()
-        this.db = new sqlite3.Database(':memory:', throwOnError)
-    }
-
-    get<Row>(text: string, values = []) {
-        return new Promise<Row | undefined>((resolve, reject) => {
-            this.db.get(text, values, (err, row) => {
-                if (err) reject(err)
-                resolve(row)
-            })
-        })
-    }
-
-    all<Row>(text: string, values = []) {
-        return new Promise<Row[]>((resolve, reject) => {
-            this.db.all(text, values, (err, rows) => {
-                if (err) reject(err)
-                resolve(rows)
-            })
-        })
-    }
-
-    run(text: string, values = [])  {
-        return new Promise<void>((resolve, reject) => {
-            this.db.run(text, values, function(err) {
-                if (err) {
-                    console.error('-----')
-                    console.error(text)
-                    console.error(err)
-                    console.error('-----')
-                    reject(err)
-                }
-                resolve()
-            })
-        })
-    }
-
+export const createDatabase = async () => {
+    const db = new PostgresDatabase(process.env.DATABASE_URL!, async () => {
+        await createSchema(db)
+        await applySeeds(db)
+    })
+    return db
 }
 
-export const db = new PostgresDatabase()
+let testDb: PostgresDatabase | undefined = undefined
 
-export const createTestDb = async() => new Promise<Database>(async resolve => {
-    const db = new SqliteDatabase()
-    await createSchema(db)
-    resolve(db)
+export const createTestDb = async (testDbName: string) => new Promise<Database>(async resolve => {
+    try {
+        const client = new Client({
+            connectionString: process.env.DATABASE_URL,
+        })
+        await client.connect()
+        await client.query(`DROP DATABASE IF EXISTS ${testDbName}`)
+        await client.query(`CREATE DATABASE ${testDbName}`)
+        await client.end()
+        const db = new PostgresDatabase(`postgresql:postgres:postgres@localhost/${testDbName}`, async () => {
+            await createSchema(db)
+            testDb = db
+            resolve(db)
+        })
+    } catch (err) {
+        console.error(err)
+    }
 })
 
-function throwOnError(err: Error | null) {
-    if (err) {
-        console.error(err.message)
-        throw err
-    }
-}
+export const destroyTestDb = (testDbName: string) => new Promise(async (resolve) => {
+    if (testDb) await testDb.db.end()
+    const client = new Client({
+        connectionString: process.env.DATABASE_URL,
+    })
+    await client.connect()
+    await client.query(`DROP DATABASE IF EXISTS ${testDbName}`)
+    await client.end()
+    resolve()
+})

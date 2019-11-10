@@ -19,17 +19,31 @@ export class EventGenreModel {
     }
 
     async setGenresForAnEvent(eventId: number, genreIds = [] as number[]) {
-        await this.deleteAllGenresForEvent(eventId)
-        if (genreIds.length === 0) return
-        return await this.insertGenresForEvent(eventId, genreIds)
+        return new Promise(async (resolve, reject) => {
+            try {
+                await this.deleteAllGenresForEvent(eventId)
+                if (genreIds.length === 0) {
+                    resolve()
+                } else {
+                    await this.insertGenresForEvent(eventId, genreIds)
+                    resolve()
+                }
+            } catch (err) {
+                console.error(err)
+                reject(err)
+            }
+        })
     }
 
-    private insertGenresForEvent(eventId: number, genreIds: number[]) {
-        const placeholders = genreIds.map((g, i) => `($${i * 2 + 1}, $${i * 2 + 2})`).join(',')
-        const values = genreIds.flatMap(genreId => [eventId, genreId])
-        return this.db.run(
-            `insert into eventGenre (eventId, genreId) VALUES ${placeholders}`,
-            values,
+    private async insertGenresForEvent(eventId: number, genreIds: number[]) {
+        const promises = genreIds.map(genreId => this.insertGenreForEvent(eventId, genreId))
+        return await Promise.all(promises)
+    }
+
+    private async insertGenreForEvent(eventId: number, genreId: number) {
+        return await this.db.run(
+            'insert into eventGenre (eventId, genreId) VALUES ($1, $2)',
+            [eventId, genreId]
         )
     }
 

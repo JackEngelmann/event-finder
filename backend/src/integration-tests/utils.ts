@@ -41,14 +41,14 @@ export const clubFragment = `
 export async function insertTestData(db: Database) {
     await db.run(`
         INSERT INTO club (
-            [name],
-            [address],
-            [region],
-            [contact],
-            [email],
-            [specials],
-            [description],
-            [link]
+            name,
+            address,
+            region,
+            contact,
+            email,
+            specials,
+            description,
+            link
         ) VALUES (
             'name',
             'address',
@@ -62,14 +62,14 @@ export async function insertTestData(db: Database) {
     `)
     await db.run(`
         INSERT INTO club (
-            [name],
-            [address],
-            [region],
-            [contact],
-            [email],
-            [specials],
-            [description],
-            [link]
+            name,
+            address,
+            region,
+            contact,
+            email,
+            specials,
+            description,
+            link
         ) VALUES (
             'name',
             'address',
@@ -111,7 +111,7 @@ export async function insertTestData(db: Database) {
         )
     `)
     await db.run(`
-        INSERT INTO genre ([name]) VALUES
+        INSERT INTO genre (name) VALUES
             ('genre1'),
             ('genre2'),
             ('genre3')

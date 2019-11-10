@@ -64,32 +64,34 @@ export class EventModel {
                     minimumAge,
                     amountOfFloors
                 ) VALUES (
-                    $name,
-                    $date,
-                    $description,
-                    $clubId,
-                    $special,
-                    $priceCategory,
-                    $admissionFee,
-                    $admissionFeeWithDiscount,
-                    $minimumAge,
-                    $amountOfFloors
+                    $1,
+                    $2,
+                    $3,
+                    $4,
+                    $5,
+                    $6,
+                    $7,
+                    $8,
+                    $9,
+                    $10
                 ) RETURNING Id
             `,
-                {
-                    $name: input.name,
-                    $date: input.date,
-                    $description: input.description,
-                    $clubId: input.clubId,
-                    $special: input.special,
-                    $priceCategory: input.priceCategory,
-                    $admissionFee: input.admissionFee,
-                    $admissionFeeWithDiscount: input.admissionFeeWithDiscount,
-                    $minimumAge: input.minimumAge,
-                    $amountOfFloors: input.amountOfFloors,
-                }
-            )
+            [
+                input.name,
+                input.date,
+                input.description,
+                input.clubId,
+                input.special,
+                input.priceCategory,
+                input.admissionFee,
+                input.admissionFeeWithDiscount,
+                input.minimumAge,
+                input.amountOfFloors
+            ])
             .then(res => res.id)
+            .catch(err => {
+                console.error(err)
+            })
     }
 
     deleteEvent(id: number) {

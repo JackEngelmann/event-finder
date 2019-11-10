@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server-express'
-import { createTestDb, Database } from '../database/database'
+import { createTestDb, Database, destroyTestDb } from '../database/database'
 import { insertTestData, eventFragment, clubFragment } from './utils'
 import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
 import { typeDefs } from '../graphql/schema'
@@ -16,16 +16,24 @@ let server: ApolloServerTestClient | undefined = undefined
 let db: Database | undefined = undefined
 let appContext: AppContext = { db: db! }
 
+const DB_NAME = 'mutationdb'
+
 beforeEach(async done => {
-    const db = await createTestDb()
-    appContext = { db }
-    await insertTestData(db)
+    const newDb = await createTestDb(DB_NAME)
+    db = newDb
+    appContext = { db: newDb }
+    await insertTestData(newDb)
     const newServer = new ApolloServer({
         typeDefs,
         resolvers,
-        context: { db },
+        context: { db: newDb },
     })
     server = createTestClient(newServer)
+    done()
+})
+
+afterEach(async done => {
+    await destroyTestDb(DB_NAME)
     done()
 })
 
