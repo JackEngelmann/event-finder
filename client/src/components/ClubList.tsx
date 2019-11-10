@@ -3,6 +3,7 @@ import { Club } from '../api'
 import { ReactNode } from 'react'
 import './ClubList.scss'
 import * as R from 'ramda'
+import { LoadingIndicator } from './LoadingIndicator'
 
 type Props = {
     clubs: Club[]
@@ -21,7 +22,7 @@ export function ClubList(props: Props) {
     const sortedClubs = sortClubsByName(clubs)
 
     function renderContent() {
-        if (sortedClubs === undefined) return 'Loading...'
+        if (sortedClubs === undefined) return <LoadingIndicator />
         if (sortedClubs.length === 0) return 'No events listed today'
         const displayedClubs =
             !showAll && showFirst ? R.take(showFirst, sortedClubs) : sortedClubs

@@ -3,23 +3,17 @@ import { useSelectedDate } from './useSelectedDate'
 import { useHistory, useLocation, Redirect } from 'react-router'
 import { useDimensions } from './useDimensions'
 import moment from 'moment'
-import { Header } from '../components/Header'
-import { SelectedDate } from '../components/SelectedDate'
 import { ClubListContainer } from './ClubListContainer'
 import { EventListContainer } from './EventListContainer'
 import { Calendar } from '../components/Calendar'
 import './HomeDesktopContent.scss'
-import { FooterContainer } from './FooterContainer'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
-import { H1Title } from '../components/H1Title'
 
 type Props = {
     monthSelection: moment.Moment
     setMonthSelection: (monthSelection: moment.Moment) => void
 }
-
-const PickDate = () => <span>Pick a date</span>
 
 const cn = 'home-desktop-content'
 

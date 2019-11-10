@@ -2,7 +2,6 @@ import React from 'react'
 import { Page } from '../components/Page'
 import { Header } from '../components/Header'
 import { Content } from '../components/Content'
-import { FooterContainer } from '../containers/FooterContainer'
 import { useParams, useHistory } from 'react-router'
 import gql from 'graphql-tag'
 import { Club } from '../api'
@@ -12,6 +11,7 @@ import { FormattedHtml } from '../components/FormattedHtml'
 import { H1Title } from '../components/H1Title'
 import { KeyValueField } from '../components/KeyValueField'
 import { KeyValueFields } from '../components/KeyValueFields'
+import { LoadingIndicator } from '../components/LoadingIndicator'
 
 type Props = {}
 
@@ -96,7 +96,7 @@ export function ClubDetailPage(props: Props) {
                         <FormattedHtml>{club.description}</FormattedHtml>
                     </>
                 ) : (
-                    'Loading...'
+                    <LoadingIndicator />
                 )}
             </Content>
         </Page>

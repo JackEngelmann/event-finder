@@ -43,7 +43,8 @@ const DELETE_CLUB_MUTATION = gql`
 `
 
 export function AdminPage() {
-    const clubs = R.sortBy(R.prop('name'), useClubs()[0] || [])
+    const unsortedClubs = useClubs()[0]
+    const clubs = unsortedClubs ? R.sortBy(R.prop('name'), unsortedClubs) : undefined
     const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
     const events =
         eventsQueryResult.data &&

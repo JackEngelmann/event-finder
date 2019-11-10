@@ -5,7 +5,6 @@ import { Content } from '../components/Content'
 import { FormattedHtml } from '../components/FormattedHtml'
 import { GoBackButton } from '../components/GoBackButton'
 import { useHistory } from 'react-router'
-import { FooterContainer } from '../containers/FooterContainer'
 import { H1Title } from '../components/H1Title'
 
 export function DataPolicyPage() {
