@@ -2,7 +2,6 @@ import * as R from 'ramda'
 import './AdminPage.scss'
 import React from 'react'
 import { Page } from '../components/Page'
-import { Content } from '../components/Content'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { Event } from '../api'
@@ -76,8 +75,8 @@ export function AdminPage() {
             <div className={cn}>
                 <H1Title>Administration</H1Title>
                 <div className={`${cn}__content`}>
-                    <div className={`${cn}__column`}>
-                        <div className={`${cn}__column-header`}>
+                    <div className={`${cn}__section`}>
+                        <div className={`${cn}__section-header`}>
                             <h2>Clubs</h2>
                             <Button
                                 borderless
@@ -87,7 +86,7 @@ export function AdminPage() {
                                 <Icon icon="plus" />
                             </Button>
                         </div>
-                        <div className={`${cn}__column-content`}>
+                        <div className={`${cn}__section-content`}>
                             {clubs ? (
                                 clubs.map(c => (
                                     <EditableEntity
@@ -105,8 +104,8 @@ export function AdminPage() {
                             )}
                         </div>
                     </div>
-                    <div className={`${cn}__column`}>
-                        <div className={`${cn}__column-header`}>
+                    <div className={`${cn}__section`}>
+                        <div className={`${cn}__section-header`}>
                             <h2>Events</h2>
                             <Button
                                 onClick={() => history.push('/admin/add-event')}
@@ -116,7 +115,7 @@ export function AdminPage() {
                                 <Icon icon="plus" />
                             </Button>
                         </div>
-                        <div className={`${cn}__column-content`}>
+                        <div className={`${cn}__section-content`}>
                             {events ? (
                                 events.map(e => (
                                     <EditableEntity
