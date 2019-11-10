@@ -4,6 +4,7 @@ import { resolvers } from './resolvers'
 import express from 'express'
 import http, { Server } from 'http'
 import { createDatabase } from '../database/database'
+import { AppContext } from '../appContext'
 
 const PORT = process.env.PORT || 5000
 
@@ -11,13 +12,14 @@ const app = express()
 
 app.use(express.static('public'))
 
+const db = createDatabase()
+
+const appContext: AppContext = { db }
+
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: async () => {
-        const db = await createDatabase()
-        return db
-    },
+    context: appContext,
     playground: true,
     introspection: true
 })

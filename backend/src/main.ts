@@ -1,7 +1,4 @@
 import { startServer, stopServer } from './graphql/server'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 if ((module as any).hot) {
     startServer()

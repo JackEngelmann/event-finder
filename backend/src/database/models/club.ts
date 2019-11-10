@@ -1,5 +1,5 @@
-import { Logger } from '../logger'
-import { Database } from '../database/database'
+import { Logger } from '../../logger'
+import { Database } from '../database'
 
 export class ClubDataModel {
     id: number

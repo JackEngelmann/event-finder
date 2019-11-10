@@ -1,4 +1,4 @@
-import { Database } from "../database/database"
+import { Database } from "../database"
 
 export class GenreDataModel {
     id: number

@@ -1,6 +1,6 @@
 import { AppContext } from '../appContext'
-import { EventModel } from '../models/event'
-import { EventGenreModel } from '../models/eventGenre'
+import { EventModel } from '../database/models/event'
+import { EventGenreModel } from '../database/models/eventGenre'
 
 export type CreateEventInput = {
     name: string

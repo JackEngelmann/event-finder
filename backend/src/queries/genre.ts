@@ -1,5 +1,5 @@
 import { AppContext } from "../appContext";
-import { GenreModel } from "../models/genre";
+import { GenreModel } from "../database/models/genre";
 
 export function queryGenre(appContext: AppContext, id: number) {
     const { db } = appContext
