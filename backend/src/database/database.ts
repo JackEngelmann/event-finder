@@ -22,25 +22,22 @@ class PostgresDatabase implements Database {
 
     async get<Row>(text: string, values = []) {
         return this.db.query<Row>(text, values).then(res => res.rows[0]).catch((err) => {
-            console.error('---------')
-            console.error(text)
-            console.error('---')
-            console.error(err)
-            console.error('---------')
+            logDatabaseError(err, text)
             return err
         })
     }
 
     async all<Row>(text: string, values = []) {
-        return this.db.query<Row>(text, values).then(res => res.rows)
+        return this.db.query<Row>(text, values).then(res => res.rows).catch(err => {
+            logDatabaseError(err, text)
+            return err
+        })
     }
 
     async run(text: string, values?: any) {
         return this.db.query(text, values).then(res => undefined).catch(err => {
-            console.error('---')
-            console.error(text)
-            console.error(err)
-            console.error('---')
+            logDatabaseError(err, text)
+            return err
         })
     }
 }
@@ -54,7 +51,6 @@ export const createDatabase = async () => {
 }
 
 let testDb: PostgresDatabase | undefined = undefined
-
 export const createTestDb = async (testDbName: string) => new Promise<Database>(async resolve => {
     try {
         const client = new Client({
@@ -84,3 +80,11 @@ export const destroyTestDb = (testDbName: string) => new Promise(async (resolve)
     await client.end()
     resolve()
 })
+
+function logDatabaseError(errorMessage: string, sqlText: string) {
+    console.error('---')
+    console.error(sqlText)
+    console.error('leads to this error:   ------------------')
+    console.error(errorMessage)
+    console.error('---')
+}
