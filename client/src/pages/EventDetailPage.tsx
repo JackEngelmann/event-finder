@@ -12,7 +12,6 @@ type Params = {
     eventId: string
 }
 
-
 export function EventDetailPage(props: Props) {
     const params = useParams<Params>()
     const { eventId } = params
