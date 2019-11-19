@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`event queries:  events correctly 1`] = `
+Object {
+  "data": Object {
+    "events": Array [
+      Object {
+        "admissionFee": 10,
+        "admissionFeeWithDiscount": 20,
+        "amountOfFloors": 4,
+        "club": Object {
+          "id": 1,
+          "name": "name",
+        },
+        "date": "date",
+        "description": "description",
+        "genres": Array [
+          Object {
+            "id": 1,
+            "name": "genre1",
+          },
+        ],
+        "id": 1,
+        "imageUrl": "imageUrl",
+        "minimumAge": 18,
+        "name": "name",
+        "priceCategory": 2,
+        "special": "specials",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`event queries:  existing event correctly 1`] = `
+Object {
+  "data": Object {
+    "event": Object {
+      "admissionFee": 10,
+      "admissionFeeWithDiscount": 20,
+      "amountOfFloors": 4,
+      "club": Object {
+        "id": 1,
+        "name": "name",
+      },
+      "date": "date",
+      "description": "description",
+      "genres": Array [
+        Object {
+          "id": 1,
+          "name": "genre1",
+        },
+      ],
+      "id": 1,
+      "imageUrl": "imageUrl",
+      "minimumAge": 18,
+      "name": "name",
+      "priceCategory": 2,
+      "special": "specials",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

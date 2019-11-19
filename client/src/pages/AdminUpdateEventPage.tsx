@@ -67,6 +67,7 @@ export function AdminUpdateEventPage(props: any) {
                 genreIds: eventEditorState.genres
                     ? eventEditorState.genres.map(g => g.id)
                     : undefined,
+                image: eventEditorState.image,
                 minimumAge: eventEditorState.minimumAge,
                 name: eventEditorState.name,
                 priceCategory: eventEditorState.priceCategory,

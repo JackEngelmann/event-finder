@@ -1,4 +1,3 @@
-import { Logger } from '../../logger'
 import { Database } from '../database'
 
 export class ClubDataModel {

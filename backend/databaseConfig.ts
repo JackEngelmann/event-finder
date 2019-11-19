@@ -1,6 +1,7 @@
 import { Database } from './src/database/database'
 import { createSchema } from './src/database/migrations/1-createSchema'
 import { initalData } from './src/database/seeds/1-initialData'
+import { addImageToEvent } from './src/database/migrations/2-addImageToEvent'
 
 export type DbScript = {
     name: string
@@ -17,18 +18,18 @@ export interface DatabaseConfig {
 const configByMode: Record<string, DatabaseConfig> = {
     production: {
         connectionString: process.env.DATABASE_URL!,
-        migrations: [createSchema],
+        migrations: [createSchema, addImageToEvent],
         seeds: [initalData]
     },
     development: {
         connectionString: 'postgresql://postgres:postgres@localhost/lieblingsclubdb',
-        migrations: [createSchema],
+        migrations: [createSchema, addImageToEvent],
         seeds: [initalData]
     },
     test: {
         connectionString: 'postgresql://postgres:postgres@localhost/lieblingsclubdb',
         getTestConnectionString: dbName => `postgresql:postgres:postgres@localhost/${dbName}`,
-        migrations: [createSchema],
+        migrations: [createSchema, addImageToEvent],
     }
 }
 

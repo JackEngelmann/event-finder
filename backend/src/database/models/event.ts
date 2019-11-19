@@ -37,32 +37,34 @@ export class EventModel {
     }
 
     async createEvent(input: {
-        name: string
-        description?: String
-        date: string
-        clubId: number
-        genreIds?: number[]
-        special?: string
-        priceCategory?: number
         admissionFee?: number
         admissionFeeWithDiscount?: number
-        minimumAge?: number
         amountOfFloors?: number
+        clubId: number
+        date: string
+        description?: String
+        genreIds?: number[]
+        imageUrl?: string
+        minimumAge?: number
+        name: string
+        priceCategory?: number
+        special?: string
     }) {
         return this.db
             .get(
                 `
                 INSERT INTO event (
-                    name,
-                    date,
-                    description,
-                    clubId,
-                    special,
-                    priceCategory,
                     admissionFee,
                     admissionFeeWithDiscount,
+                    amountOfFloors,
+                    clubId,
+                    date,
+                    description,
+                    imageUrl,
                     minimumAge,
-                    amountOfFloors
+                    name,
+                    priceCategory,
+                    special
                 ) VALUES (
                     $1,
                     $2,
@@ -73,21 +75,24 @@ export class EventModel {
                     $7,
                     $8,
                     $9,
-                    $10
+                    $10,
+                    $11
                 ) RETURNING Id
             `,
-            [
-                input.name,
-                input.date,
-                input.description,
-                input.clubId,
-                input.special,
-                input.priceCategory,
-                input.admissionFee,
-                input.admissionFeeWithDiscount,
-                input.minimumAge,
-                input.amountOfFloors
-            ])
+                [
+                    input.admissionFee,
+                    input.admissionFeeWithDiscount,
+                    input.amountOfFloors,
+                    input.clubId,
+                    input.date,
+                    input.description,
+                    input.imageUrl,
+                    input.minimumAge,
+                    input.name,
+                    input.priceCategory,
+                    input.special,
+                ]
+            )
             .then(res => res.id)
             .catch(err => {
                 console.error(err)
@@ -128,6 +133,7 @@ export class EventModel {
         genreIds?: number[]
         special?: string
         priceCategory?: number
+        imageUrl?: string
         admissionFee?: number
         admissionFeeWithDiscount?: number
         minimumAge?: number
@@ -143,11 +149,12 @@ export class EventModel {
                     clubId = $4,
                     date = $5,
                     description = $6,
-                    minimumAge = $7,
-                    name = $8,
-                    priceCategory = $9,
-                    special = $10
-                WHERE id = $11
+                    imageUrl = $7,
+                    minimumAge = $8,
+                    name = $9,
+                    priceCategory = $10,
+                    special = $11
+                WHERE id = $12
             `,
             [
                 input.admissionFee,
@@ -156,6 +163,7 @@ export class EventModel {
                 input.clubId,
                 input.date,
                 input.description,
+                input.imageUrl,
                 input.minimumAge,
                 input.name,
                 input.priceCategory,

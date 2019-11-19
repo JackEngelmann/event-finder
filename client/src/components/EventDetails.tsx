@@ -24,7 +24,7 @@ export function EventDetails(props: Props) {
                     <div className={`${cn}__picture-wrapper`}>
                         <img
                             className={`${cn}__picture`}
-                            src={'./' + event.imageUrl}
+                            src={event.imageUrl}
                             alt="event"
                         />
                     </div>

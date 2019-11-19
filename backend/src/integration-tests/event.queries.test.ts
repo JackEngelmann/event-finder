@@ -3,16 +3,11 @@ import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from '../graphql/schema'
 import { resolvers } from '../graphql/resolvers'
 import { createTestDb, destroyTestDb } from '../database/database'
-import {
-    genreFragment,
-    eventFragment,
-    clubFragment,
-    insertTestData,
-} from './utils'
+import { eventFragment, insertTestData } from './utils'
 
-let server: ApolloServerTestClient | undefined = undefined
+let server: ApolloServerTestClient | undefined
 
-const DB_NAME = 'querydb'
+const DB_NAME = 'eventquerydb'
 
 beforeEach(async done => {
     const db = await createTestDb(DB_NAME)
@@ -31,49 +26,12 @@ afterEach(async done => {
     done()
 })
 
-describe('should query', () => {
-    test('clubs correctly', async done => {
-        const result = await server!.query({
-            query: `{
-                clubs { ${clubFragment} }
-            }`,
-        })
-        expect(result.data).toBeDefined()
-        expect(result).toMatchSnapshot()
-        done()
-    })
+describe('event queries: ', () => {
     test('events correctly', async done => {
         const result = await server!.query({
             query: `{
                 events { ${eventFragment} }
             }`,
-        })
-        expect(result.data).toBeDefined()
-        expect(result).toMatchSnapshot()
-        done()
-    })
-    test('genres correctly', async done => {
-        const result = await server!.query({
-            query: `
-            {
-                genres { ${genreFragment} }
-            }
-            `,
-        })
-        expect(result.data).toBeDefined()
-        expect(result).toMatchSnapshot()
-        done()
-    })
-    test('existing club correctly', async done => {
-        const result = await server!.query({
-            query: `
-                query clubById($id: Int!) {
-                    club(id: $id) { ${clubFragment} }
-                }
-            `,
-            variables: {
-                id: 1,
-            },
         })
         expect(result.data).toBeDefined()
         expect(result).toMatchSnapshot()

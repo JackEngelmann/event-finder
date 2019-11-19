@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`club queries clubs correctly 1`] = `
+Object {
+  "data": Object {
+    "clubs": Array [
+      Object {
+        "address": "address",
+        "contact": "contact",
+        "description": "description",
+        "email": "email",
+        "id": 1,
+        "link": "link",
+        "name": "name",
+        "region": "region",
+        "specials": "specials",
+      },
+      Object {
+        "address": "address",
+        "contact": "contact",
+        "description": "description",
+        "email": "email",
+        "id": 2,
+        "link": "link",
+        "name": "name",
+        "region": "region",
+        "specials": "specials",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`club queries existing club correctly 1`] = `
+Object {
+  "data": Object {
+    "club": Object {
+      "address": "address",
+      "contact": "contact",
+      "description": "description",
+      "email": "email",
+      "id": 1,
+      "link": "link",
+      "name": "name",
+      "region": "region",
+      "specials": "specials",
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

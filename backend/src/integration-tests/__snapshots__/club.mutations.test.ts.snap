@@ -1,0 +1,109 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`club mutations:  create create club with all information 1`] = `
+Object {
+  "data": Object {
+    "createClub": Object {
+      "club": Object {
+        "address": "address",
+        "contact": "contact",
+        "description": "description",
+        "email": "email",
+        "id": 3,
+        "link": "link",
+        "name": "test",
+        "region": "region",
+        "specials": "speicals",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`club mutations:  create create club with only required information 1`] = `
+Object {
+  "data": Object {
+    "createClub": Object {
+      "club": Object {
+        "address": null,
+        "contact": null,
+        "description": null,
+        "email": null,
+        "id": 3,
+        "link": null,
+        "name": "test",
+        "region": null,
+        "specials": null,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`club mutations:  update update club with all information 1`] = `
+Object {
+  "data": Object {
+    "updateClub": Object {
+      "club": Object {
+        "address": "updated-address",
+        "contact": "updated-contact",
+        "description": "updated-description",
+        "email": "updated-email",
+        "id": 1,
+        "link": "updated-link",
+        "name": "updated-test",
+        "region": "updated-region",
+        "specials": "updated-speicals",
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`club mutations:  update update club with only required information 1`] = `
+Object {
+  "data": Object {
+    "updateClub": Object {
+      "club": Object {
+        "address": null,
+        "contact": null,
+        "description": null,
+        "email": null,
+        "id": 1,
+        "link": null,
+        "name": "updated-name",
+        "region": null,
+        "specials": null,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;

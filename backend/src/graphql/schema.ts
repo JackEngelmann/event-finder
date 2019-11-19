@@ -37,6 +37,7 @@ export const typeDefs = gql`
         date: String!
         description: String
         genreIds: [Int]
+        image: Upload
         minimumAge: Int
         name: String!
         priceCategory: Int
@@ -50,6 +51,7 @@ export const typeDefs = gql`
         date: String!
         clubId: Int!
         genreIds: [Int]
+        image: Upload
         special: String
         priceCategory: Int
         admissionFee: Float

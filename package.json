@@ -9,8 +9,8 @@
     "build-frontend": "cd client && yarn && yarn add node-sass && yarn build",
     "build-backend": "cd backend && yarn && yarn build",
     "postinstall": "(cd client && yarn);(cd backend && yarn);",
-    "heroku-postbuild": "yarn build-frontend && yarn build-backend && cp -r client/build/* backend/public/",
-    "build": "NODE_ENV=production yarn build-frontend && yarn build-backend && cp -r client/build/* backend/public/"
+    "heroku-postbuild": "yarn build-frontend && yarn build-backend && mkdir backend/public && cp -r client/build/* backend/public/",
+    "build": "NODE_ENV=production yarn build-frontend && yarn build-backend && mkdir backend/public && cp -r client/build/* backend/public/"
   },
   "engines": {
     "node": "^10.16.1",

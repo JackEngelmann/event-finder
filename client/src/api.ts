@@ -1,4 +1,8 @@
-import ApolloClient from 'apollo-boost'
+import { createUploadLink } from 'apollo-upload-client'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+import ApolloClient from 'apollo-client'
+import { ApolloLink } from 'apollo-link'
+import { onError } from 'apollo-link-error'
 
 export type Club = {
     id: number
@@ -33,4 +37,19 @@ export type Event = {
     special: string | undefined
 }
 
-export const apolloClient = new ApolloClient()
+const uploadLink = createUploadLink()
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+    if (graphQLErrors) {
+        graphQLErrors.forEach(({ message, locations, path }) =>
+            console.log(
+                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+            )
+        )
+    }
+    if (networkError) console.log(`[Network error]: ${networkError}`)
+})
+
+export const apolloClient = new ApolloClient({
+    cache: new InMemoryCache(),
+    link: ApolloLink.from([errorLink, uploadLink]),
+})

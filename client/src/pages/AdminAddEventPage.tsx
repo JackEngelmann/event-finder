@@ -37,6 +37,7 @@ export function AdminAddEventPage() {
                     eventEditorState.admissionFeeWithDiscount,
                 amountOfFloors: eventEditorState.amountOfFloors,
                 id: eventEditorState.id,
+                image: eventEditorState.image,
                 clubId: eventEditorState.club && eventEditorState.club.id,
                 date: eventEditorState.date,
                 description: eventEditorState.description,

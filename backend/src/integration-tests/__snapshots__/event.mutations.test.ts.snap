@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`create an event with all fields 1`] = `
+exports[`event mutations:  create event create an event with all fields 1`] = `
 Object {
   "data": Object {
     "createEvent": Object {
@@ -43,7 +43,7 @@ Object {
 }
 `;
 
-exports[`create an event with empty genres 1`] = `
+exports[`event mutations:  create event create an event with empty genres 1`] = `
 Object {
   "data": Object {
     "createEvent": Object {
@@ -77,7 +77,7 @@ Object {
 }
 `;
 
-exports[`create an event with only required information 1`] = `
+exports[`event mutations:  create event create an event with only required information 1`] = `
 Object {
   "data": Object {
     "createEvent": Object {
@@ -111,47 +111,27 @@ Object {
 }
 `;
 
-exports[`create club with all information 1`] = `
+exports[`event mutations:  update event to only have required fields 1`] = `
 Object {
   "data": Object {
-    "createClub": Object {
-      "club": Object {
-        "address": "address",
-        "contact": "contact",
-        "description": "description",
-        "email": "email",
-        "id": 3,
-        "link": "link",
-        "name": "test",
-        "region": "region",
-        "specials": "speicals",
-      },
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`create club with only required information 1`] = `
-Object {
-  "data": Object {
-    "createClub": Object {
-      "club": Object {
-        "address": null,
-        "contact": null,
+    "updateEvent": Object {
+      "event": Object {
+        "admissionFee": null,
+        "admissionFeeWithDiscount": null,
+        "amountOfFloors": null,
+        "club": Object {
+          "id": 2,
+          "name": "name",
+        },
+        "date": "updated-date",
         "description": null,
-        "email": null,
-        "id": 3,
-        "link": null,
-        "name": "test",
-        "region": null,
-        "specials": null,
+        "genres": Array [],
+        "id": 1,
+        "imageUrl": null,
+        "minimumAge": null,
+        "name": "updated-name",
+        "priceCategory": null,
+        "special": null,
       },
     },
   },
@@ -165,7 +145,7 @@ Object {
 }
 `;
 
-exports[`update all fields of an event 1`] = `
+exports[`event mutations:  update event with all fields 1`] = `
 Object {
   "data": Object {
     "updateEvent": Object {
@@ -190,7 +170,7 @@ Object {
           },
         ],
         "id": 1,
-        "imageUrl": "imageUrl",
+        "imageUrl": null,
         "minimumAge": 16,
         "name": "updated-name",
         "priceCategory": 1,
@@ -208,7 +188,7 @@ Object {
 }
 `;
 
-exports[`update an event to only have required fields 1`] = `
+exports[`event mutations:  update event with empty genre list 1`] = `
 Object {
   "data": Object {
     "updateEvent": Object {
@@ -224,99 +204,11 @@ Object {
         "description": null,
         "genres": Array [],
         "id": 1,
-        "imageUrl": "imageUrl",
+        "imageUrl": null,
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
         "special": null,
-      },
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`update an event with empty genre list 1`] = `
-Object {
-  "data": Object {
-    "updateEvent": Object {
-      "event": Object {
-        "admissionFee": null,
-        "admissionFeeWithDiscount": null,
-        "amountOfFloors": null,
-        "club": Object {
-          "id": 2,
-          "name": "name",
-        },
-        "date": "updated-date",
-        "description": null,
-        "genres": Array [],
-        "id": 1,
-        "imageUrl": "imageUrl",
-        "minimumAge": null,
-        "name": "updated-name",
-        "priceCategory": null,
-        "special": null,
-      },
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`update club with all information 1`] = `
-Object {
-  "data": Object {
-    "updateClub": Object {
-      "club": Object {
-        "address": "updated-address",
-        "contact": "updated-contact",
-        "description": "updated-description",
-        "email": "updated-email",
-        "id": 1,
-        "link": "updated-link",
-        "name": "updated-test",
-        "region": "updated-region",
-        "specials": "updated-speicals",
-      },
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`update club with only required information 1`] = `
-Object {
-  "data": Object {
-    "updateClub": Object {
-      "club": Object {
-        "address": null,
-        "contact": null,
-        "description": null,
-        "email": null,
-        "id": 1,
-        "link": null,
-        "name": "updated-name",
-        "region": null,
-        "specials": null,
       },
     },
   },

@@ -1,5 +1,5 @@
 import './EventEditor.scss'
-import React from 'react'
+import React, { useState } from 'react'
 import { Calendar } from './Calendar'
 import moment, { Moment } from 'moment'
 import { LabeledInput } from './LabeledInput'
@@ -7,6 +7,7 @@ import { Input } from './Input'
 import { Textarea } from './Textarea'
 import { Select } from './Select'
 import { Option } from './Option'
+import { Button } from './Button'
 
 export type EventEditorState = {
     admissionFee?: number
@@ -23,6 +24,8 @@ export type EventEditorState = {
         name: string
     }[]
     id?: number
+    image?: File
+    imageUrl?: string
     minimumAge?: number
     name?: string
     priceCategory?: 1 | 2 | 3
@@ -57,6 +60,7 @@ export function EventEditor(props: Props) {
         genres,
         setMonthSelection,
     } = props
+    const [editExistingImage, setEditExistingImage] = useState(false)
     return (
         <div className={cn}>
             <LabeledInput label="Name">
@@ -197,10 +201,10 @@ export function EventEditor(props: Props) {
                     onChange={e =>
                         setState({
                             ...state,
-                            priceCategory: parseInt(e.target.value, 10) as (
+                            priceCategory: parseInt(e.target.value, 10) as
                                 | 1
                                 | 2
-                                | 3),
+                                | 3,
                         })
                     }
                 />
@@ -240,6 +244,28 @@ export function EventEditor(props: Props) {
                         </div>
                     ))}
                 </div>
+            </LabeledInput>
+            <LabeledInput label="Image">
+                {!state.imageUrl || editExistingImage ? (
+                    <Input
+                        type="file"
+                        onChange={e =>
+                            setState({
+                                ...state,
+                                image: e.target.files
+                                    ? e.target.files[0]
+                                    : undefined,
+                            })
+                        }
+                    />
+                ) : (
+                    <span>
+                        assigned{' '}
+                        <Button onClick={() => setEditExistingImage(true)}>
+                            Edit
+                        </Button>
+                    </span>
+                )}
             </LabeledInput>
         </div>
     )

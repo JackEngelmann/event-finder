@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`club queries genres correctly 1`] = `
+Object {
+  "data": Object {
+    "genres": Array [
+      Object {
+        "id": 1,
+        "name": "genre1",
+      },
+      Object {
+        "id": 2,
+        "name": "genre2",
+      },
+      Object {
+        "id": 3,
+        "name": "genre3",
+      },
+    ],
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
