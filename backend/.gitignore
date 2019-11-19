@@ -2,6 +2,11 @@ db.sqlite
 
 yarn.lock
 
+/public/
+!/public/images/eventLobo.jpg
+!/public/images/eventOka.jpg
+!/public/images/eventRosis.jpg
+
 # dependencies
 /node_modules
 /.pnp
