@@ -1,3 +1,4 @@
+db-backups/
 db.sqlite
 
 yarn.lock

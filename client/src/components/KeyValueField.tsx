@@ -1,9 +1,9 @@
 import './KeyValueField.scss'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 type Props = {
     fieldKey: string
-    fieldValue: string | undefined
+    fieldValue: ReactNode | string | undefined
 }
 
 const cn = 'key-value-field'

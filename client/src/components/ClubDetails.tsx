@@ -4,6 +4,7 @@ import { KeyValueFields } from './KeyValueFields';
 import { KeyValueField } from './KeyValueField';
 import { TextWithLineBreaks } from './TextWithLineBreaks';
 import './ClubDetails.scss'
+import { LinkRenderer } from './LinkRenderer';
 
 type Props = {
     club: {
@@ -31,7 +32,7 @@ export function ClubDetails(props: Props) {
                 <KeyValueField fieldKey="Contact" fieldValue={club.contact} />
                 <KeyValueField fieldKey="Email" fieldValue={club.email} />
                 <KeyValueField fieldKey="Specials" fieldValue={club.specials} />
-                <KeyValueField fieldKey="Link" fieldValue={club.link} />
+                <KeyValueField fieldKey="Link" fieldValue={club.link && <LinkRenderer href={club.link} />} />
             </KeyValueFields>
             <section>
                 <TextWithLineBreaks text={club.description || ''} />
