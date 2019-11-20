@@ -6,16 +6,18 @@ import { Event } from '../api'
 import { KeyValueFields } from './KeyValueFields'
 import { KeyValueField } from './KeyValueField'
 import { H1Title } from './H1Title'
+import { FakeLink } from './FakeLink'
 
 type Props = {
     event: Event
+    onClubClick: () => void
 }
 
 // TODO: use KeyValueFields in container ? could type properly
 const cn = 'event-details'
 
 export function EventDetails(props: Props) {
-    const { event } = props
+    const { event, onClubClick } = props
     return (
         <div className={cn}>
             <div className={`${cn}__content`}>
@@ -31,7 +33,11 @@ export function EventDetails(props: Props) {
                     <KeyValueFields>
                         <KeyValueField
                             fieldKey="Club"
-                            fieldValue={event.club.name}
+                            fieldValue={
+                                <FakeLink onClick={onClubClick}>
+                                    {event.club.name}
+                                </FakeLink>
+                            }
                         />
                         <KeyValueField
                             fieldKey="Price Category"
