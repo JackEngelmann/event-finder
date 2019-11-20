@@ -111,6 +111,7 @@ describe('event mutations: ', () => {
                 admissionFee: 10.0,
                 admissionFeeWithDiscount: 4.0,
                 minimumAge: 18,
+                link: 'http://www.some-link.de',
                 amountOfFloors: 3,
             }
             const result = await server!.mutate({
@@ -188,6 +189,7 @@ describe('event mutations: ', () => {
                 admissionFeeWithDiscount: 3.0,
                 minimumAge: 16,
                 amountOfFloors: 2,
+                link: 'http://www.some-link.de',
             }
             const result = await server!.mutate({
                 mutation: updateEventMutation,

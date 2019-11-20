@@ -15,6 +15,7 @@ export type CreateEventInput = {
     genreIds?: number[]
     image?: Promise<FileUpload>
     imageUrl?: string
+    link?: string
     minimumAge?: number
     name: string
     priceCategory?: number

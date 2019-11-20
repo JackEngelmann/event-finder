@@ -9,6 +9,7 @@ export class EventDataModel {
     description?: string
     id: number
     imageUrl?: string
+    link?: string
     minimumAge?: number
     name: string
     priceCategory?: 1 | 2 | 3
@@ -22,6 +23,7 @@ export class EventDataModel {
         this.description = row.description
         this.id = row.id
         this.imageUrl = row.imageurl
+        this.link = row.link
         this.minimumAge = row.minimumage
         this.name = row.name
         this.priceCategory = row.pricecategory
@@ -45,6 +47,7 @@ export class EventModel {
         description?: String
         genreIds?: number[]
         imageUrl?: string
+        link?: string
         minimumAge?: number
         name: string
         priceCategory?: number
@@ -61,6 +64,7 @@ export class EventModel {
                     date,
                     description,
                     imageUrl,
+                    link,
                     minimumAge,
                     name,
                     priceCategory,
@@ -76,7 +80,8 @@ export class EventModel {
                     $8,
                     $9,
                     $10,
-                    $11
+                    $11,
+                    $12
                 ) RETURNING Id
             `,
                 [
@@ -87,6 +92,7 @@ export class EventModel {
                     input.date,
                     input.description,
                     input.imageUrl,
+                    input.link,
                     input.minimumAge,
                     input.name,
                     input.priceCategory,
@@ -125,19 +131,20 @@ export class EventModel {
     }
 
     updateEvent(input: {
-        id: number
-        name: string
-        description?: String
-        date: string
-        clubId: number
-        genreIds?: number[]
-        special?: string
-        priceCategory?: number
-        imageUrl?: string
         admissionFee?: number
         admissionFeeWithDiscount?: number
-        minimumAge?: number
         amountOfFloors?: number
+        clubId: number
+        date: string
+        description?: String
+        genreIds?: number[]
+        id: number
+        imageUrl?: string
+        link?: string
+        minimumAge?: number
+        name: string
+        priceCategory?: number
+        special?: string
     }) {
         return this.db.run(
             `
@@ -150,11 +157,12 @@ export class EventModel {
                     date = $5,
                     description = $6,
                     imageUrl = $7,
-                    minimumAge = $8,
-                    name = $9,
-                    priceCategory = $10,
-                    special = $11
-                WHERE id = $12
+                    link = $8,
+                    minimumAge = $9,
+                    name = $10,
+                    priceCategory = $11,
+                    special = $12
+                WHERE id = $13
             `,
             [
                 input.admissionFee,
@@ -164,6 +172,7 @@ export class EventModel {
                 input.date,
                 input.description,
                 input.imageUrl,
+                input.link,
                 input.minimumAge,
                 input.name,
                 input.priceCategory,

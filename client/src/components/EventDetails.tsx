@@ -7,6 +7,7 @@ import { KeyValueFields } from './KeyValueFields'
 import { KeyValueField } from './KeyValueField'
 import { H1Title } from './H1Title'
 import { FakeLink } from './FakeLink'
+import { LinkRenderer } from './LinkRenderer'
 
 type Props = {
     event: Event
@@ -18,6 +19,7 @@ const cn = 'event-details'
 
 export function EventDetails(props: Props) {
     const { event, onClubClick } = props
+    console.log(event)
     return (
         <div className={cn}>
             <div className={`${cn}__content`}>
@@ -96,6 +98,12 @@ export function EventDetails(props: Props) {
                                 event.genres
                                     ? event.genres.map(g => g.name).join(', ')
                                     : undefined
+                            }
+                        />
+                        <KeyValueField
+                            fieldKey="Link"
+                            fieldValue={
+                                event.link && <LinkRenderer href={event.link} />
                             }
                         />
                     </KeyValueFields>

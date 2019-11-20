@@ -31,6 +31,7 @@ export type Event = {
     genres: Genre[] | undefined
     id: number
     imageUrl: string
+    link?: string
     minimumAge: number | undefined
     name: string
     priceCategory: 1 | 2 | 3 | undefined

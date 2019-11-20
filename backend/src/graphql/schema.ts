@@ -14,19 +14,20 @@ export const typeDefs = gql`
     }
 
     type Event {
-        id: Int!
-        name: String!
-        description: String
-        date: String!
-        club: Club!
-        imageUrl: String
-        genres: [Genre]!
-        special: String
-        priceCategory: Int
         admissionFee: Float
         admissionFeeWithDiscount: Float
-        minimumAge: Int
         amountOfFloors: Int
+        club: Club!
+        date: String!
+        description: String
+        genres: [Genre]!
+        id: Int!
+        imageUrl: String
+        link: String
+        minimumAge: Int
+        name: String!
+        priceCategory: Int
+        special: String
     }
 
     input CreateEventInput {
@@ -38,6 +39,8 @@ export const typeDefs = gql`
         description: String
         genreIds: [Int]
         image: Upload
+        imageUrl: String
+        link: String
         minimumAge: Int
         name: String!
         priceCategory: Int
@@ -45,19 +48,21 @@ export const typeDefs = gql`
     }
 
     input UpdateEventInput {
-        id: Int!
-        name: String!
-        description: String
-        date: String!
-        clubId: Int!
-        genreIds: [Int]
-        image: Upload
-        special: String
-        priceCategory: Int
         admissionFee: Float
         admissionFeeWithDiscount: Float
-        minimumAge: Int
         amountOfFloors: Int
+        clubId: Int!
+        date: String!
+        description: String
+        genreIds: [Int]
+        id: Int!
+        image: Upload
+        imageUrl: String
+        link: String
+        minimumAge: Int
+        name: String!
+        priceCategory: Int
+        special: String
     }
 
     input CreateClubInput {

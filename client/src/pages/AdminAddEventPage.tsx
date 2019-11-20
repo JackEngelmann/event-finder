@@ -44,6 +44,7 @@ export function AdminAddEventPage() {
                 genreIds: eventEditorState.genres
                     ? eventEditorState.genres.map(g => g.id)
                     : undefined,
+                link: eventEditorState.link,
                 minimumAge: eventEditorState.minimumAge,
                 name: eventEditorState.name,
                 priceCategory: eventEditorState.priceCategory,

@@ -18,6 +18,7 @@ export const eventDetailsFragment = gql`
         }
         id
         imageUrl
+        link
         minimumAge
         name
         priceCategory

@@ -12,7 +12,12 @@ const cn = 'link-renderer'
 export function LinkRenderer(props: Props) {
     const { text, href } = props
     const linkText = text || prettifyLink(href)
-    return <a href={href} className={cn}>{linkText}</a>
+    return <a href={prependProtocoll(href)} className={cn}>{linkText}</a>
+}
+
+function prependProtocoll(link: string) {
+    const hasProtocoll = Boolean(link.match(/^(http[s]?:)/))
+    return hasProtocoll ? link : `https://${link}`
 }
 
 function prettifyLink(link: string) {

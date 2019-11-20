@@ -26,6 +26,7 @@ export type EventEditorState = {
     id?: number
     image?: File
     imageUrl?: string
+    link?: string
     minimumAge?: number
     name?: string
     priceCategory?: 1 | 2 | 3
@@ -244,6 +245,17 @@ export function EventEditor(props: Props) {
                         </div>
                     ))}
                 </div>
+            </LabeledInput>
+            <LabeledInput label="Link">
+                <Input
+                    value={state.link || ''}
+                    onChange={e =>
+                        setState({
+                            ...state,
+                            link: e.target.value,
+                        })
+                    }
+                />
             </LabeledInput>
             <LabeledInput label="Image">
                 {!state.imageUrl || editExistingImage ? (

@@ -18,6 +18,7 @@ export const eventFragment = `
     priceCategory,
     admissionFee,
     admissionFeeWithDiscount,
+    link
     special,
     minimumAge,
     amountOfFloors
