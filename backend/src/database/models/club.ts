@@ -1,25 +1,27 @@
 import { Database } from '../database'
 
 export class ClubDataModel {
-    id: number
-    name: string
     address?: string
-    region?: string
     contact?: string
-    email?: string
-    specials?: string
     description?: string
+    email?: string
+    id: number
+    imageUrl?: string
     link?: string
+    name: string
+    region?: string
+    specials?: string
     constructor(row: any) {
-        this.id = row.id
-        this.name = row.name
         this.address = row.address
-        this.region = row.region
         this.contact = row.contact
-        this.email = row.email
-        this.specials = row.specials
         this.description = row.description
+        this.email = row.email
+        this.id = row.id
+        this.imageUrl = row.imageurl
         this.link = row.link
+        this.name = row.name
+        this.region = row.region
+        this.specials = row.specials
     }
 }
 
@@ -35,6 +37,7 @@ export class ClubModel {
         contact?: string
         description?: string
         email?: string
+        imageUrl?: string
         link?: string
         name: string
         region?: string
@@ -48,6 +51,7 @@ export class ClubModel {
                     contact,
                     description,
                     email,
+                    imageUrl,
                     link,
                     name,
                     region,
@@ -60,7 +64,8 @@ export class ClubModel {
                     $5,
                     $6,
                     $7,
-                    $8
+                    $8,
+                    $9
                 ) RETURNING Id
             `,
                 [
@@ -68,6 +73,7 @@ export class ClubModel {
                     input.contact,
                     input.description,
                     input.email,
+                    input.imageUrl,
                     input.link,
                     input.name,
                     input.region,
@@ -83,6 +89,7 @@ export class ClubModel {
         description?: string
         email?: string
         id: number
+        imageUrl?: string
         link?: string
         name: string
         region?: string
@@ -96,17 +103,19 @@ export class ClubModel {
                     contact = $2,
                     description = $3,
                     email = $4,
-                    link = $5,
-                    name = $6,
-                    region = $7,
-                    specials = $8
-                WHERE id = $9
+                    imageUrl = $5,
+                    link = $6,
+                    name = $7,
+                    region = $8,
+                    specials = $9
+                WHERE id = $10
             `,
             [
                 input.address,
                 input.contact,
                 input.description,
                 input.email,
+                input.imageUrl,
                 input.link,
                 input.name,
                 input.region,

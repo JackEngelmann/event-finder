@@ -3,6 +3,7 @@ import { createSchema } from './src/database/migrations/1-createSchema'
 import { initalData } from './src/database/seeds/1-initialData'
 import { addImageToEvent } from './src/database/migrations/2-addImageToEvent'
 import { addLinkToEvent } from './src/database/migrations/3-addLinkToEvent'
+import { addImageToClub } from './src/database/migrations/4-addImageToClub'
 
 export type DbScript = {
     name: string
@@ -16,16 +17,23 @@ export interface DatabaseConfig {
     seeds?: DbScript[]
 }
 
+const migrations = [
+    createSchema,
+    addImageToEvent,
+    addLinkToEvent,
+    addImageToClub,
+]
+
 const configByMode: Record<string, DatabaseConfig> = {
     production: {
         connectionString: process.env.DATABASE_URL!,
-        migrations: [createSchema, addImageToEvent, addLinkToEvent],
+        migrations,
         seeds: [initalData],
     },
     development: {
         connectionString:
             'postgresql://postgres:postgres@localhost/lieblingsclubdb',
-        migrations: [createSchema, addImageToEvent, addLinkToEvent],
+        migrations,
         seeds: [initalData],
     },
     test: {
@@ -33,7 +41,7 @@ const configByMode: Record<string, DatabaseConfig> = {
             'postgresql://postgres:postgres@localhost/lieblingsclubdb',
         getTestConnectionString: dbName =>
             `postgresql:postgres:postgres@localhost/${dbName}`,
-        migrations: [createSchema, addImageToEvent, addLinkToEvent],
+        migrations,
     },
 }
 

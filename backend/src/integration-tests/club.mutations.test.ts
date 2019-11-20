@@ -1,3 +1,7 @@
+import fetch from 'node-fetch'
+import express from 'express'
+import http from 'http'
+import FormData from 'form-data'
 import { ApolloServer } from 'apollo-server-express'
 import { createTestDb, Database, destroyTestDb } from '../database/database'
 import { insertTestData, clubFragment } from './utils'
@@ -10,6 +14,9 @@ import { AppContext } from '../appContext'
 import { CreateClubInput, createClub } from '../mutations/createClub'
 import { UpdateClubInput } from '../mutations/updateClub'
 import { queryClub } from '../queries/club'
+import { createReadStream } from 'fs'
+import { join } from 'path'
+import { GraphQLResponse } from 'apollo-server-core'
 
 const DB_NAME = 'clubmutationdb'
 
@@ -191,5 +198,94 @@ describe('club mutations: ', () => {
             expect(deletedEvent).toBeUndefined()
             done()
         })
+    })
+})
+
+describe('club image field', () => {
+    let server: ApolloServer
+    let app: express.Application
+    let httpServer: http.Server
+    let port: number
+
+    async function createServer() {
+        const newDb = await createTestDb(DB_NAME)
+        server = new ApolloServer({
+            typeDefs,
+            resolvers,
+            context: { db: newDb },
+        })
+        app = express()
+        server.applyMiddleware({ app })
+        httpServer = await new Promise<http.Server>(resolve => {
+            const l: http.Server = app.listen({ port: 0 }, () => resolve(l))
+        })
+        await insertTestData(newDb)
+        port = (httpServer.address() as { port: number }).port
+    }
+
+    afterEach(async done => {
+        if (server) await server.stop()
+        if (httpServer) await httpServer.close()
+        await destroyTestDb(DB_NAME)
+        done()
+    })
+
+    test('update club with an image', async done => {
+        await createServer()
+
+        const input: any = {
+            name: 'updated-name',
+            id: 1,
+            image: null,
+        }
+
+        const body = new FormData()
+        body.append(
+            'operations',
+            JSON.stringify({
+                query: updateClubMutation,
+                variables: { input },
+            })
+        )
+        body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
+        body.append('1', createReadStream(join(__dirname, 'testPicture.jpg')))
+
+        const result: GraphQLResponse = await fetch(`http://localhost:${port!}/graphql`, {
+            method: 'POST',
+            body: body as any,
+        }).then(res => res.json())
+
+        expect(result.errors).toBeUndefined()
+        expect(result.data!.updateClub.club.imageUrl).toBeDefined()
+        done()
+    })
+
+    test('create club with an image', async done => {
+        await createServer()
+
+        const input: any = {
+            name: 'created-name',
+            image: null,
+        }
+
+        const body = new FormData()
+        body.append(
+            'operations',
+            JSON.stringify({
+                query: createClubMutation,
+                variables: { input },
+            })
+        )
+        body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
+        body.append('1', createReadStream(join(__dirname, 'testPicture.jpg')))
+
+        const result: GraphQLResponse = await fetch(`http://localhost:${port!}/graphql`, {
+            method: 'POST',
+            body: body as any,
+        }).then(res => res.json())
+
+        expect(result.errors).toBeUndefined()
+        expect(result.data!.createClub.club.imageUrl).toBeDefined()
+        done()
     })
 })

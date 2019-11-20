@@ -39,6 +39,7 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
             await eventGenreModel.setGenresForAnEvent(input.id, input.genreIds)
             resolve()
         } catch (err) {
+            console.error(err)
             reject(err)
         }
     })

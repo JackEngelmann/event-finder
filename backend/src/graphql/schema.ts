@@ -2,15 +2,16 @@ import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
     type Club {
-        id: Int!
-        name: String!
         address: String
-        region: String
         contact: String
-        email: String
-        specials: String
         description: String
+        email: String
+        id: Int!
+        imageUrl: String
         link: String
+        name: String!
+        region: String
+        specials: String
     }
 
     type Event {
@@ -70,6 +71,8 @@ export const typeDefs = gql`
         contact: String
         description: String
         email: String
+        image: Upload
+        imageUrl: String
         link: String
         name: String!
         region: String
@@ -82,6 +85,8 @@ export const typeDefs = gql`
         description: String
         email: String
         id: Int!
+        image: Upload
+        imageUrl: String
         link: String
         name: String!
         region: String

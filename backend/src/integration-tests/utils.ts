@@ -34,6 +34,7 @@ export const clubFragment = `
     email
     id
     link
+    imageUrl
     name
     region
     specials
