@@ -26,7 +26,7 @@ export function ImpressumPage() {
                     <h3>Vertreten durch:</h3>
                     Falco Huhold<br />
                     Kontakt:<br />
-                    Telefon: 0172-4277088<br />
+                    Telefon: 0162-2326045<br />
                     E-Mail: f.huhold@online.de<br />
                     <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h3>
                     Falco Huhold<br />

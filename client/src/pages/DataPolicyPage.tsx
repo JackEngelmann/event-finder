@@ -87,7 +87,7 @@ export function DataPolicyPage() {
                     Kreuzsur. 3<br />
                     01067 Dresden
                     <br />
-                    Telefon: +49 (0) 172 42 77 0 88
+                    Telefon: 0162-2326045
                     <br />
                     E-Mail: f.huhold@online.de
                     <br />
