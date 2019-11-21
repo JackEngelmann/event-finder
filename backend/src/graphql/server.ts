@@ -20,6 +20,7 @@ app.get('/images/:imageId', async (req, res) => {
     const imageId = parseInt(req.params.imageId, 10);
     const imageModel = new ImageModel(db)
     const imageService = new ImageService(imageModel)
+    if (Number.isNaN(imageId)) return null
     const file = await imageService.readFile(imageId);
     if (!file) return res.send(undefined)
     res.type(file.type)
