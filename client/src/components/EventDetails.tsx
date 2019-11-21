@@ -19,7 +19,6 @@ const cn = 'event-details'
 
 export function EventDetails(props: Props) {
     const { event, onClubClick } = props
-    console.log(event)
     return (
         <div className={cn}>
             <div className={`${cn}__content`}>

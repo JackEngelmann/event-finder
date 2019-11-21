@@ -30,6 +30,7 @@ export function AdminAddClubPage() {
                 description: clubEditorState.description,
                 email: clubEditorState.email,
                 link: clubEditorState.link,
+                image: clubEditorState.image,
                 name: clubEditorState.name,
                 region: clubEditorState.region,
                 specials: clubEditorState.specials

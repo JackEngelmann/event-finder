@@ -49,6 +49,7 @@ export function AdminUpdateClubPage() {
                 description: clubEditorState.description,
                 email: clubEditorState.email,
                 id: parseInt(clubId),
+                image: clubEditorState.image,
                 link: clubEditorState.link,
                 name: clubEditorState.name,
                 region: clubEditorState.region,

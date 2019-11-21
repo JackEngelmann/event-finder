@@ -7,7 +7,7 @@ import { Input } from './Input'
 import { Textarea } from './Textarea'
 import { Select } from './Select'
 import { Option } from './Option'
-import { Button } from './Button'
+import { ImageFileInput } from './ImageFileInput'
 
 export type EventEditorState = {
     admissionFee?: number
@@ -61,7 +61,6 @@ export function EventEditor(props: Props) {
         genres,
         setMonthSelection,
     } = props
-    const [editExistingImage, setEditExistingImage] = useState(false)
     return (
         <div className={cn}>
             <LabeledInput label="Name">
@@ -258,26 +257,10 @@ export function EventEditor(props: Props) {
                 />
             </LabeledInput>
             <LabeledInput label="Image">
-                {!state.imageUrl || editExistingImage ? (
-                    <Input
-                        type="file"
-                        onChange={e =>
-                            setState({
-                                ...state,
-                                image: e.target.files
-                                    ? e.target.files[0]
-                                    : undefined,
-                            })
-                        }
-                    />
-                ) : (
-                    <span>
-                        assigned{' '}
-                        <Button onClick={() => setEditExistingImage(true)}>
-                            Edit
-                        </Button>
-                    </span>
-                )}
+                <ImageFileInput
+                    imageUrl={state.imageUrl}
+                    onChange={image => setState({ ...state, image })}
+                />
             </LabeledInput>
         </div>
     )

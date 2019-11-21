@@ -12,15 +12,16 @@ type Props = {
 const CLUB_QUERY = gql`
     query clubQuery($clubId: Int!) {
         club(id: $clubId) {
-            id
-            name
             address
-            region
             contact
-            email
-            specials
             description
+            email
+            id
+            imageUrl
             link
+            name
+            region
+            specials
         }
     }
 `
@@ -36,6 +37,7 @@ type ClubQueryData = {
         | 'specials'
         | 'description'
         | 'link'
+        | 'imageUrl'
     >
 }
 

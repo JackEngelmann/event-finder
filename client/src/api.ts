@@ -5,15 +5,16 @@ import { ApolloLink } from 'apollo-link'
 import { onError } from 'apollo-link-error'
 
 export type Club = {
-    id: number
-    name: string
     address?: string
-    region?: string
     contact?: string
-    email?: string
-    specials?: string
     description?: string
+    email?: string
+    id: number
+    imageUrl?: string
     link?: string
+    name: string
+    region?: string
+    specials?: string
 }
 
 export type Genre = {
