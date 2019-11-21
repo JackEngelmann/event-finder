@@ -4,6 +4,8 @@ import { initalData } from './src/database/seeds/1-initialData'
 import { addImageToEvent } from './src/database/migrations/2-addImageToEvent'
 import { addLinkToEvent } from './src/database/migrations/3-addLinkToEvent'
 import { addImageToClub } from './src/database/migrations/4-addImageToClub'
+import { createAdminUser } from './src/database/seeds/2-createAdminUser'
+import { addUserTable } from './src/database/migrations/5-addUserTable'
 
 export type DbScript = {
     name: string
@@ -22,19 +24,20 @@ const migrations = [
     addImageToEvent,
     addLinkToEvent,
     addImageToClub,
+    addUserTable,
 ]
 
 const configByMode: Record<string, DatabaseConfig> = {
     production: {
         connectionString: process.env.DATABASE_URL!,
         migrations,
-        seeds: [initalData],
+        seeds: [initalData, createAdminUser],
     },
     development: {
         connectionString:
             'postgresql://postgres:postgres@localhost/lieblingsclubdb',
         migrations,
-        seeds: [initalData],
+        seeds: [initalData, createAdminUser],
     },
     test: {
         connectionString:
@@ -42,6 +45,7 @@ const configByMode: Record<string, DatabaseConfig> = {
         getTestConnectionString: dbName =>
             `postgresql:postgres:postgres@localhost/${dbName}`,
         migrations,
+        seeds: [createAdminUser]
     },
 }
 

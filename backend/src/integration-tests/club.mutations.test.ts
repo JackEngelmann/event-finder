@@ -45,12 +45,12 @@ const deleteClubMutation = `
 describe('club mutations: ', () => {
     let server: ApolloServerTestClient | undefined = undefined
     let db: Database | undefined = undefined
-    let appContext: AppContext = { db: db! }
+    let appContext: AppContext = { db: db!, isAdmin: true }
 
     beforeEach(async done => {
         const newDb = await createTestDb(DB_NAME)
         db = newDb
-        appContext = { db: newDb }
+        appContext = { db: newDb, isAdmin: true }
         await insertTestData(newDb)
         const newServer = new ApolloServer({
             typeDefs,

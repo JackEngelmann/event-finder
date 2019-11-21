@@ -126,6 +126,11 @@ export const typeDefs = gql`
         date: String
     }
 
+    type User {
+        id: Int!
+        name: String
+    }
+
     type Query {
         club(id: Int!): Club
         clubs: [Club!]!
@@ -133,6 +138,7 @@ export const typeDefs = gql`
         events(filter: EventsQueryFilter): [Event!]!
         genre(id: Int!): Genre
         genres: [Genre!]!
+        me: User
     }
 
     type Mutation {

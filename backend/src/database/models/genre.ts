@@ -17,7 +17,7 @@ export class GenreModel {
     }
 
     async getGenre(id: number) {
-        const sql = 'SELECT * FROM genre WHERE id = ?'
+        const sql = 'SELECT * FROM genre WHERE id = $1'
         const params = [id]
         const row = await this.db.get(sql, params)
         if (!row) return undefined
