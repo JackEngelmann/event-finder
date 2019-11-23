@@ -1,0 +1,40 @@
+.login-page {
+    align-items: center;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+    h1 {
+        font-size: 1.4em;
+        margin-top: 1em;
+        margin-bottom: 1.5em;
+        font-weight: bold;
+    }
+    form {
+        width: 25em;
+        height: 30em;
+        background-color: #111;
+        padding: 1.5em 2em;
+    }
+    &__labeled-input {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        color: #111;
+        margin: 2em 0;
+        padding: 0.2em 0.6em;
+    }
+    input {
+        border: none;
+        font-size: 1.1em;
+    }
+    input:focus {
+        outline: none;
+    }
+    label {
+        font-size: 0.8em;
+    }
+    &__login-button {
+        width: 100%;
+    }
+}
