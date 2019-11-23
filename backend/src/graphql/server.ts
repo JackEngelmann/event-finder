@@ -33,11 +33,13 @@ passport.use(
         const userModel = new UserModel(db)
         try {
             const user = await userModel.getUserByName(userName)
-            if (!user) return done(null, false)
-            if (await isSamePassword(user.password, password)) {
-                return done(null, false)
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username' })
             }
-            return done(null, user)
+            if (await isSamePassword(password, user.password)) {
+                return done(null, user)
+            }
+            return done(null, false, { message: 'Incorrect password' })
         } catch (err) {
             return done(err)
         }
@@ -61,10 +63,9 @@ passport.deserializeUser(async (id: number, done) => {
 app.post(
     '/login',
     passport.authenticate('local', {
-        failureRedirect: '/#/login',
         successRedirect: '/#/admin',
+        failureRedirect: '/#/login',
     }),
-    (req, res) => res.redirect('/#/login')
 )
 
 app.get('/images/:imageId', async (req, res) => {

@@ -16,5 +16,6 @@ export function requireAdminPermission(appContext: AppContext) {
 }
 
 export async function isSamePassword(password1: string, password2: string) {
+    console.log({ password1, password2 })
     return await bcrypt.compare(password1, password2)
 }
