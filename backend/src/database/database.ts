@@ -60,8 +60,8 @@ export const createDatabase = () =>
     })
 
 let testDb: PostgresDatabase | undefined = undefined
-export const createTestDb = async (testDbName: string) =>
-    new Promise<Database>(async resolve => {
+export const createTestDb = async (testDbName: string) => {
+    return new Promise<Database>(async (resolve, reject) => {
         if (!databaseConfig.getTestConnectionString) {
             throw new Error(
                 'to create a test db the getTestConnectionString must be defined in the database configuration'
@@ -84,9 +84,11 @@ export const createTestDb = async (testDbName: string) =>
                 }
             )
         } catch (err) {
+            reject(err)
             console.error(err)
         }
     })
+}
 
 export const destroyTestDb = (testDbName: string) =>
     new Promise(async resolve => {

@@ -1,16 +1,14 @@
 import fetch from 'node-fetch'
-import express from 'express'
-import http from 'http'
 import FormData from 'form-data'
-import { ApolloServer } from 'apollo-server-express'
-import { createTestDb, Database, destroyTestDb } from '../database/database'
-import { insertTestData, clubFragment } from './utils'
-import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
-import { typeDefs } from '../graphql/schema'
-import { resolvers } from '../graphql/resolvers'
+import {
+    clubFragment,
+    createApolloTestServer,
+    createApolloHttpTestServer,
+    ApolloTestServer,
+    ApolloHttpTestServer,
+} from './utils'
 import { createEvent } from '../mutations/createEvent'
 import { queryEvent } from '../queries/event'
-import { AppContext } from '../appContext'
 import { CreateClubInput, createClub } from '../mutations/createClub'
 import { UpdateClubInput } from '../mutations/updateClub'
 import { queryClub } from '../queries/club'
@@ -41,47 +39,47 @@ const deleteClubMutation = `
         }
     }
 `
+let apolloTestServer: ApolloTestServer | undefined
+let apolloHttpTestServer: ApolloHttpTestServer | undefined
+
+afterEach(async done => {
+    if (apolloHttpTestServer) await apolloHttpTestServer.destroy()
+    if (apolloTestServer) await apolloTestServer.destroy()
+    apolloTestServer = undefined
+    apolloHttpTestServer = undefined
+    done()
+})
 
 describe('club mutations: ', () => {
-    let server: ApolloServerTestClient | undefined = undefined
-    let db: Database | undefined = undefined
-    let appContext: AppContext = { db: db!, isAdmin: true }
-
-    beforeEach(async done => {
-        const newDb = await createTestDb(DB_NAME)
-        db = newDb
-        appContext = { db: newDb, isAdmin: true }
-        await insertTestData(newDb)
-        const newServer = new ApolloServer({
-            typeDefs,
-            resolvers,
-            context: { db: newDb },
-        })
-        server = createTestClient(newServer)
-        done()
-    })
-
-    afterEach(async done => {
-        await destroyTestDb(DB_NAME)
-        done()
-    })
-
     describe('create', () => {
         test('create club with only required information', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
             const input: CreateClubInput = {
                 name: 'test',
             }
 
-            const result = await server!.mutate({
+            // act
+            const result = await apolloTestServer.client.mutate({
                 mutation: createClubMutation,
                 variables: { input },
             })
+
+            // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
             done()
         })
 
         test('create club with all information', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
             const input: CreateClubInput = {
                 address: 'address',
                 contact: 'contact',
@@ -93,27 +91,101 @@ describe('club mutations: ', () => {
                 specials: 'speicals',
             }
 
-            const result = await server!.mutate({
+            // act
+            const result = await apolloTestServer.client.mutate({
                 mutation: createClubMutation,
                 variables: { input },
             })
+
+            // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
+            done()
+        })
+
+        test('create club with an image', async done => {
+            // arrange
+            apolloHttpTestServer = await createApolloHttpTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
+            const { port } = apolloHttpTestServer
+            const input: any = {
+                name: 'created-name',
+                image: null,
+            }
+            const body = new FormData()
+            body.append(
+                'operations',
+                JSON.stringify({
+                    query: createClubMutation,
+                    variables: { input },
+                })
+            )
+            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
+            body.append(
+                '1',
+                createReadStream(join(__dirname, 'testPicture.jpg'))
+            )
+
+            // act
+            const result: GraphQLResponse = await fetch(
+                `http://localhost:${port!}/graphql`,
+                {
+                    method: 'POST',
+                    body: body as any,
+                }
+            ).then(res => res.json())
+
+            // assert
+            expect(result.errors).toBeUndefined()
+            expect(result.data!.createClub.club.imageUrl).toBeDefined()
+            done()
+        })
+
+        test('create club without being admin should result in error', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                dbName: DB_NAME,
+                isAdmin: false,
+            })
+            const input: CreateClubInput = {
+                name: 'test',
+            }
+
+            // act
+            const result = await apolloTestServer.client.mutate({
+                mutation: createClubMutation,
+                variables: { input },
+            })
+
+            // assert
+            expect(result.data).toBeNull()
+            expect(result.errors).toBeDefined()
+            expect(result.errors).toMatchSnapshot()
             done()
         })
     })
 
     describe('update', () => {
         test('update club with only required information', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
             const input: UpdateClubInput = {
                 name: 'updated-name',
                 id: 1,
             }
 
-            const result = await server!.mutate({
+            // act
+            const result = await apolloTestServer.client.mutate({
                 mutation: updateClubMutation,
                 variables: { input },
             })
+
+            // assert
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
@@ -121,6 +193,11 @@ describe('club mutations: ', () => {
         })
 
         test('update club with all information', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
             const input: UpdateClubInput = {
                 address: 'updated-address',
                 contact: 'updated-contact',
@@ -133,13 +210,82 @@ describe('club mutations: ', () => {
                 specials: 'updated-speicals',
             }
 
-            const result = await server!.mutate({
+            // act
+            const result = await apolloTestServer.client.mutate({
                 mutation: updateClubMutation,
                 variables: { input },
             })
+
+            // assert
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
+            done()
+        })
+
+        test('update club with an image', async done => {
+            // arrange
+            apolloHttpTestServer = await createApolloHttpTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
+            const { port } = apolloHttpTestServer
+            const input: any = {
+                name: 'updated-name',
+                id: 1,
+                image: null,
+            }
+
+            const body = new FormData()
+            body.append(
+                'operations',
+                JSON.stringify({
+                    query: updateClubMutation,
+                    variables: { input },
+                })
+            )
+            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
+            body.append(
+                '1',
+                createReadStream(join(__dirname, 'testPicture.jpg'))
+            )
+
+            // act
+            const result: GraphQLResponse = await fetch(
+                `http://localhost:${port!}/graphql`,
+                {
+                    method: 'POST',
+                    body: body as any,
+                }
+            ).then(res => res.json())
+
+            // assert
+            expect(result.errors).toBeUndefined()
+            expect(result.data!.updateClub.club.imageUrl).toBeDefined()
+            done()
+        })
+
+        test('update club without being admin should result in error', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                dbName: DB_NAME,
+                isAdmin: false
+            })
+            const input: UpdateClubInput = {
+                name: 'test',
+                id: 1,
+            }
+
+            // act
+            const result = await apolloTestServer.client.mutate({
+                mutation: updateClubMutation,
+                variables: { input },
+            })
+
+            // assert
+            expect(result.data).toBeNull()
+            expect(result.errors).toBeDefined()
+            expect(result.errors).toMatchSnapshot()
             done()
         })
     })
@@ -147,6 +293,11 @@ describe('club mutations: ', () => {
     describe('delete', () => {
         test('delete club', async done => {
             // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
+            const { client, appContext } = apolloTestServer
             const clubId = await createClub(appContext, {
                 name: 'test',
             })
@@ -154,7 +305,7 @@ describe('club mutations: ', () => {
             expect(club).toBeDefined()
 
             // act
-            const result = await server!.mutate({
+            const result = await client.mutate({
                 mutation: deleteClubMutation,
                 variables: { id: clubId },
             })
@@ -166,8 +317,33 @@ describe('club mutations: ', () => {
             done()
         })
 
+        test('delete club without permission should yield error', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: false,
+                dbName: DB_NAME,
+            })
+            const { client } = apolloTestServer
+
+            // act
+            const result = await client.mutate({
+                mutation: deleteClubMutation,
+                variables: { id: 1 }
+            })
+
+            // assert
+            expect(result.errors).toBeDefined()
+            expect(result.data).toBeNull()
+            done()
+        })
+
         test('when deleting an event, the events the club did should be deleted too', async done => {
             // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
+            const { client, appContext } = apolloTestServer
             const clubId = await createClub(appContext, {
                 name: 'test',
             })
@@ -185,7 +361,7 @@ describe('club mutations: ', () => {
             expect(connectedEvent).toBeDefined()
 
             // act
-            const result = await server!.mutate({
+            const result = await client.mutate({
                 mutation: deleteClubMutation,
                 variables: { id: clubId },
             })
@@ -198,94 +374,5 @@ describe('club mutations: ', () => {
             expect(deletedEvent).toBeUndefined()
             done()
         })
-    })
-})
-
-describe('club image field', () => {
-    let server: ApolloServer
-    let app: express.Application
-    let httpServer: http.Server
-    let port: number
-
-    async function createServer() {
-        const newDb = await createTestDb(DB_NAME)
-        server = new ApolloServer({
-            typeDefs,
-            resolvers,
-            context: { db: newDb },
-        })
-        app = express()
-        server.applyMiddleware({ app })
-        httpServer = await new Promise<http.Server>(resolve => {
-            const l: http.Server = app.listen({ port: 0 }, () => resolve(l))
-        })
-        await insertTestData(newDb)
-        port = (httpServer.address() as { port: number }).port
-    }
-
-    afterEach(async done => {
-        if (server) await server.stop()
-        if (httpServer) await httpServer.close()
-        await destroyTestDb(DB_NAME)
-        done()
-    })
-
-    test('update club with an image', async done => {
-        await createServer()
-
-        const input: any = {
-            name: 'updated-name',
-            id: 1,
-            image: null,
-        }
-
-        const body = new FormData()
-        body.append(
-            'operations',
-            JSON.stringify({
-                query: updateClubMutation,
-                variables: { input },
-            })
-        )
-        body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-        body.append('1', createReadStream(join(__dirname, 'testPicture.jpg')))
-
-        const result: GraphQLResponse = await fetch(`http://localhost:${port!}/graphql`, {
-            method: 'POST',
-            body: body as any,
-        }).then(res => res.json())
-
-        expect(result.errors).toBeUndefined()
-        expect(result.data!.updateClub.club.imageUrl).toBeDefined()
-        done()
-    })
-
-    test('create club with an image', async done => {
-        await createServer()
-
-        const input: any = {
-            name: 'created-name',
-            image: null,
-        }
-
-        const body = new FormData()
-        body.append(
-            'operations',
-            JSON.stringify({
-                query: createClubMutation,
-                variables: { input },
-            })
-        )
-        body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-        body.append('1', createReadStream(join(__dirname, 'testPicture.jpg')))
-
-        const result: GraphQLResponse = await fetch(`http://localhost:${port!}/graphql`, {
-            method: 'POST',
-            body: body as any,
-        }).then(res => res.json())
-
-        expect(result.errors).toBeUndefined()
-        expect(result.data!.createClub.club.imageUrl).toBeDefined()
-        done()
     })
 })

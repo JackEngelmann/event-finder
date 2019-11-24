@@ -114,6 +114,18 @@ Object {
 }
 `;
 
+exports[`event mutations:  create event create an event without permission shoul yield error 1`] = `
+Array [
+  [GraphQLError: You need to be logged in as admin to mutate data],
+]
+`;
+
+exports[`event mutations:  delte event without permission should yield error 1`] = `
+Array [
+  [GraphQLError: You need to be logged in as admin to mutate data],
+]
+`;
+
 exports[`event mutations:  update event to only have required fields 1`] = `
 Object {
   "data": Object {
@@ -219,6 +231,21 @@ Object {
     },
   },
   "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`event mutations:  update event without permission should yield error 1`] = `
+Object {
+  "data": null,
+  "errors": Array [
+    [GraphQLError: You need to be logged in as admin to mutate data],
+  ],
   "extensions": undefined,
   "http": Object {
     "headers": Headers {

@@ -1,34 +1,26 @@
-import { ApolloServerTestClient, createTestClient } from "apollo-server-testing"
-import { genreFragment, insertTestData } from "./utils"
-import { createTestDb, destroyTestDb } from "../database/database"
-import { ApolloServer } from "apollo-server-express"
-import { resolvers } from '../graphql/resolvers'
-import { typeDefs } from '../graphql/schema'
+import { genreFragment, ApolloTestServer, createApolloTestServer } from "./utils"
 
-let server: ApolloServerTestClient | undefined
+let apolloTestServer: ApolloTestServer | undefined
 
 const DB_NAME = 'genresquerydb'
 
 beforeEach(async done => {
-    const db = await createTestDb(DB_NAME)
-    await insertTestData(db)
-    const newServer = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context: { db },
+    apolloTestServer = await createApolloTestServer({
+        isAdmin: false,
+        dbName: DB_NAME,
     })
-    server = createTestClient(newServer)
     done()
 })
 
 afterEach(async done => {
-    await destroyTestDb(DB_NAME)
+    if (apolloTestServer) await apolloTestServer.destroy()
+    apolloTestServer = undefined
     done()
 })
 
 describe('club queries', () => {
     test('genres correctly', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `
             {
                 genres { ${genreFragment} }

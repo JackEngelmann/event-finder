@@ -1,34 +1,26 @@
-import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
-import { ApolloServer } from 'apollo-server-express'
-import { typeDefs } from '../graphql/schema'
-import { resolvers } from '../graphql/resolvers'
-import { createTestDb, destroyTestDb } from '../database/database'
-import { clubFragment, insertTestData } from './utils'
+import { clubFragment, ApolloTestServer, createApolloTestServer } from './utils'
 
-let server: ApolloServerTestClient | undefined
+let apolloTestServer: ApolloTestServer | undefined
 
 const DB_NAME = 'clubquerydb'
 
 beforeEach(async done => {
-    const db = await createTestDb(DB_NAME)
-    await insertTestData(db)
-    const newServer = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context: { db },
+    apolloTestServer = await createApolloTestServer({
+        isAdmin: false,
+        dbName: DB_NAME,
     })
-    server = createTestClient(newServer)
     done()
 })
 
 afterEach(async done => {
-    await destroyTestDb(DB_NAME)
+    if (apolloTestServer) await apolloTestServer.destroy()
+    apolloTestServer = undefined
     done()
 })
 
 describe('club queries', () => {
     test('clubs correctly', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `{
                 clubs { ${clubFragment} }
             }`,
@@ -38,7 +30,7 @@ describe('club queries', () => {
         done()
     })
     test('existing club correctly', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `
                 query clubById($id: Int!) {
                     club(id: $id) { ${clubFragment} }

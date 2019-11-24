@@ -1,34 +1,26 @@
-import { createTestClient, ApolloServerTestClient } from 'apollo-server-testing'
-import { ApolloServer } from 'apollo-server-express'
-import { typeDefs } from '../graphql/schema'
-import { resolvers } from '../graphql/resolvers'
-import { createTestDb, destroyTestDb } from '../database/database'
-import { eventFragment, insertTestData } from './utils'
-
-let server: ApolloServerTestClient | undefined
+import { eventFragment, ApolloTestServer, createApolloTestServer } from './utils'
 
 const DB_NAME = 'eventquerydb'
 
+let apolloTestServer: ApolloTestServer | undefined
+
 beforeEach(async done => {
-    const db = await createTestDb(DB_NAME)
-    await insertTestData(db)
-    const newServer = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context: { db },
+    apolloTestServer = await createApolloTestServer({
+        isAdmin: false,
+        dbName: DB_NAME,
     })
-    server = createTestClient(newServer)
     done()
 })
 
 afterEach(async done => {
-    await destroyTestDb(DB_NAME)
+    if (apolloTestServer) await apolloTestServer.destroy()
+    apolloTestServer = undefined
     done()
 })
 
 describe('event queries: ', () => {
     test('events correctly', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `{
                 events { ${eventFragment} }
             }`,
@@ -38,7 +30,7 @@ describe('event queries: ', () => {
         done()
     })
     test('existing event correctly', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `
                 query eventQuery($id: Int!) {
                     event(id: $id) { ${eventFragment} }
@@ -53,7 +45,7 @@ describe('event queries: ', () => {
         done()
     })
     test('not existing event and return undefined', async done => {
-        const result = await server!.query({
+        const result = await apolloTestServer!.client.query({
             query: `
                 query eventQuery($id: Int!) {
                     event(id: $id) { ${eventFragment} }

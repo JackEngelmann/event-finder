@@ -13,7 +13,7 @@ export async function getAdminPassword() {
 }
 
 export function requireAdminPermission(appContext: AppContext) {
-    if (process.env.NODE_ENV !== 'test' && !appContext.isAdmin) {
+    if (!appContext.isAdmin) {
         throw new Error('You need to be logged in as admin to mutate data')
     }
 }
