@@ -9,6 +9,7 @@ export function FooterContainer() {
             <button onClick={() => history.push('/impressum')}>Impressum</button>
             <button onClick={() => history.push('/data-policy')}>Data Policy</button>
             <button onClick={() => history.push('/contact')}>Contact</button>
+            <button onClick={() => history.push('/admin')}>Administration</button>
         </Footer>
     )
 }
