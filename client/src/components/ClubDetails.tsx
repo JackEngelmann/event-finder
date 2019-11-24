@@ -32,7 +32,7 @@ export function ClubDetails(props: Props) {
                     <img
                         className={`${cn}__picture`}
                         src={club.imageUrl}
-                        alt="image of the club"
+                        alt={`club ${club.name}`}
                     />
                 </div>
                 <KeyValueFields>
