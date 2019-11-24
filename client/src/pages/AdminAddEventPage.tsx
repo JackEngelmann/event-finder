@@ -249,7 +249,7 @@ export function AdminAddEventPage() {
                             }
                         />
                     </LabeledInput>
-                    <LabeledInput label="GAenres">
+                    <LabeledInput label="Genres">
                         <MultiSelect
                             getItemKey={item => item.id.toString()}
                             renderItem={item => item.name}

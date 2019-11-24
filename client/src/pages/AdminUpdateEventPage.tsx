@@ -109,6 +109,7 @@ export function AdminUpdateEventPage(props: any) {
                 special: state.special,
             },
         },
+        refetchQueries: [EVENT_QUERY]
     })
     const history = useHistory()
     const event = eventQueryResult.data && eventQueryResult.data.event
@@ -286,7 +287,7 @@ export function AdminUpdateEventPage(props: any) {
                             }
                         />
                     </LabeledInput>
-                    <LabeledInput label="GAenres">
+                    <LabeledInput label="Genres">
                         <MultiSelect
                             getItemKey={item => item.id.toString()}
                             renderItem={item => item.name}

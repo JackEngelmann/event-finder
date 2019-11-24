@@ -8,6 +8,7 @@ import { useHistory } from 'react-router'
 import { Button } from '../components/Button'
 import { H1Title } from '../components/H1Title'
 import { Spacer } from '../components/Spacer'
+import { CLUBS_QUERY } from '../containers/useClubs'
 
 const CREATE_CLUB_MUTATION = gql`
     mutation CreateClub($input: CreateClubInput!) {
@@ -35,7 +36,8 @@ export function AdminAddClubPage() {
                 region: clubEditorState.region,
                 specials: clubEditorState.specials
             }
-        }
+        },
+        refetchQueries: [CLUBS_QUERY]
     })
     const history = useHistory()
 
