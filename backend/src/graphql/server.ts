@@ -2,23 +2,25 @@ import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './schema'
 import { resolvers } from './resolvers'
 import express from 'express'
-import bcrypt from 'bcrypt'
 import http, { Server } from 'http'
 import { createDatabase } from '../database/database'
 import { AppContext } from '../appContext'
 import passport from 'passport'
-import { Strategy } from 'passport-local'
 import { ImageService } from '../service/imageService'
 import { ImageModel } from '../database/models/image'
 import { UserModel, UserDataModel } from '../database/models/user'
 import session from 'express-session'
 import bodyParser from 'body-parser'
-import { SECRET, isSamePassword } from '../permissionUtils'
+import { SECRET, createAuthenticationStrategy } from '../authentication'
 
 const PORT = process.env.PORT || 5000
 
 const db = createDatabase()
 const app = express()
+
+/**
+ * express middlewares
+ */
 
 app.use(express.static('public'))
 app.use(session({ secret: SECRET }))
@@ -26,30 +28,14 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 app.use(passport.session())
 
-// TODO: refactor -> there shouldn't be so much logic in this file
+/**
+ * authentication
+ */
 
-passport.use(
-    new Strategy(async function(userName, password, done) {
-        const userModel = new UserModel(db)
-        try {
-            const user = await userModel.getUserByName(userName)
-            if (!user) {
-                return done(null, false, { message: 'Incorrect username' })
-            }
-            if (await isSamePassword(password, user.password)) {
-                return done(null, user)
-            }
-            return done(null, false, { message: 'Incorrect password' })
-        } catch (err) {
-            return done(err)
-        }
-    })
-)
-
-passport.serializeUser((user: UserDataModel, done) => {
+passport.use(createAuthenticationStrategy(db))
+passport.serializeUser((user: UserDataModel, done) =>
     done(null, user.id)
-})
-
+)
 passport.deserializeUser(async (id: number, done) => {
     try {
         const userModel = new UserModel(db)
@@ -59,6 +45,10 @@ passport.deserializeUser(async (id: number, done) => {
         done(err, null)
     }
 })
+
+/**
+ * routes
+ */
 
 app.post(
     '/login',
@@ -79,6 +69,10 @@ app.get('/images/:imageId', async (req, res) => {
     res.send(file.data)
 })
 
+/**
+ * GraphQL (implemented using apollo-server)
+ */
+
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
@@ -98,6 +92,11 @@ const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({ app })
 
 let expressServer: Server | null = null
+
+/**
+ * Imperatives to start and stop the server
+ * (used for testing, hot-reloading)
+ */
 
 export async function startServer() {
     expressServer = http.createServer(app).listen({ port: PORT }, () => {

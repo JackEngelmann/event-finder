@@ -1,5 +1,5 @@
 import { DbScript } from "../../../databaseConfig";
-import { getAdminPassword } from "../../permissionUtils";
+import { getAdminPassword } from "../../authentication";
 
 export const createAdminUser: DbScript = {
     name: 'create-admin',

@@ -13,7 +13,7 @@ import { createClub } from '../mutations/createClub'
 import { updateClub } from '../mutations/updateClub'
 import { deleteClub } from '../mutations/deleteClub'
 import { AppContext } from '../appContext'
-import { requireAdminPermission } from '../permissionUtils'
+import { requireAdminPermission } from '../authentication'
 
 type Source = {
     clubId: number
