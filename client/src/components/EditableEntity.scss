@@ -3,8 +3,14 @@
     color: white;
     display: flex;
     padding: 0.2em 0;
+    white-space: nowrap;
+
+    &__entity-actions {
+        flex: 0 0 auto;
+    }
 
     &__entity-name {
         margin-left: 0.5em;
+        text-overflow: ellipsis;
     }
 }
