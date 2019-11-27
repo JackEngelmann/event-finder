@@ -1,19 +1,19 @@
 import React from 'react';
 import { Page } from '../components/Page';
-import { Header } from '../components/Header';
 import { Content } from '../components/Content';
 import { FormattedHtml } from '../components/FormattedHtml';
 import { GoBackButton } from '../components/GoBackButton';
 import { useHistory } from 'react-router';
 import { H1Title } from '../components/H1Title';
+import { HeaderContainer } from '../containers/HeaderContainer';
 
 export function ImpressumPage() {
     const history = useHistory()
     return (
         <Page>
-            <Header>
+            <HeaderContainer>
                 <GoBackButton onClick={() => history.push('/')} />
-            </Header>
+            </HeaderContainer>
             <Content restrictMaxWidth scrollable>
                 <H1Title>
                     Impressum

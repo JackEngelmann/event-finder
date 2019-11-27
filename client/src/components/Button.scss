@@ -7,6 +7,7 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    cursor: pointer;
 
     &--primary {
         background-color: lighten(#264653, 10%);

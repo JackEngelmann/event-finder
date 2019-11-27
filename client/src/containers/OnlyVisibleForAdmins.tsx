@@ -1,8 +1,9 @@
 import React from 'react';
+import { ComponentProps } from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import { Redirect } from "react-router-dom";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+
+type Props = ComponentProps<'div'>
 
 const ME_QUERY = gql`
     {
@@ -11,10 +12,11 @@ const ME_QUERY = gql`
         }
     }
 `
-export function LoginRedirect() {
+
+export function OnlyVisibleForAdmins(props: Props) {
     const meResult = useQuery(ME_QUERY)
     const me = meResult.data && meResult.data.me
-    if (meResult.loading) return <LoadingIndicator />
-    if (!me) return <Redirect to="/login" />
-    return null
+    if (meResult.loading) return null
+    if (!me) return null
+    return <>{props.children}</>
 }

@@ -26,7 +26,7 @@ export function ClubDetails(props: Props) {
     const { club } = props
     return (
         <div className={cn}>
-            <H1Title hideDivider>{club.name}</H1Title>
+            <H1Title>{club.name}</H1Title>
             <div className={`${cn}__picture-and-short-info`}>
                 <div className={`${cn}__picture-wrapper`}>
                     <img

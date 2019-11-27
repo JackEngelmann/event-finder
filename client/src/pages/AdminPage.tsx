@@ -12,6 +12,8 @@ import { useClubs, CLUBS_QUERY } from '../containers/useClubs'
 import { Button } from '../components/Button'
 import { H1Title } from '../components/H1Title'
 import { Icon } from '../components/Icon'
+import { HeaderContainer } from '../containers/HeaderContainer'
+import { Content } from '../components/Content'
 
 const cn = 'admin-page'
 
@@ -73,7 +75,8 @@ export function AdminPage() {
 
     return (
         <Page>
-            <div className={cn}>
+            <HeaderContainer />
+            <Content className={cn}>
                 <H1Title>Administration</H1Title>
                 <div className={`${cn}__content`}>
                     <div className={`${cn}__section`}>
@@ -92,6 +95,7 @@ export function AdminPage() {
                                 clubs.map(c => (
                                     <EditableEntity
                                         key={c.id}
+                                        onShow={() => history.push(`/club/${c.id}`)}
                                         onDelete={() => deleteClub(c.id)}
                                         onEdit={() =>
                                             history.push(`/admin/club/${c.id}`)
@@ -122,6 +126,7 @@ export function AdminPage() {
                                     <EditableEntity
                                         key={e.id}
                                         onDelete={() => deleteEvent(e.id)}
+                                        onShow={() => history.push(`/event/${e.id}`)}
                                         onEdit={() =>
                                             history.push(`/admin/event/${e.id}`)
                                         }
@@ -135,7 +140,7 @@ export function AdminPage() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </Content>
         </Page>
     )
 }

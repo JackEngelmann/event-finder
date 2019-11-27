@@ -14,7 +14,7 @@ type Props = {
 }
 
 const EVENTS_QUERY = gql`
-    query homePageEventsQuery($eventsQueryFilter: EventsQueryFilter) {
+    query eventsPageEventsQuery($eventsQueryFilter: EventsQueryFilter) {
         events(filter: $eventsQueryFilter) {
             id
             name

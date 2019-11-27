@@ -5,6 +5,9 @@ import { Content } from '../components/Content'
 import { useParams, useHistory } from 'react-router'
 import { GoBackButton } from '../components/GoBackButton'
 import { ClubDetailsContainer } from '../containers/ClubDetailsContainer'
+import { OnlyVisibleForAdmins } from '../containers/OnlyVisibleForAdmins'
+import { Button } from '../components/Button'
+import { HeaderContainer } from '../containers/HeaderContainer'
 
 type Props = {}
 
@@ -19,11 +22,18 @@ export function ClubDetailPage(props: Props) {
 
     return (
         <Page>
-            <Header>
+            <HeaderContainer>
                 <GoBackButton onClick={() => history.push('/')} />
-            </Header>
+            </HeaderContainer>
             <Content restrictMaxWidth scrollable>
                 <ClubDetailsContainer clubId={clubId} />
+                <OnlyVisibleForAdmins>
+                    <Button
+                        onClick={() => history.push(`/admin/club/${clubId}`)}
+                    >
+                        Edit
+                    </Button>
+                </OnlyVisibleForAdmins>
             </Content>
         </Page>
     )

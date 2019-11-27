@@ -1,0 +1,15 @@
+.mobile-menu {
+    position: absolute;
+    top: 2.5em;
+    bottom: 0;
+    background-color: #1f1f1f;
+    width: 100%;
+    z-index: 100;
+    color: white;
+}
+
+@media only screen and (min-width: 800px) {
+    .mobile-menu {
+        display: none;
+    }
+}

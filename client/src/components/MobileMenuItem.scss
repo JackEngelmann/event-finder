@@ -1,0 +1,9 @@
+.mobile-menu-item {
+    padding: 0.7em 1em;
+    display: block;
+    text-decoration: none;
+    color: white;
+    &__active {
+        font-weight: bold;
+    }
+}
