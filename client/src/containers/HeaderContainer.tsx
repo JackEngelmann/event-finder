@@ -5,6 +5,8 @@ import { ReduxAction } from '../redux/store'
 
 type Props = {
     children?: ReactNode
+    left?: ReactNode
+    right?: ReactNode
 }
 export function HeaderContainer(props: Props) {
     const dispatch = useDispatch<(action: ReduxAction) => void>()

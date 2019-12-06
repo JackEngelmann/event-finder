@@ -22,9 +22,13 @@ export function EventDetailPage(props: Props) {
 
     return (
         <Page>
-            <HeaderContainer>
-                <GoBackButton onClick={() => history.push(`/${search}`)} />
-            </HeaderContainer>
+            <HeaderContainer
+                left={
+                    <GoBackButton
+                        onClick={() => history.push(`/event/${search}`)}
+                    />
+                }
+            />
             <Content restrictMaxWidth scrollable>
                 <EventDetailsContainer
                     eventId={eventId ? parseInt(eventId, 10) : undefined}

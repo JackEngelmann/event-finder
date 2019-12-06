@@ -1,6 +1,5 @@
 import React from 'react'
 import { Page } from '../components/Page'
-import { Header } from '../components/Header'
 import { Content } from '../components/Content'
 import { GoBackButton } from '../components/GoBackButton'
 import { useHistory } from 'react-router'
@@ -11,9 +10,9 @@ export function ContactPage() {
     const history = useHistory()
     return (
         <Page>
-            <HeaderContainer>
-                <GoBackButton onClick={() => history.push('/')} />
-            </HeaderContainer>
+            <HeaderContainer
+                left={<GoBackButton onClick={() => history.push('/')} />}
+            />
             <Content restrictMaxWidth scrollable>
                 <H1Title>Contact</H1Title>
                 ...

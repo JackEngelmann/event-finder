@@ -9,24 +9,41 @@
     height: 2.5em;
     width: 100%;
     position: relative;
+    display: flex;
+
+    &__left {
+        align-items: center;
+        display: flex;
+        flex: 1 1 0;
+        height: 100%;
+        .go-back-button {
+            padding-left: 0.2em;
+        }
+    }
+
+    &__right {
+        align-items: center;
+        display: flex;
+        flex: 1 1 0;
+        height: 100%;
+        justify-content: flex-end;
+    }
+
+    &__content {
+        height: 100%;
+        flex: 0 0 auto;
+    }
 
     &__content {
         align-items: center;
-        color: white;
-        display: flex;;
+        display: flex;
         height: 100%;
-        margin: 0 auto;
         max-width: 1200px;
-        padding-left: 1em;
     }
 
     &__menu-icon {
         padding: 0.5em;
         font-size: 1.3em;
-        position: absolute;
-        right: 0;
-        top: 0;
-        bottom: 0;
         text-align: center;
         &:hover {
             background-color: black;
