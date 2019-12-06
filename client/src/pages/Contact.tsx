@@ -15,7 +15,7 @@ export function ContactPage() {
             />
             <Content restrictMaxWidth scrollable>
                 <H1Title>Contact</H1Title>
-                ...
+                Email: info@event-jaf.de
             </Content>
         </Page>
     )

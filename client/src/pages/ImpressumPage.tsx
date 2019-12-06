@@ -31,7 +31,7 @@ export function ImpressumPage() {
                     <br />
                     Telefon: 0162-2326045
                     <br />
-                    E-Mail: f.huhold@online.de
+                    E-Mail: info@event-jaf.de
                     <br />
                     <h3>
                         Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:

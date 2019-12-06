@@ -89,7 +89,7 @@ export function DataPolicyPage() {
                     <br />
                     Telefon: 0162-2326045
                     <br />
-                    E-Mail: f.huhold@online.de
+                    E-Mail: info@event-jaf.de
                     <br />
                     <br />
                     Verantwortliche Stelle ist die natürliche oder juristische
