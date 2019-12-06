@@ -14,15 +14,15 @@ import { H1Title } from '../components/H1Title'
 import { Icon } from '../components/Icon'
 import { HeaderContainer } from '../containers/HeaderContainer'
 import { Content } from '../components/Content'
+import moment from 'moment'
 
 const cn = 'admin-page'
-
-// TODO: permission system!
 
 const EVENTS_QUERY = gql`
     query AdminEventsQuery {
         events {
             id
+            date
             name
         }
     }
@@ -131,7 +131,7 @@ export function AdminPage() {
                                             history.push(`/admin/event/${e.id}`)
                                         }
                                     >
-                                        {e.name}
+                                        {e.name} ({moment(e.date).format('DD.MM.YYYY')})
                                     </EditableEntity>
                                 ))
                             ) : (
