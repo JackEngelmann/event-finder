@@ -11,8 +11,11 @@ type Props = ComponentProps<'div'> & {
 
 const cn = 'content'
 
+const ScrollContainer = (props: ComponentProps<'div'>) => <div {...props} />
+
 export function Content(props: Props) {
     const { restrictMaxWidth, scrollable, children, ...divProps } = props
+    const Container = scrollable ? ScrollContainer : React.Fragment
     return (
         <div
             className={classNames(cn, scrollable && `${cn}--scrollable`)}
@@ -20,17 +23,17 @@ export function Content(props: Props) {
         >
             <MobileMenuContainer />
             {restrictMaxWidth ? (
-                <div className={`${cn}__scrollable-content`}>
+                <Container>
                     <div className={`${cn}__max-width-wrapper`}>
                         {children}
                     </div>
                     <FooterContainer />
-                </div>
+                </Container>
             ) : (
-                <div className={`${cn}__scrollable-content`}>
+                <Container>
                     {children}
                     <FooterContainer />
-                </div>
+                </Container>
             )}
         </div>
     )
