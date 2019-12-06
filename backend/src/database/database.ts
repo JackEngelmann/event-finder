@@ -55,7 +55,7 @@ class PostgresDatabase implements Database {
 
 export const createDatabase = () =>
     new PostgresDatabase(databaseConfig.connectionString, async db => {
-        console.log('appydbscripts')
+        console.log('apply db-scripts')
         await applyDbScripts(db, databaseConfig)
     })
 

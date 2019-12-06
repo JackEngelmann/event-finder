@@ -6,6 +6,7 @@ import { addLinkToEvent } from './src/database/migrations/3-addLinkToEvent'
 import { addImageToClub } from './src/database/migrations/4-addImageToClub'
 import { createAdminUser } from './src/database/seeds/2-createAdminUser'
 import { addUserTable } from './src/database/migrations/5-addUserTable'
+import { addGenres } from './src/database/seeds/3-addGenres'
 
 export type DbScript = {
     name: string
@@ -31,13 +32,13 @@ const configByMode: Record<string, DatabaseConfig> = {
     production: {
         connectionString: process.env.DATABASE_URL!,
         migrations,
-        seeds: [initalData, createAdminUser],
+        seeds: [initalData, createAdminUser, addGenres],
     },
     development: {
         connectionString:
             'postgresql://postgres:postgres@localhost/lieblingsclubdb',
         migrations,
-        seeds: [initalData, createAdminUser],
+        seeds: [initalData, createAdminUser, addGenres],
     },
     test: {
         connectionString:
