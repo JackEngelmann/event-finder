@@ -24,12 +24,12 @@ export function Button(props: Props) {
     return (
         <button
             {...restProps}
-            className={classNames(cn, className, {
+            className={classNames(cn, {
                 [`${cn}--primary`]: primary,
                 [`${cn}--secondary`]: secondary,
                 [`${cn}--danger`]: danger,
                 [`${cn}--borderless`]: borderless,
-            })}
+            }, className)}
         />
     )
 }

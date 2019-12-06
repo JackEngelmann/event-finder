@@ -1,4 +1,10 @@
-.club-details {
+.club-detail-page {
+    &__edit-button {
+        margin-left: 0.5em;
+        background-color: transparent;
+        color: white;
+    }
+
     &__picture {
         max-width: 100%;
         height: auto;
@@ -27,11 +33,11 @@
 }
 
 @media only screen and (min-width: 800px) {
-    .club-details__picture-and-short-info {
+    .club-detail-page__picture-and-short-info {
         flex-direction: row;
         justify-content: space-around;
 
-        .club-details__picture-wrapper {
+        .club-detail-page__picture-wrapper {
             width: 40%;
         }
 
