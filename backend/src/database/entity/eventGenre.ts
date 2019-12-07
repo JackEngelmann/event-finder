@@ -1,21 +1,22 @@
-import { Database } from "../database"
+import { Entity, PrimaryGeneratedColumn, Column, Connection } from "typeorm"
 
+@Entity('eventgenre')
 export class EventGenreDataModel {
-    id: number
-    eventId: number
-    genreId: number
-    constructor(row: any) {
-        this.id = row.id
-        this.eventId = row.eventid
-        this.genreId = row.genreid
-    }
+    @PrimaryGeneratedColumn()
+    id!: number
+
+    @Column()
+    eventId!: number
+
+    @Column()
+    genreId!: number
 }
 
 export class EventGenreModel {
-    private db: Database
+    private connection: Connection
 
-    constructor(db: Database) {
-        this.db = db
+    constructor(connection: Connection) {
+        this.connection = connection
     }
 
     async setGenresForAnEvent(eventId: number, genreIds = [] as number[]) {
@@ -41,16 +42,18 @@ export class EventGenreModel {
     }
 
     private async insertGenreForEvent(eventId: number, genreId: number) {
-        return await this.db.run(
-            'insert into eventGenre (eventId, genreId) VALUES ($1, $2)',
-            [eventId, genreId]
-        )
+        const eventGenre = new EventGenreDataModel()
+        eventGenre.eventId = eventId
+        eventGenre.genreId = genreId
+        await this.connection.manager.save(eventGenre)
     }
 
-    deleteAllGenresForEvent(eventId: number) {
-        return this.db.run(
-            `DELETE FROM eventGenre WHERE eventId = $1`,
-            [eventId]
-        )
+    async deleteAllGenresForEvent(eventId: number) {
+        const eventGenres = await this.getAllEventGenresForAnEvent(eventId)
+        await this.connection.manager.remove(eventGenres)
+    }
+
+    async getAllEventGenresForAnEvent(eventId: number) {
+        return await this.connection.manager.find(EventGenreDataModel, { eventId })
     }
 }

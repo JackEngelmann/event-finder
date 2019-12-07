@@ -1,7 +1,7 @@
 import { AppContext } from "../appContext";
-import { ClubModel } from "../database/models/club";
+import { ClubModel } from "../database/entity/club";
 import { Logger } from "../logger";
-import { EventModel } from "../database/models/event";
+import { EventModel } from "../database/entity/event";
 import { deleteEvent } from "./deleteEvent";
 
 export function deleteClub(appContext: AppContext, clubId: number) {

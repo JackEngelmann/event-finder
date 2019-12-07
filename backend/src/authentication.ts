@@ -1,8 +1,8 @@
 import bcrypt from 'bcrypt'
 import { AppContext } from './appContext'
 import { Strategy } from 'passport-local'
-import { UserModel } from './database/models/user'
-import { Database } from './database/database'
+import { UserModel } from './database/entity/user'
+import { Connection } from 'typeorm'
 
 export const BCRYPT_SALT_ROUNDS = 11
 export const ADMIN_PASSWORD_PLAINTEXT = 'alexfalcojack'
@@ -22,9 +22,12 @@ async function isSamePassword(password1: string, password2: string) {
     return await bcrypt.compare(password1, password2)
 }
 
-export const createAuthenticationStrategy = (db: Database) =>
+export const createAuthenticationStrategy = (
+    connectionPromise: Promise<Connection>
+) =>
     new Strategy(async function(userName, password, done) {
-        const userModel = new UserModel(db)
+        const connection = await connectionPromise
+        const userModel = new UserModel(connection)
         try {
             const user = await userModel.getUserByName(userName)
             if (!user) {

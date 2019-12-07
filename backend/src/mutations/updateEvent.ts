@@ -1,8 +1,8 @@
 import { AppContext } from '../appContext'
-import { EventModel } from '../database/models/event'
-import { EventGenreModel } from '../database/models/eventGenre'
+import { EventModel } from '../database/entity/event'
+import { EventGenreModel } from '../database/entity/eventGenre'
 import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../database/models/image'
+import { ImageModel } from '../database/entity/image'
 import { ImageService } from '../service/imageService'
 
 export type UpdateEventInput = {
@@ -11,7 +11,7 @@ export type UpdateEventInput = {
     amountOfFloors?: number
     clubId: number
     date: string
-    description?: String
+    description?: string
     genreIds?: number[]
     id: number
     image?: Promise<FileUpload>

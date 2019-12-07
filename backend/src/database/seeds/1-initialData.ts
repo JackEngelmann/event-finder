@@ -2,8 +2,8 @@ import { DbScript } from "../../../databaseConfig"
 
 export const initalData: DbScript = {
     name: 'initialData',
-    async up(db) {
-        await db.run(`
+    async up(connection) {
+        await connection.query(`
             INSERT INTO club (name, address, region, contact, email, specials, description, link) VALUES
             ('Kathys Garage','Alaunstraße 48 01099 Dresden','Neustadt ','0351 6567701','stefan@katysgarage.de','Biergarten','Katys Garage ist ein alternativer Szeneclub im Herzen der Dresdner Neustadt. Die Gäste sind nationale und internationale Studenten, Touristen und Dresdner. Katys Garage versteht sich als weltoffen und tolerant. Das Programmspektrum ist breit gefächert und reicht von Rock bis Elektro. Katys Garage fördert einen respektvollen Umgang im Team und unter den Gästen. Katys Garage distanziert sich von rechtem und linkem Extremismus, Rassismus, Homophobie, Gewaltverherrlichung und Frauenfeindlichkeit.','https://katysgarage.de/'),
             ('Stolperdiele','Breitscheidstr. 57 01237 Dresden','Außerhalb','01520 2687225','https://www.facebook.com/Stolperdiele','','','www.stolperdiele.de'),
@@ -52,7 +52,7 @@ export const initalData: DbScript = {
             ('Ostpol','','','','','','',''),
             ('Der Lude','','Neustadt','','','','','');
         `)
-        await db.run(`
+        await connection.query(`
             INSERT INTO event
             (
                 name,
@@ -122,7 +122,7 @@ export const initalData: DbScript = {
                     1
                 )
         `)
-        await db.run(`
+        await connection.query(`
             INSERT INTO genre (name) VALUES
                 ('Hip-Hop'),
                 ('Deutsch-Rap'),
@@ -133,8 +133,8 @@ export const initalData: DbScript = {
                 ('Rock'),
                 ('Gospel')
         `)
-        return await db.run(`
-            INSERT INTO eventGenre (eventId, genreId) VALUES
+        return await connection.query(`
+            INSERT INTO eventgenre (eventId, genreId) VALUES
                 (1, 3),
                 (1, 2),
                 (1, 1),

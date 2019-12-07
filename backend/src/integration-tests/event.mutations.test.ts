@@ -243,6 +243,7 @@ describe('event mutations: ', () => {
             })
 
             // assert
+            expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result.data!.updateEvent).toBeDefined()
             expect(result.data!.updateEvent.event).toBeNull()

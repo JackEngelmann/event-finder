@@ -1,4 +1,4 @@
-import { Database } from "./database/database";
-import { UserDataModel } from "./database/models/user";
+import { UserDataModel } from "./database/entity/user";
+import { Connection } from "typeorm";
 
-export type AppContext = { db: Database, isAdmin: boolean, user?: UserDataModel }
+export type AppContext = { db: Connection, isAdmin: boolean, user?: UserDataModel }

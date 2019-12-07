@@ -1,6 +1,6 @@
 import { AppContext } from '../appContext'
 import moment from 'moment'
-import { EventModel, EventDataModel } from '../database/models/event'
+import { EventModel, EventDataModel } from '../database/entity/event'
 
 type Filter = {
     date?: string

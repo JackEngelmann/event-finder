@@ -1,0 +1,11 @@
+{
+    "type": "mysql",
+    "host": "localhost",
+    "port": 3306,
+    "username": "lieblingsclub",
+    "password": "lieblingsclub",
+    "synchronize": true,
+    "logging": false,
+    "entites": "src/database/entity/**/*.ts",
+    "migrations": "src/database/migrations/**/*.ts"
+}

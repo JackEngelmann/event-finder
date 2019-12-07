@@ -1,7 +1,7 @@
 import { AppContext } from '../appContext'
-import { ClubModel } from '../database/models/club'
+import { ClubModel } from '../database/entity/club'
 import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../database/models/image'
+import { ImageModel } from '../database/entity/image'
 import { ImageService } from '../service/imageService'
 
 export type CreateClubInput = {

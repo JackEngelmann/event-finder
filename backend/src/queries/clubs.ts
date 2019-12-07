@@ -1,5 +1,5 @@
 import { AppContext } from "../appContext"
-import { ClubModel } from "../database/models/club"
+import { ClubModel } from "../database/entity/club"
 
 export function queryClubs(appContext: AppContext) {
     const { db } = appContext

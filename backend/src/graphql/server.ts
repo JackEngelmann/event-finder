@@ -3,19 +3,19 @@ import { typeDefs } from './schema'
 import { resolvers } from './resolvers'
 import express from 'express'
 import http, { Server } from 'http'
-import { createDatabase } from '../database/database'
 import { AppContext } from '../appContext'
 import passport from 'passport'
 import { ImageService } from '../service/imageService'
-import { ImageModel } from '../database/models/image'
-import { UserModel, UserDataModel } from '../database/models/user'
+import { ImageModel, ImageDataModel } from '../database/entity/image'
+import { UserModel, UserDataModel } from '../database/entity/user'
 import session from 'express-session'
 import bodyParser from 'body-parser'
 import { SECRET, createAuthenticationStrategy } from '../authentication'
+import "reflect-metadata"
+import { connectionPromise } from '../database/database'
 
 const PORT = process.env.PORT || 5000
 
-const db = createDatabase()
 const app = express()
 
 /**
@@ -32,13 +32,14 @@ app.use(passport.session())
  * authentication
  */
 
-passport.use(createAuthenticationStrategy(db))
+passport.use(createAuthenticationStrategy(connectionPromise))
 passport.serializeUser((user: UserDataModel, done) =>
     done(null, user.id)
 )
 passport.deserializeUser(async (id: number, done) => {
     try {
-        const userModel = new UserModel(db)
+        const connection = await connectionPromise
+        const userModel = new UserModel(connection)
         const user = await userModel.getUser(id)
         done(null, user)
     } catch (err) {
@@ -59,8 +60,9 @@ app.post(
 )
 
 app.get('/images/:imageId', async (req, res) => {
+    const connection = await connectionPromise
     const imageId = parseInt(req.params.imageId, 10)
-    const imageModel = new ImageModel(db)
+    const imageModel = new ImageModel(connection)
     const imageService = new ImageService(imageModel)
     if (Number.isNaN(imageId)) return null
     const file = await imageService.readFile(imageId)
@@ -76,10 +78,11 @@ app.get('/images/:imageId', async (req, res) => {
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: req => {
+    context: async req => {
         const isAdmin = Boolean(req.req.user)
+        const connection = await connectionPromise
         const appContext: AppContext = {
-            db,
+            db: connection,
             isAdmin,
             user: req.req.user as UserDataModel,
         }

@@ -1,5 +1,5 @@
 import { AppContext } from "../appContext";
-import { EventModel } from "../database/models/event";
+import { EventModel } from "../database/entity/event";
 
 export function queryEvent(appContext: AppContext, id: number) {
     const { db } = appContext

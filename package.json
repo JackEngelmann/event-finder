@@ -8,8 +8,8 @@
   "scripts": {
     "build-frontend": "cd client && yarn && yarn add node-sass && yarn build",
     "build-backend": "cd backend && yarn && yarn build",
-    "postinstall": "(cd client && yarn);(cd backend && yarn);",
-    "heroku-postbuild": "yarn build-frontend && yarn build-backend && mkdir backend/public && cp -r client/build/* backend/public/",
+    "postinstall": "(cd client && npm i);(cd backend && npm i);",
+    "heroku-postbuild": "npm build-frontend && npm build-backend && mkdir backend/public && cp -r client/build/* backend/public/",
     "build": "NODE_ENV=production yarn build-frontend && yarn build-backend && mkdir backend/public && cp -r client/build/* backend/public/"
   },
   "engines": {

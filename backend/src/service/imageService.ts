@@ -1,4 +1,4 @@
-import { ImageModel } from "../database/models/image";
+import { ImageModel } from "../database/entity/image";
 import { FileUpload } from 'graphql-upload'
 
 type File = {

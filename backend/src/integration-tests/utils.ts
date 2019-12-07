@@ -1,11 +1,16 @@
 import express from 'express'
 import http from 'http'
-import { Database, createTestDb, destroyTestDb } from '../database/database'
 import { AppContext } from '../appContext'
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from '../graphql/schema'
 import { resolvers } from '../graphql/resolvers'
 import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
+import { Connection } from 'typeorm'
+import { createDbConnection } from '../database/database'
+
+/**
+ * GraphQL utils
+ */
 
 export const genreFragment = `
     id
@@ -47,8 +52,8 @@ export const clubFragment = `
     specials
 `
 
-export async function insertTestData(db: Database) {
-    await db.run(`
+export async function insertTestData(connection: Connection) {
+    await connection.query(`
         INSERT INTO club (
             name,
             address,
@@ -69,7 +74,7 @@ export async function insertTestData(db: Database) {
             'link'
         )
     `)
-    await db.run(`
+    await connection.query(`
         INSERT INTO club (
             name,
             address,
@@ -90,7 +95,7 @@ export async function insertTestData(db: Database) {
             'link'
         )
     `)
-    await db.run(`
+    await connection.query(`
         INSERT INTO event
         (
             name,
@@ -119,14 +124,14 @@ export async function insertTestData(db: Database) {
             4
         )
     `)
-    await db.run(`
+    await connection.query(`
         INSERT INTO genre (name) VALUES
             ('genre1'),
             ('genre2'),
             ('genre3')
     `)
-    return await db.run(`
-        INSERT INTO eventGenre (eventId, genreId) VALUES (1, 1)
+    return connection.query(`
+        INSERT INTO eventgenre (eventId, genreId) VALUES (1, 1)
     `)
 }
 
@@ -146,7 +151,7 @@ export async function createApolloTestServer(options: {
     dbName: string
 }) {
     return new Promise<ApolloTestServer>(async (resolve, reject) => {
-        const db = await createTestDb(options.dbName)
+        const db = await createDbConnection(options.dbName)
         const appContext: AppContext = {
             db,
             isAdmin: options.isAdmin,
@@ -160,7 +165,9 @@ export async function createApolloTestServer(options: {
         const client = createTestClient(server)
 
         async function destroy() {
-            return await destroyTestDb(options.dbName)
+            await db.dropDatabase()
+            await db.close()
+            // return await destroyTestDb(options.dbName)
         }
 
         resolve({ destroy, server, appContext, client })
@@ -185,7 +192,7 @@ export async function createApolloHttpTestServer(options: {
     dbName: string
 }) {
     return new Promise<ApolloHttpTestServer>(async (resolve, reject) => {
-        const db = await createTestDb(options.dbName)
+        const db = await createDbConnection(options.dbName)
         const appContext: AppContext = {
             db,
             isAdmin: options.isAdmin,
@@ -206,7 +213,9 @@ export async function createApolloHttpTestServer(options: {
         async function destroy() {
             if (server) await server.stop()
             if (httpServer) await httpServer.close()
-            return await destroyTestDb(options.dbName)
+            await db.dropDatabase()
+            await db.close()
+            // return await destroyTestDb(options.dbName)
         }
 
         resolve({ destroy, httpServer, appContext, port, server })

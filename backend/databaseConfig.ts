@@ -1,52 +1,49 @@
-import { Database } from './src/database/database'
-import { createSchema } from './src/database/migrations/1-createSchema'
 import { initalData } from './src/database/seeds/1-initialData'
-import { addImageToEvent } from './src/database/migrations/2-addImageToEvent'
-import { addLinkToEvent } from './src/database/migrations/3-addLinkToEvent'
-import { addImageToClub } from './src/database/migrations/4-addImageToClub'
 import { createAdminUser } from './src/database/seeds/2-createAdminUser'
-import { addUserTable } from './src/database/migrations/5-addUserTable'
 import { addGenres } from './src/database/seeds/3-addGenres'
+import { Connection, ConnectionOptions } from 'typeorm'
 
 export type DbScript = {
     name: string
-    up(database: Database): Promise<any>
+    up(connection: Connection): Promise<any>
 }
 
 export interface DatabaseConfig {
-    connectionString: string
-    getTestConnectionString?: (dbName: string) => string
     migrations?: DbScript[]
     seeds?: DbScript[]
+    connectionOptions: ConnectionOptions
 }
 
-const migrations = [
-    createSchema,
-    addImageToEvent,
-    addLinkToEvent,
-    addImageToClub,
-    addUserTable,
-]
+const migrations: DbScript[] = []
 
 const configByMode: Record<string, DatabaseConfig> = {
     production: {
-        connectionString: process.env.DATABASE_URL!,
         migrations,
         seeds: [initalData, createAdminUser, addGenres],
+        connectionOptions: {
+            type: 'mysql',
+            database: 'lieblingsclub' // TODO
+            
+        }
     },
     development: {
-        connectionString:
-            'postgresql://postgres:postgres@localhost/lieblingsclubdb',
         migrations,
         seeds: [initalData, createAdminUser, addGenres],
+        connectionOptions: {
+            database: 'lieblingsclub',
+            type: 'mysql',
+            host: 'localhost',
+            username: 'jack',
+            port: 3306
+        }
     },
     test: {
-        connectionString:
-            'postgresql://postgres:postgres@localhost/lieblingsclubdb',
-        getTestConnectionString: dbName =>
-            `postgresql:postgres:postgres@localhost/${dbName}`,
         migrations,
-        seeds: [createAdminUser]
+        seeds: [createAdminUser],
+        connectionOptions: {
+            type: 'sqlite',
+            database: ':memory:'
+        }
     },
 }
 

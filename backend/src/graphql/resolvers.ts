@@ -14,6 +14,7 @@ import { updateClub } from '../mutations/updateClub'
 import { deleteClub } from '../mutations/deleteClub'
 import { AppContext } from '../appContext'
 import { requireAdminPermission } from '../authentication'
+import { AdvancedConsoleLogger } from 'typeorm'
 
 type Source = {
     clubId: number
@@ -72,8 +73,10 @@ export const resolvers: IResolvers<Source, AppContext> = {
         },
     },
     Event: {
-        club: (event, args, appContext, info) =>
-            queryClub(appContext, event.clubId),
+        club: (event, args, appContext, info) => {
+            console.log({ event })
+            return queryClub(appContext, event.clubId)
+        },
         genres: (event, args, appContext, info) =>
             queryGenresForEvent(appContext, event.id),
     },
