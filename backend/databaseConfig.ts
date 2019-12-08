@@ -27,6 +27,7 @@ const configByMode: Record<string, DatabaseConfig> = {
             username: process.env.DBUSERNAME!,
             host: process.env.DBHOST!,
             port: parseInt(process.env.DBPORT!, 10),
+            password: process.env.DBPASSWORD,
         }
     },
     development: {
