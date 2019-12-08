@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './schema'
 import { resolvers } from './resolvers'
@@ -11,7 +12,6 @@ import { UserModel, UserDataModel } from '../database/entity/user'
 import session from 'express-session'
 import bodyParser from 'body-parser'
 import { SECRET, createAuthenticationStrategy } from '../authentication'
-import "reflect-metadata"
 import { connectionPromise } from '../database/database'
 
 const PORT = process.env.PORT || 5000

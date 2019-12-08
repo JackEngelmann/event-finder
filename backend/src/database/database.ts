@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { databaseConfig } from '../../databaseConfig'
 import { applyDbScripts } from './applyDbScripts'
 import { createConnection } from 'typeorm'
