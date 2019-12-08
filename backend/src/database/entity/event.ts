@@ -77,9 +77,7 @@ export class EventModel {
     }
 
     async getEvent(id: number) {
-        const res = await this.connection.manager.findOne(EventDataModel, id)
-        console.log({ id, res })
-        return res
+        return await this.connection.manager.findOne(EventDataModel, id)
     }
 
     async getEvents() {

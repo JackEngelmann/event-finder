@@ -22,7 +22,7 @@ export async function applyDbScripts(
                 console.log(`will run db script: ${script.name}`)
             }
             await script.up(connection)
-            appliedScriptModel.createAppliedScript({
+            await appliedScriptModel.createAppliedScript({
                 name: script.name
             })
         } catch (err) {

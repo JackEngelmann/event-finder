@@ -10,8 +10,8 @@ export function deleteEvent(appContext: AppContext, id: number) {
     const logger = new Logger()
     return new Promise(async (resolve, reject) => {
         try {
-            console.log({ id })
             await eventModel.deleteEvent(id)
+            // TODO: comment in
             // await eventGenreModel.deleteAllGenresForEvent(id);
             resolve()
         } catch(err) {

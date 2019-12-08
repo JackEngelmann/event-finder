@@ -73,7 +73,6 @@ export class ClubModel {
             ClubDataModel,
             input.id
         )
-        console.log({ club })
 
         club.address = input.address || null
         club.contact = input.contact || null
@@ -90,7 +89,6 @@ export class ClubModel {
 
     async getClub(id: number) {
         const club = await this.connection.manager.findOne(ClubDataModel, id)
-        console.log({ id, club })
         return club
     }
 

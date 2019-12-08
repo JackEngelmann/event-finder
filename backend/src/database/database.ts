@@ -13,7 +13,7 @@ export const createDbConnection = (dbName?: any) =>
     createConnection({
         name: dbName,
         synchronize: true,
-        logging: false,
+        logging: ['query', 'error', 'info', 'log', 'warn'],
         entities: [
             AppliedScriptDataModel,
             ClubDataModel,
@@ -25,6 +25,7 @@ export const createDbConnection = (dbName?: any) =>
         ],
         database: dbName,
         ...databaseConfig.connectionOptions,
+        logger: 'file',
     }).then(async connection => {
         await applyDbScripts(connection, databaseConfig)
         return connection
