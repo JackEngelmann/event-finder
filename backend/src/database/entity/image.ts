@@ -5,7 +5,7 @@ export class ImageDataModel {
     @PrimaryGeneratedColumn()
     id!: string
 
-    @Column()
+    @Column({ type: 'longtext', length: 4000000 })
     dataUrl!: string
 }
 
