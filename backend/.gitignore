@@ -1,6 +1,6 @@
 db.sqlite
 log.txt
-ormlogs.txt
+ormlogs.log
 
 yarn.lock
 
