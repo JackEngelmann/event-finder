@@ -9,7 +9,7 @@
     "build-frontend": "cd client && npm i && npm i node-sass && npm run build",
     "build-backend": "cd backend && npm i && npm run build",
     "postinstall": "(cd client && npm i);(cd backend && npm i);",
-    "build-on-server": "npm run build-frontend && npm run build-backend && mkdir backend/public && cp -r client/build/* backend/public/",
+    "build-on-server": "rm -r backend/public && rm -r backend/dist && npm run build-frontend && npm run build-backend && mkdir backend/public && cp -r client/build/* backend/public/",
     "build": "NODE_ENV=production yarn build-frontend && yarn build-backend && mkdir backend/public && cp -r client/build/* backend/public/"
   },
   "engines": {
