@@ -13,6 +13,9 @@ import session from 'express-session'
 import bodyParser from 'body-parser'
 import { SECRET, createAuthenticationStrategy } from '../authentication'
 import { connectionPromise } from '../database/database'
+import { Logger } from "../logger"
+
+const logger = new Logger()
 
 const PORT = process.env.PORT || 5000
 
@@ -61,6 +64,7 @@ app.post(
 app.get('/images/:imageId', async (req, res) => {
     const connection = await connectionPromise
     const imageId = parseInt(req.params.imageId, 10)
+    logger.info(`requesting image with id ${imageId}`)
     const imageModel = new ImageModel(connection)
     const imageService = new ImageService(imageModel)
     if (Number.isNaN(imageId)) return null
