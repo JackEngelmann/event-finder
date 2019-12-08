@@ -34,11 +34,12 @@ const configByMode: Record<string, DatabaseConfig> = {
         migrations,
         seeds: [initalData, createAdminUser, addGenres],
         connectionOptions: {
-            database: 'lieblingsclub',
             type: 'mysql',
-            host: 'localhost',
-            username: 'jack',
-            port: 3306
+            database: process.env.DATABASE!,
+            username: process.env.DBUSERNAME!,
+            host: process.env.DBHOST!,
+            port: parseInt(process.env.DBPORT!, 10),
+            password: process.env.DBPASSWORD,
         }
     },
     test: {

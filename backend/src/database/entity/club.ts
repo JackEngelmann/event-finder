@@ -72,8 +72,8 @@ export class ClubModel {
         region?: string
         specials?: string
     }) {
-        const club = await this.connection.manager.findOneOrFail(
-            ClubDataModel,
+        const club = await this.connection.manager.findOneOrFail<ClubDataModel>(
+            'club',
             input.id
         )
 
@@ -91,19 +91,19 @@ export class ClubModel {
     }
 
     async getClub(id: number) {
-        const club = await this.connection.manager.findOne(ClubDataModel, id)
+        const club = await this.connection.manager.findOne<ClubDataModel>('club', id)
         return club
     }
 
     async getClubs() {
         logger.info('club model: getClubs')
-        const clubs = await this.connection.manager.find(ClubDataModel)
+        const clubs = await this.connection.manager.find<ClubDataModel>('club')
         logger.info(JSON.stringify(clubs))
         return clubs
     }
 
     async deleteClub(id: number) {
-        const club = await this.connection.manager.findOne(ClubDataModel, id)
+        const club = await this.connection.manager.findOne<ClubDataModel>('club', id)
         await this.connection.manager.remove(club)
     }
 }
