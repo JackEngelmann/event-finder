@@ -2,6 +2,7 @@ import { initalData } from './src/database/seeds/1-initialData'
 import { createAdminUser } from './src/database/seeds/2-createAdminUser'
 import { addGenres } from './src/database/seeds/3-addGenres'
 import { Connection, ConnectionOptions } from 'typeorm'
+import { hostname } from 'os'
 
 export type DbScript = {
     name: string
@@ -22,8 +23,10 @@ const configByMode: Record<string, DatabaseConfig> = {
         seeds: [initalData, createAdminUser, addGenres],
         connectionOptions: {
             type: 'mysql',
-            database: 'lieblingsclub' // TODO
-            
+            database: process.env.DATABASE!,
+            username: process.env.DBUSERNAME!,
+            host: process.env.DBHOST!,
+            port: parseInt(process.env.DBPORT!, 10),
         }
     },
     development: {

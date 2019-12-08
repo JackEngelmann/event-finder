@@ -22,7 +22,6 @@ const app = express()
  * express middlewares
  */
 
-app.use(express.static('public'))
 app.use(session({ secret: SECRET }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
