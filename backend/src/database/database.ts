@@ -8,6 +8,7 @@ import { GenreDataModel } from './entity/genre'
 import { ImageDataModel } from './entity/image'
 import { UserDataModel } from './entity/user'
 import { AppliedScriptDataModel } from './entity/appliedScripts'
+import { Logger } from '../logger'
 
 export const createDbConnection = (dbName?: any) =>
     createConnection({
@@ -29,6 +30,10 @@ export const createDbConnection = (dbName?: any) =>
     }).then(async connection => {
         await applyDbScripts(connection, databaseConfig)
         return connection
+    }).catch(err => {
+        const logger = new Logger()
+        logger.error(err)
+        throw new Error(err)
     })
 
 export const connectionPromise = createDbConnection()

@@ -39,15 +39,15 @@ export const resolvers: IResolvers<Source, AppContext> = {
         },
         event: (obj, args, appContext, info) => {
             logger.info('query event')
-            queryEvent(appContext, args.id)
+            return queryEvent(appContext, args.id)
         },
         genre: (obj, args, appContext, info) => {
             logger.info('query genre')
-            queryGenre(appContext, args.id)
+            return queryGenre(appContext, args.id)
         },
         genres: (obj, args, appContext, info) => {
             logger.info('query genres')
-            queryGenres(appContext)
+            return queryGenres(appContext)
         },
         me: (obj, args, appContext, info) => {
             logger.info('query me')
