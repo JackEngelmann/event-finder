@@ -14,23 +14,45 @@ import { updateClub } from '../mutations/updateClub'
 import { deleteClub } from '../mutations/deleteClub'
 import { AppContext } from '../appContext'
 import { requireAdminPermission } from '../authentication'
-import { AdvancedConsoleLogger } from 'typeorm'
+import { Logger } from '../logger'
 
 type Source = {
     clubId: number
     id: number
 }
 
+const logger = new Logger()
+
 export const resolvers: IResolvers<Source, AppContext> = {
     Query: {
-        clubs: (obj, args, appContext, info) => queryClubs(appContext),
-        club: (obj, args, appContext, info) => queryClub(appContext, args.id),
-        events: (obj, args, appContext, info) =>
-            queryEvents(appContext, args.filter),
-        event: (obj, args, appContext, info) => queryEvent(appContext, args.id),
-        genre: (obj, args, appContext, info) => queryGenre(appContext, args.id),
-        genres: (obj, args, appContext, info) => queryGenres(appContext),
-        me: (obj, args, appContext, info) => appContext.user,
+        clubs: (obj, args, appContext, info) => {
+            logger.info('query clubs')
+            return queryClubs(appContext)
+        },
+        club: (obj, args, appContext, info) => {
+            logger.info('query club')
+            return queryClub(appContext, args.id)
+        },
+        events: (obj, args, appContext, info) => {
+            logger.info('query events')
+            return queryEvents(appContext, args.filter)
+        },
+        event: (obj, args, appContext, info) => {
+            logger.info('query event')
+            queryEvent(appContext, args.id)
+        },
+        genre: (obj, args, appContext, info) => {
+            logger.info('query genre')
+            queryGenre(appContext, args.id)
+        },
+        genres: (obj, args, appContext, info) => {
+            logger.info('query genres')
+            queryGenres(appContext)
+        },
+        me: (obj, args, appContext, info) => {
+            logger.info('query me')
+            return appContext.user
+        }
     },
     Mutation: {
         createEvent: async (obj, args, appContext, info) => {

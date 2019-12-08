@@ -1,4 +1,5 @@
 db.sqlite
+log.txt
 
 yarn.lock
 

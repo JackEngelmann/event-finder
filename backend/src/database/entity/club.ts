@@ -1,4 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, Connection } from 'typeorm'
+import { Logger } from '../../logger'
+
+const logger = new Logger()
 
 @Entity('club')
 export class ClubDataModel {
@@ -93,7 +96,9 @@ export class ClubModel {
     }
 
     async getClubs() {
+        logger.info('club model: getClubs')
         const clubs = await this.connection.manager.find(ClubDataModel)
+        logger.info(JSON.stringify(clubs))
         return clubs
     }
 
