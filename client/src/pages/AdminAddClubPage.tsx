@@ -37,7 +37,7 @@ export function AdminAddClubPage() {
                 specials: clubEditorState.specials
             }
         },
-        refetchQueries: [CLUBS_QUERY]
+        refetchQueries: [{ query: CLUBS_QUERY }]
     })
     const history = useHistory()
 
