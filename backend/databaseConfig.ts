@@ -2,7 +2,6 @@ import { initalData } from './src/database/seeds/1-initialData'
 import { createAdminUser } from './src/database/seeds/2-createAdminUser'
 import { addGenres } from './src/database/seeds/3-addGenres'
 import { Connection, ConnectionOptions } from 'typeorm'
-import { hostname } from 'os'
 
 export type DbScript = {
     name: string

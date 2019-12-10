@@ -109,7 +109,7 @@ export function AdminUpdateEventPage(props: any) {
                 special: state.special,
             },
         },
-        refetchQueries: [EVENT_QUERY]
+        refetchQueries: [{ query: EVENT_QUERY, variables: { eventId: parseInt(eventId, 10) } }]
     })
     const history = useHistory()
     const event = eventQueryResult.data && eventQueryResult.data.event

@@ -9,6 +9,7 @@ import { useClubWithDetails } from '../containers/useClubWithDetails'
 import { Button } from '../components/Button'
 import { H1Title } from '../components/H1Title'
 import { Spacer } from '../components/Spacer'
+import { CLUBS_QUERY } from '../containers/useClubs'
 
 type Params = {
     clubId: string
@@ -55,7 +56,8 @@ export function AdminUpdateClubPage() {
                 region: clubEditorState.region,
                 specials: clubEditorState.specials
             }
-        }
+        },
+        refetchQueries: [{ query: CLUBS_QUERY }]
     })
     const history = useHistory()
 
