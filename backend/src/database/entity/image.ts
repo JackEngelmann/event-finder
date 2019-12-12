@@ -1,11 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, Connection } from 'typeorm'
+import { longTextType } from '../database'
 
 @Entity('image')
 export class ImageDataModel {
     @PrimaryGeneratedColumn()
     id!: string
 
-    @Column({ type: 'longtext' })
+    @Column({ type: longTextType })
     dataUrl!: string
 }
 

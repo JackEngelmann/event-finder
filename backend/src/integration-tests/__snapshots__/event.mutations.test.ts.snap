@@ -205,6 +205,41 @@ Object {
 }
 `;
 
+exports[`event mutations:  update event with emojis in description 1`] = `
+Object {
+  "data": Object {
+    "updateEvent": Object {
+      "event": Object {
+        "admissionFee": null,
+        "admissionFeeWithDiscount": null,
+        "amountOfFloors": null,
+        "club": Object {
+          "id": 2,
+          "name": "name",
+        },
+        "date": "updated-date",
+        "description": "🍃🔝🎉📢👉🌵🎵",
+        "genres": Array [],
+        "id": 1,
+        "imageUrl": null,
+        "link": null,
+        "minimumAge": null,
+        "name": "updated-name",
+        "priceCategory": null,
+        "special": null,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
 exports[`event mutations:  update event with empty genre list 1`] = `
 Object {
   "data": Object {

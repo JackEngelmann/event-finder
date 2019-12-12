@@ -378,6 +378,34 @@ describe('event mutations: ', () => {
             expect(result).toMatchSnapshot()
             done()
         })
+
+        test('with emojis in description', async done => {
+            // arrange
+            apolloTestServer = await createApolloTestServer({
+                isAdmin: true,
+                dbName: DB_NAME,
+            })
+            const emojiDescription = '🍃🔝🎉📢👉🌵🎵'
+            const input: UpdateEventInput = {
+                id: 1,
+                name: 'updated-name',
+                date: 'updated-date',
+                description: emojiDescription,
+                clubId: 2,
+            }
+
+            // act
+            const result = await apolloTestServer.client.mutate({
+                mutation: updateEventMutation,
+                variables: { input },
+            })
+
+            // assert
+            expect(result.data).toBeDefined()
+            expect(result.data!.updateEvent.event.description).toBe(emojiDescription)
+            expect(result).toMatchSnapshot()
+            done()
+        })
     })
 
     describe('delte event', () => {

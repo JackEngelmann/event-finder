@@ -27,6 +27,7 @@ const configByMode: Record<string, DatabaseConfig> = {
             host: process.env.DBHOST!,
             port: parseInt(process.env.DBPORT!, 10),
             password: process.env.DBPASSWORD,
+            charset: 'utf8mb4'
         }
     },
     development: {
@@ -37,7 +38,8 @@ const configByMode: Record<string, DatabaseConfig> = {
             database: 'lieblingsclub',
             host: 'localhost',
             username: 'jack',
-            port: 3306
+            port: 3306,
+            charset: 'utf8mb4'
         }
     },
     test: {
@@ -45,7 +47,7 @@ const configByMode: Record<string, DatabaseConfig> = {
         seeds: [createAdminUser],
         connectionOptions: {
             type: 'sqlite',
-            database: ':memory:'
+            database: ':memory:',
         }
     },
 }

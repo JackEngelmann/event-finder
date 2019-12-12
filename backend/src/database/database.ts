@@ -11,6 +11,8 @@ import { UserDataModel } from './entity/user'
 import { AppliedScriptDataModel } from './entity/appliedScripts'
 import { Logger } from '../logger'
 
+let startedApplyingDbScript = false
+
 export const createDbConnection = (dbName?: any) =>
     createConnection({
         name: dbName,
@@ -29,6 +31,8 @@ export const createDbConnection = (dbName?: any) =>
         ...databaseConfig.connectionOptions,
         logger: 'file',
     }).then(async connection => {
+        if (startedApplyingDbScript) return connection
+        startedApplyingDbScript = true
         await applyDbScripts(connection, databaseConfig)
         return connection
     }).catch(err => {
@@ -38,3 +42,15 @@ export const createDbConnection = (dbName?: any) =>
     })
 
 export const connectionPromise = createDbConnection()
+
+export const longTextType = (() => {
+    const dbType = databaseConfig.connectionOptions.type
+    switch (dbType) {
+        case 'mysql':
+            return 'longtext'
+        case 'sqlite':
+            return 'text'
+        default:
+            throw new Error(`long text is not defined for the database type: ${dbType}`)
+    }
+})()

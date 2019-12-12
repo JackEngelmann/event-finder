@@ -17,7 +17,7 @@ export class EventDataModel {
     @Column()
     date!: string
 
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
     description?: string | null
 
     @PrimaryGeneratedColumn()
@@ -38,7 +38,7 @@ export class EventDataModel {
     @Column({ type: 'int', nullable: true })
     priceCategory?: number | null
 
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
     special?: string | null
 }
 

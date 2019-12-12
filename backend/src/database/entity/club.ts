@@ -11,7 +11,7 @@ export class ClubDataModel {
     @Column({ type: 'text', nullable: true })
     contact?: string | null
 
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
     description?: string | null
 
     @Column({ type: 'text', nullable: true })
@@ -32,7 +32,7 @@ export class ClubDataModel {
     @Column({ type: 'text', nullable: true })
     region?: string | null
 
-    @Column({ type: 'text', nullable: true })
+    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
     specials?: string | null
 }
 

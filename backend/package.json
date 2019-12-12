@@ -41,7 +41,6 @@
     "node-fetch": "^2.6.0",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "pg": "^7.12.1",
     "prettier": "1.18.2",
     "reflect-metadata": "^0.1.13",
     "sqlite3": "^4.1.1",

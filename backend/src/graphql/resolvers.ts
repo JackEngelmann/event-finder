@@ -57,13 +57,9 @@ export const resolvers: IResolvers<Source, AppContext> = {
     Mutation: {
         createEvent: async (obj, args, appContext, info) => {
             requireAdminPermission(appContext)
-            try {
-                const eventId = await createEvent(appContext, args.input)
-                const event = await queryEvent(appContext, eventId)
-                return { event }
-            } catch (err) {
-                console.log(err)
-            }
+            const eventId = await createEvent(appContext, args.input)
+            const event = await queryEvent(appContext, eventId)
+            return { event }
         },
         updateEvent: async (obj, args, appContext, info) => {
             requireAdminPermission(appContext)
@@ -96,7 +92,6 @@ export const resolvers: IResolvers<Source, AppContext> = {
     },
     Event: {
         club: (event, args, appContext, info) => {
-            console.log({ event })
             return queryClub(appContext, event.clubId)
         },
         genres: (event, args, appContext, info) =>
