@@ -11,9 +11,9 @@ export function DataPolicyPage() {
     const history = useHistory()
     return (
         <Page>
-            <HeaderContainer>
-                <GoBackButton onClick={() => history.push('/')} />
-            </HeaderContainer>
+            <HeaderContainer
+                left={<GoBackButton onClick={() => history.push('/')} />}
+            />
             <Content restrictMaxWidth scrollable>
                 <H1Title>Data Policy</H1Title>
                 <FormattedHtml>
