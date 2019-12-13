@@ -11,7 +11,12 @@ export class ClubDataModel {
     @Column({ type: 'text', nullable: true })
     contact?: string | null
 
-    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
+    @Column({
+        type: 'text',
+        nullable: true,
+        charset: 'utf8mb4',
+        collation: 'utf8mb4_general_ci',
+    })
     description?: string | null
 
     @Column({ type: 'text', nullable: true })
