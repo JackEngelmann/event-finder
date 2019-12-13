@@ -7,10 +7,14 @@ export class Logger {
     }
     error(message: any) {
         this.writeToLog(message, 'error')
-        console.error(message)
+        if (process.env.NODE_ENV !== 'test') {
+            console.error(message)
+        }
     }
     info(message: any) {
         this.writeToLog(message, 'info')
-        console.info(message)
+        if (process.env.NODE_ENV !== 'test') {
+            console.info(message)
+        }
     }
 }

@@ -26,4 +26,9 @@ export class AppliedScriptModel {
     async getAppliedScripts() {
         return await this.connection.manager.find(AppliedScriptDataModel)
     }
+
+    async deleteAppliedScriptWithName(name: string) {
+        const appliedScript = this.connection.manager.findOne(AppliedScriptDataModel, { name })
+        await this.connection.manager.remove(appliedScript)
+    }
 }

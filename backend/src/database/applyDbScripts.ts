@@ -21,13 +21,10 @@ export async function applyDbScripts(
             continue
         }
         try {
-            if (process.env.NODE_ENV !== 'test') {
-                console.log(`will run db script: ${script.name}`)
-            }
             logger.info(`will run db script: ${script.name}`)
             await script.up(connection)
             await appliedScriptModel.createAppliedScript({
-                name: script.name
+                name: script.name,
             })
         } catch (err) {
             console.error(err)
