@@ -27,12 +27,17 @@ export class ClubDataModel {
     link?: string | null
 
     @Column()
-    name!: string 
+    name!: string
 
     @Column({ type: 'text', nullable: true })
     region?: string | null
 
-    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
+    @Column({
+        type: 'text',
+        nullable: true,
+        charset: 'utf8mb4',
+        collation: 'utf8mb4_general_ci',
+    })
     specials?: string | null
 }
 
@@ -91,7 +96,10 @@ export class ClubModel {
     }
 
     async getClub(id: number) {
-        const club = await this.connection.manager.findOne<ClubDataModel>('club', id)
+        const club = await this.connection.manager.findOne<ClubDataModel>(
+            'club',
+            id
+        )
         return club
     }
 
@@ -103,7 +111,10 @@ export class ClubModel {
     }
 
     async deleteClub(id: number) {
-        const club = await this.connection.manager.findOne<ClubDataModel>('club', id)
+        const club = await this.connection.manager.findOne<ClubDataModel>(
+            'club',
+            id
+        )
         await this.connection.manager.remove(club)
     }
 }

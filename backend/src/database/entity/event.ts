@@ -17,7 +17,12 @@ export class EventDataModel {
     @Column()
     date!: string
 
-    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
+    @Column({
+        type: 'text',
+        nullable: true,
+        charset: 'utf8mb4',
+        collation: 'utf8mb4_general_ci',
+    })
     description?: string | null
 
     @PrimaryGeneratedColumn()
@@ -38,7 +43,12 @@ export class EventDataModel {
     @Column({ type: 'int', nullable: true })
     priceCategory?: number | null
 
-    @Column({ type: 'text', nullable: true, charset: 'utf8mb4' })
+    @Column({
+        type: 'text',
+        nullable: true,
+        charset: 'utf8mb4',
+        collation: 'utf8mb4_general_ci',
+    })
     special?: string | null
 }
 
@@ -72,7 +82,10 @@ export class EventModel {
     }
 
     async deleteEvent(id: number) {
-        const event = await this.connection.manager.findOneOrFail(EventDataModel, id)
+        const event = await this.connection.manager.findOneOrFail(
+            EventDataModel,
+            id
+        )
         await this.connection.manager.remove(event)
     }
 
