@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { LoadingIndicator } from "../components/LoadingIndicator";
+import { NetworkError } from '../components/NetworkError';
 
 const ME_QUERY = gql`
     {
@@ -14,6 +15,7 @@ const ME_QUERY = gql`
 export function LoginRedirect() {
     const meResult = useQuery(ME_QUERY)
     const me = meResult.data && meResult.data.me
+    if (meResult.error) return <NetworkError />
     if (meResult.loading) return <LoadingIndicator />
     if (!me) return <Redirect to="/login" />
     return null

@@ -21,6 +21,7 @@ import { Textarea } from '../components/Textarea'
 import { MultiSelect } from '../components/MultiSelect'
 import { ImageFileInput } from '../components/ImageFileInput'
 import './AdminUpdateEventPage.scss'
+import { NetworkError } from '../components/NetworkError'
 
 type Params = {
     eventId: string
@@ -80,8 +81,8 @@ export function AdminUpdateEventPage(props: any) {
     const { eventId } = params
     const [requestPending, setRequestPending] = useState(false)
     const [monthSelection, setMonthSelection] = useState(moment())
-    const genres = useGenres()[0] || []
-    const clubs = useClubs()[0] || []
+    const [genres, genresQueryResult] = useGenres()
+    const [clubs, clubsQueryResult] = useClubs()
     const eventQueryResult = useQuery<QueryData>(EVENT_QUERY, {
         variables: { eventId: parseInt(eventId, 10) },
     })
@@ -120,6 +121,10 @@ export function AdminUpdateEventPage(props: any) {
         if (!event) return
         setState(event)
     }, [event])
+
+    if (eventQueryResult.error) return <NetworkError />
+    if (clubsQueryResult.error) return <NetworkError />
+    if (genresQueryResult.error) return <NetworkError />
 
     if (!event) return <LoadingIndicator />
 
@@ -172,7 +177,7 @@ export function AdminUpdateEventPage(props: any) {
                             onChange={e =>
                                 setState({
                                     ...state,
-                                    club: clubs.find(
+                                    club: (clubs || []).find(
                                         c =>
                                             c.id ===
                                             parseInt(e.target.value, 10)
@@ -183,7 +188,7 @@ export function AdminUpdateEventPage(props: any) {
                             <Option disabled value="">
                                 --select--
                             </Option>
-                            {clubs.map(c => (
+                            {(clubs || []).map(c => (
                                 <Option value={c.id}>{c.name}</Option>
                             ))}
                         </Select>
@@ -292,7 +297,7 @@ export function AdminUpdateEventPage(props: any) {
                         <MultiSelect
                             getItemKey={item => item.id.toString()}
                             renderItem={item => item.name}
-                            items={genres}
+                            items={genres || []}
                             selectedItems={state.genres || []}
                             onChange={genres =>
                                 setState({

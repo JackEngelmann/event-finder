@@ -17,6 +17,7 @@ import { LinkRenderer } from '../components/LinkRenderer'
 import { TextWithLineBreaks } from '../components/TextWithLineBreaks'
 import { Icon } from '../components/Icon'
 import { useDimensions } from '../containers/useDimensions'
+import { NetworkError } from '../components/NetworkError'
 
 type Props = {}
 
@@ -70,6 +71,7 @@ export function ClubDetailPage(props: Props) {
         variables: { clubId },
     })
     const club = clubQueryResult.data && clubQueryResult.data.club
+    if (clubQueryResult.error) return <NetworkError />
     if (!club) return <LoadingIndicator />
 
     function renderDescription(club: QueriedClub) {

@@ -6,6 +6,7 @@ import { Event } from '../api'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
 import { LoadingIndicator } from '../components/LoadingIndicator'
+import { NetworkError } from '../components/NetworkError'
 
 type Props = {
     selectedDate: moment.Moment | undefined
@@ -41,6 +42,7 @@ export function EventListContainer(props: Props) {
         },
     })
     const events = eventsQueryResult.data && eventsQueryResult.data.events
+    if (eventsQueryResult.error) return <NetworkError />
     return events ? (
         <EventList
             events={events}

@@ -19,6 +19,7 @@ import { Textarea } from '../components/Textarea'
 import { MultiSelect } from '../components/MultiSelect'
 import { ImageFileInput } from '../components/ImageFileInput'
 import './AdminAddEventPage.scss'
+import { NetworkError } from '../components/NetworkError'
 
 const CREATE_EVENT_MUTATION = gql`
     mutation CreateEvent($input: CreateEventInput!) {
@@ -59,8 +60,8 @@ const cn = 'admin-add-event-page'
 export function AdminAddEventPage() {
     const [monthSelection, setMonthSelection] = useState(moment())
     const [requestPending, setRequestPending] = useState(false)
-    const genres = useGenres()[0] || []
-    const clubs = useClubs()[0] || []
+    const [genres, genresQueryResult] = useGenres()
+    const [clubs, clubsQueryResult] = useClubs()
     const [state, setState] = useState<State>({
         dates: [],
     })
@@ -101,6 +102,8 @@ export function AdminAddEventPage() {
         const eventId = results[0].data.createEvent.event.id
         history.push(`/event/${eventId}`)
     }
+    if (clubsQueryResult.error) return <NetworkError />
+    if (genresQueryResult.error) return <NetworkError />
     return (
         <Page>
             <Content restrictMaxWidth scrollable>
@@ -139,7 +142,7 @@ export function AdminAddEventPage() {
                             onChange={e =>
                                 setState({
                                     ...state,
-                                    club: clubs.find(
+                                    club: (clubs || []).find(
                                         c =>
                                             c.id ===
                                             parseInt(e.target.value, 10)
@@ -150,7 +153,7 @@ export function AdminAddEventPage() {
                             <Option disabled value="">
                                 --select--
                             </Option>
-                            {clubs.map(c => (
+                            {(clubs || []).map(c => (
                                 <Option value={c.id}>{c.name}</Option>
                             ))}
                         </Select>
@@ -259,7 +262,7 @@ export function AdminAddEventPage() {
                         <MultiSelect
                             getItemKey={item => item.id.toString()}
                             renderItem={item => item.name}
-                            items={genres}
+                            items={genres || []}
                             selectedItems={state.genres || []}
                             onChange={genres =>
                                 setState({

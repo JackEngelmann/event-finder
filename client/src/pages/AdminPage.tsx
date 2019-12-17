@@ -15,6 +15,7 @@ import { Icon } from '../components/Icon'
 import { HeaderContainer } from '../containers/HeaderContainer'
 import { Content } from '../components/Content'
 import moment from 'moment'
+import { NetworkError } from '../components/NetworkError'
 
 const cn = 'admin-page'
 
@@ -45,7 +46,7 @@ const DELETE_CLUB_MUTATION = gql`
 `
 
 export function AdminPage() {
-    const unsortedClubs = useClubs()[0]
+    const [unsortedClubs, clubsQueryResult] = useClubs()
     const clubs = unsortedClubs ? R.sortBy(R.prop('name'), unsortedClubs) : undefined
     const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
     const events =
@@ -54,6 +55,9 @@ export function AdminPage() {
     const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
     const [deleteClubMutation] = useMutation(DELETE_CLUB_MUTATION)
     const history = useHistory()
+
+    if (eventsQueryResult.error) return <NetworkError />
+    if (clubsQueryResult.error) return <NetworkError />
 
     function deleteEvent(id: number) {
         const isSure = window.confirm('Sure?')
