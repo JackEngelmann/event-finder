@@ -22,7 +22,8 @@ const CREATE_CLUB_MUTATION = gql`
 
 export function AdminAddClubPage() {
     const [clubEditorState, setClubEditorState] = useState<ClubEditorState>({})
-    const canCreate = Boolean(clubEditorState.name)
+    const [requestPending, setRequestPending] = useState(false)
+    const canCreate = Boolean(clubEditorState.name) && !requestPending;
     const [createClubMutation] = useMutation(CREATE_CLUB_MUTATION, {
         variables: {
             input: {
@@ -42,6 +43,7 @@ export function AdminAddClubPage() {
     const history = useHistory()
 
     async function createClub() {
+        setRequestPending(true)
         const createClubMutationResult = await createClubMutation()
         const clubId = createClubMutationResult.data.createClub.club.id
         history.push(`/club/${clubId}`)

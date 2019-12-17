@@ -78,21 +78,19 @@ const cn = 'admin-update-event-page'
 export function AdminUpdateEventPage(props: any) {
     const params = useParams<Params>()
     const { eventId } = params
+    const [requestPending, setRequestPending] = useState(false)
     const [monthSelection, setMonthSelection] = useState(moment())
     const genres = useGenres()[0] || []
     const clubs = useClubs()[0] || []
     const eventQueryResult = useQuery<QueryData>(EVENT_QUERY, {
         variables: { eventId: parseInt(eventId, 10) },
     })
-    const [state, setState] = useState<State>(
-        {}
-    )
+    const [state, setState] = useState<State>({})
     const [updateEventMutation] = useMutation(UPDATE_EVENT_MUTATION, {
         variables: {
             input: {
                 admissionFee: state.admissionFee,
-                admissionFeeWithDiscount:
-                    state.admissionFeeWithDiscount,
+                admissionFeeWithDiscount: state.admissionFeeWithDiscount,
                 amountOfFloors: state.amountOfFloors,
                 id: state.id,
                 clubId: state.club && state.club.id,
@@ -109,7 +107,12 @@ export function AdminUpdateEventPage(props: any) {
                 special: state.special,
             },
         },
-        refetchQueries: [{ query: EVENT_QUERY, variables: { eventId: parseInt(eventId, 10) } }]
+        refetchQueries: [
+            {
+                query: EVENT_QUERY,
+                variables: { eventId: parseInt(eventId, 10) },
+            },
+        ],
     })
     const history = useHistory()
     const event = eventQueryResult.data && eventQueryResult.data.event
@@ -121,15 +124,13 @@ export function AdminUpdateEventPage(props: any) {
     if (!event) return <LoadingIndicator />
 
     const updateEvent = async () => {
+        setRequestPending(true)
         await updateEventMutation()
         history.push(`/event/${eventId}`)
     }
 
     const canSave =
-        state.name &&
-        state.club &&
-        state.date &&
-        state.id
+        state.name && state.club && state.date && state.id && !requestPending
 
     return (
         <Page>

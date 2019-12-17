@@ -58,6 +58,7 @@ const cn = 'admin-add-event-page'
 
 export function AdminAddEventPage() {
     const [monthSelection, setMonthSelection] = useState(moment())
+    const [requestPending, setRequestPending] = useState(false)
     const genres = useGenres()[0] || []
     const clubs = useClubs()[0] || []
     const [state, setState] = useState<State>({
@@ -65,32 +66,37 @@ export function AdminAddEventPage() {
     })
     const [createEventMutation] = useMutation(CREATE_EVENT_MUTATION)
 
-    const canCreate = state.name && state.club && state.dates.length >= 1
+    const canCreate =
+        state.name && state.club && state.dates.length >= 1 && !requestPending
     const history = useHistory()
 
     const createEvent = async () => {
-        const mutations = state.dates.map(date => createEventMutation({
-            variables: {
-                input: {
-                    admissionFee: state.admissionFee,
-                    admissionFeeWithDiscount: state.admissionFeeWithDiscount,
-                    amountOfFloors: state.amountOfFloors,
-                    id: state.id,
-                    image: state.image,
-                    clubId: state.club && state.club.id,
-                    date,
-                    description: state.description,
-                    genreIds: state.genres
-                        ? state.genres.map(g => g.id)
-                        : undefined,
-                    link: state.link,
-                    minimumAge: state.minimumAge,
-                    name: state.name,
-                    priceCategory: state.priceCategory,
-                    special: state.special,
+        setRequestPending(true)
+        const mutations = state.dates.map(date =>
+            createEventMutation({
+                variables: {
+                    input: {
+                        admissionFee: state.admissionFee,
+                        admissionFeeWithDiscount:
+                            state.admissionFeeWithDiscount,
+                        amountOfFloors: state.amountOfFloors,
+                        id: state.id,
+                        image: state.image,
+                        clubId: state.club && state.club.id,
+                        date,
+                        description: state.description,
+                        genreIds: state.genres
+                            ? state.genres.map(g => g.id)
+                            : undefined,
+                        link: state.link,
+                        minimumAge: state.minimumAge,
+                        name: state.name,
+                        priceCategory: state.priceCategory,
+                        special: state.special,
+                    },
                 },
-            },
-        }))
+            })
+        )
         const results = await Promise.all(mutations)
         const eventId = results[0].data.createEvent.event.id
         history.push(`/event/${eventId}`)

@@ -23,6 +23,15 @@ export function ComponentLibraryPage() {
                 <Button danger>Danger</Button>
             </div>
             <div className={`${cn}__spacer`}>
+                <Button disabled primary>Primary</Button>
+            </div>
+            <div className={`${cn}__spacer`}>
+                <Button disabled secondary>Secondary</Button>
+            </div>
+            <div className={`${cn}__spacer`}>
+                <Button disabled danger>Danger</Button>
+            </div>
+            <div className={`${cn}__spacer`}>
                 <Input />
             </div>
             <div className={`${cn}__spacer`}>

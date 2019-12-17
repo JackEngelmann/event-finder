@@ -35,13 +35,14 @@ const UPDATE_CLUB_MUTATION = gql`
 
 export function AdminUpdateClubPage() {
     const { clubId } = useParams<Params>()
+    const [requestPending, setRequestPending] = useState(false)
     const [club] = useClubWithDetails(parseInt(clubId, 10))
     const [clubEditorState, setClubEditorState] = useState<ClubEditorState>({})
     useEffect(() => {
         if (!club) return
         setClubEditorState(club)
     }, [club])
-    const canSave = Boolean(clubEditorState.name && clubEditorState.id)
+    const canSave = Boolean(clubEditorState.name && clubEditorState.id) && !requestPending
     const [updateClubMutation] = useMutation(UPDATE_CLUB_MUTATION, {
         variables: {
             input: {
@@ -62,6 +63,7 @@ export function AdminUpdateClubPage() {
     const history = useHistory()
 
     async function updateClub() {
+        setRequestPending(true)
         const createClubMutationResult = await updateClubMutation()
         const clubId = createClubMutationResult.data.updateClub.club.id
         history.push(`/club/${clubId}`)
