@@ -1,6 +1,7 @@
 import './Header.scss'
 import React, { ReactNode } from 'react'
 import { Icon } from './Icon'
+import { Logo } from './Logo'
 
 type Props = {
     children?: ReactNode
@@ -8,21 +9,35 @@ type Props = {
     toggleCalender: () => void
     left?: ReactNode
     right?: ReactNode
+    onLogoClick: () => void
 }
 
 const cn = 'header'
 
 export function Header(props: Props) {
-    const { children, toggleMobileMenu, left, right, toggleCalender } = props
+    const {
+        children,
+        toggleMobileMenu,
+        left,
+        right,
+        toggleCalender,
+        onLogoClick,
+    } = props
     return (
         <div className={cn}>
             <div className={`${cn}__header`}>
-                <button
-                    className={`${cn}__calendar-button`}
-                    onClick={toggleCalender}
-                >
-                    <Icon icon="calendar" />
-                </button>
+                <div className={`${cn}__left`}>
+                    <Logo onClick={onLogoClick} />
+                </div>
+                <div className={`${cn}__content`}>
+                    <button
+                        className={`${cn}__calendar-button`}
+                        onClick={toggleCalender}
+                    >
+                        <Icon icon="calendar" />
+                    </button>
+                </div>
+                <div className={`${cn}__right`} />
             </div>
             <div className={`${cn}__sub-header`}>
                 <div className={`${cn}__left`}>
