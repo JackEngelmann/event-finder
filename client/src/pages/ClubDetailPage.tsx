@@ -17,6 +17,7 @@ import { KeyValueField } from '../components/KeyValueField'
 import { LinkRenderer } from '../components/LinkRenderer'
 import { TextWithLineBreaks } from '../components/TextWithLineBreaks'
 import { Icon } from '../components/Icon'
+import { useDimensions } from '../containers/useDimensions'
 
 type Props = {}
 
@@ -42,53 +43,104 @@ const CLUB_QUERY = gql`
         }
     }
 `
+
+type QueriedClub = Pick<
+    Club,
+    | 'id'
+    | 'name'
+    | 'address'
+    | 'region'
+    | 'contact'
+    | 'email'
+    | 'specials'
+    | 'description'
+    | 'link'
+    | 'imageUrl'
+>
 type ClubQueryData = {
-    club: Pick<
-        Club,
-        | 'id'
-        | 'name'
-        | 'address'
-        | 'region'
-        | 'contact'
-        | 'email'
-        | 'specials'
-        | 'description'
-        | 'link'
-        | 'imageUrl'
-    >
+    club: QueriedClub
 }
 
 export function ClubDetailPage(props: Props) {
     const params = useParams<Params>()
     const history = useHistory()
     const clubId = parseInt(params.clubId)
+    const dimensions = useDimensions()
+    const desktop = Boolean(dimensions.width && dimensions.width > 800)
     const clubQueryResult = useQuery<ClubQueryData>(CLUB_QUERY, {
         variables: { clubId },
     })
     const club = clubQueryResult.data && clubQueryResult.data.club
     if (!club) return <LoadingIndicator />
 
-    return (
-        <Page>
-            <HeaderContainer
-                left={<GoBackButton onClick={() => history.push('/')} />}
-            />
-            <Content restrictMaxWidth scrollable>
-                <div className={cn}>
-                    <H1Title>
-                        {club.name}
-                        <OnlyVisibleForAdmins>
-                            <Button
-                                className={`${cn}__edit-button`}
-                                onClick={() =>
-                                    history.push(`/admin/club/${clubId}`)
-                                }
-                            >
-                                <Icon icon="pen" />
-                            </Button>
-                        </OnlyVisibleForAdmins>
-                    </H1Title>
-                    <div className={`${cn}__picture-and-short-info`}>
+    function renderDescription(club: QueriedClub) {
+        return (
+            <section>
+                <TextWithLineBreaks text={club.description || ''} />
+            </section>
+        )
+    }
+
+    function renderKeyValueFields(club: QueriedClub) {
+        return (
+            <KeyValueFields>
+                <KeyValueField fieldKey="Adress" fieldValue={club.address} />
+                <KeyValueField fieldKey="Region" fieldValue={club.region} />
+                <KeyValueField fieldKey="Contact" fieldValue={club.contact} />
+                <KeyValueField fieldKey="Email" fieldValue={club.email} />
+                <KeyValueField fieldKey="Specials" fieldValue={club.specials} />
+                <KeyValueField
+                    fieldKey="Link"
+                    fieldValue={club.link && <LinkRenderer href={club.link} />}
+                />
+            </KeyValueFields>
+        )
+    }
+
+    function renderEditButton() {
+        return (
+            <OnlyVisibleForAdmins>
+                <Button
+                    className={`${cn}__edit-button`}
+                    onClick={() => history.push(`/admin/club/${clubId}`)}
+                >
+                    <Icon icon="pen" />
+                </Button>
+            </OnlyVisibleForAdmins>
+        )
+    }
+
+    function renderMobileContent(club: QueriedClub) {
+        return (
+            <div className={cn}>
+                {club.imageUrl && (
+                    <div className={`${cn}__picture-wrapper`}>
+                        <img
+                            className={`${cn}__picture`}
+                            src={club.imageUrl}
+                            alt={`club ${club.name}`}
+                        />
+                    </div>
+                )}
+                <H1Title hideDivider>
+                    {club.name}
+                    {renderEditButton()}
+                </H1Title>
+                {renderKeyValueFields(club)}
+                {renderDescription(club)}
+            </div>
+        )
+    }
+
+    function renderDesktopContent(club: QueriedClub) {
+        return (
+            <div className={cn}>
+                <H1Title>
+                    {club.name}
+                    {renderEditButton()}
+                </H1Title>
+                <div className={`${cn}__picture-and-short-info`}>
+                    {club.imageUrl && (
                         <div className={`${cn}__picture-wrapper`}>
                             <img
                                 className={`${cn}__picture`}
@@ -96,41 +148,23 @@ export function ClubDetailPage(props: Props) {
                                 alt={`club ${club.name}`}
                             />
                         </div>
-                        <KeyValueFields>
-                            <KeyValueField
-                                fieldKey="Adress"
-                                fieldValue={club.address}
-                            />
-                            <KeyValueField
-                                fieldKey="Region"
-                                fieldValue={club.region}
-                            />
-                            <KeyValueField
-                                fieldKey="Contact"
-                                fieldValue={club.contact}
-                            />
-                            <KeyValueField
-                                fieldKey="Email"
-                                fieldValue={club.email}
-                            />
-                            <KeyValueField
-                                fieldKey="Specials"
-                                fieldValue={club.specials}
-                            />
-                            <KeyValueField
-                                fieldKey="Link"
-                                fieldValue={
-                                    club.link && (
-                                        <LinkRenderer href={club.link} />
-                                    )
-                                }
-                            />
-                        </KeyValueFields>
-                    </div>
-                    <section>
-                        <TextWithLineBreaks text={club.description || ''} />
-                    </section>
+                    )}
+                    {renderKeyValueFields(club)}
                 </div>
+                {renderDescription(club)}
+            </div>
+        )
+    }
+
+    return (
+        <Page>
+            <HeaderContainer
+                left={<GoBackButton onClick={() => history.push('/')} />}
+            />
+            <Content restrictMaxWidth scrollable>
+                {desktop
+                    ? renderDesktopContent(club)
+                    : renderMobileContent(club)}
             </Content>
         </Page>
     )

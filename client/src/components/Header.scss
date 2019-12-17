@@ -1,5 +1,6 @@
 .header {
     background-color: #1e97fa;
+    color: black;
     flex: 0 0 auto;
     width: 100%;
 
@@ -22,7 +23,7 @@
 
     &__calendar-button {
         border-radius: 50%;
-        border: 1px solid white;
+        border: 1px solid black;
         height: 2.1em;
         width: 2.1em;
         display: flex;
@@ -31,7 +32,7 @@
         align-items: center;
         cursor: pointer;
         background-color: transparent;
-        color: white;
+        color: black;
     }
 
     &__left {

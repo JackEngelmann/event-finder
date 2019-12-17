@@ -6,9 +6,8 @@
     }
 
     &__picture {
-        max-width: 100%;
-        height: auto;
-        width: auto;
+        width: 100%;
+        height: 100%;
         display: block;
     }
 
@@ -16,19 +15,24 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        width: 100%;
+        height: 10em;
+        overflow: hidden;
     }
 
     section {
-        padding: 0.5em;
+        padding: 1.5em;
         max-width: 80%;
     }
 
     &__picture-and-short-info {
-        padding: 0.5em;
         display: flex;
         flex-direction: column;
         justify-content: center;
         margin-bottom: 2em;
+    }
+    .key-value-fields {
+        padding: 0.5em;
     }
 }
 
