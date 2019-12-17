@@ -10,6 +10,8 @@ import { Content } from '../components/Content'
 import { ClubListContainer } from '../containers/ClubListContainer'
 import { EventListContainer } from '../containers/EventListContainer'
 import { Calendar } from '../components/Calendar'
+import { Button } from '../components/Button'
+import { Icon } from '../components/Icon'
 
 type Props = {}
 
@@ -72,9 +74,35 @@ export function EventsPage(props: Props) {
             <>
                 <HeaderContainer>
                     <div>
-                        {selectedDate
-                            ? selectedDate.format('D. MMMM')
-                            : 'Pick a Date'}
+                        {selectedDate ? (
+                            <div>
+                                <Button
+                                    borderless
+                                    onClick={() =>
+                                        setSelectedDate(
+                                            selectedDate.subtract(1, 'day')
+                                        )
+                                    }
+                                    className={`${cn}__select-day-arrow-button`}
+                                >
+                                    <Icon icon="arrow-left" />
+                                </Button>
+                                <span>{selectedDate.format('D. MMMM')}</span>
+                                <Button
+                                    borderless
+                                    onClick={() =>
+                                        setSelectedDate(
+                                            selectedDate.add(1, 'day')
+                                        )
+                                    }
+                                    className={`${cn}__select-day-arrow-button`}
+                                >
+                                    <Icon icon="arrow-right" />
+                                </Button>
+                            </div>
+                        ) : (
+                            'Pick a Date'
+                        )}
                     </div>
                 </HeaderContainer>
                 <Content scrollable restrictMaxWidth={desktop}>

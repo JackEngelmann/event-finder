@@ -19,6 +19,10 @@
         width: 90%;
     }
 
+    &__select-day-arrow-button {
+        font-size: 0.9em !important;
+    }
+
     &__calendar-wrapper--hidden {
         max-height: 0;
         overflow: hidden;

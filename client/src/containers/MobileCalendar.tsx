@@ -12,7 +12,7 @@ const currentDate = moment()
 const cn = 'mobile-calendar'
 
 export function MobileCalendar() {
-    const [selectedDate, setSelectedDate] = useSelectedDate()
+    const [selectedDate] = useSelectedDate()
     const [monthSelection, setMonthSelection] = useState(currentDate)
     const showMobileCalendar = useSelector<ReduxState, any>(
         state => state.showMobileCalendar

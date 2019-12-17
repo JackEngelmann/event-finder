@@ -1,7 +1,7 @@
 import './EventDetailPage.scss'
 import * as R from 'ramda'
 import React from 'react'
-import { useParams, useHistory, useLocation } from 'react-router'
+import { useParams, useHistory } from 'react-router'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { OnlyVisibleForAdmins } from '../containers/OnlyVisibleForAdmins'
@@ -29,7 +29,6 @@ export function EventDetailPage(props: Props) {
     const params = useParams<Params>()
     const eventId = params.eventId ? parseInt(params.eventId, 10) : undefined
     const history = useHistory()
-    const search = useLocation().search
     const event = useEventWithDetails(eventId!)[0]
     if (!eventId) return null
     if (event === undefined) return <LoadingIndicator />
