@@ -1,0 +1,9 @@
+.mobile-calendar {
+  padding: 0.5em;
+}
+
+@media only screen and (min-width: 800px) {
+  .mobile-calendar {
+    display: none;
+  }
+}

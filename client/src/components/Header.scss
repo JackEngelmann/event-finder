@@ -1,10 +1,38 @@
 .header {
     background-color: #1e97fa;
     flex: 0 0 auto;
-    height: 2.5em;
     width: 100%;
-    position: relative;
-    display: flex;
+
+    &__header {
+        height: 3em;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: linear-gradient(darken(#1e97fa, 3%), lighten(#1e97fa, 10%));
+    }
+
+    &__sub-header {
+        height: 1.7em;
+        display: flex;
+        position: relative;
+        width: 100%;
+        background-image: linear-gradient(darken(#1e97fa, 3%), lighten(#1e97fa, 3%));
+    }
+
+    &__calendar-button {
+        border-radius: 50%;
+        border: 1px solid white;
+        height: 2.1em;
+        width: 2.1em;
+        display: flex;
+        font-size: 1.1em;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        background-color: transparent;
+        color: white;
+    }
 
     &__left {
         align-items: center;
@@ -38,7 +66,7 @@
 
     &__menu-icon {
         padding: 0.5em;
-        font-size: 1.3em;
+        font-size: 1.1em;
         text-align: center;
         &:hover {
             background-color: black;

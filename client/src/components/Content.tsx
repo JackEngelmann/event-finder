@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import React, { ComponentProps } from 'react'
 import { FooterContainer } from '../containers/FooterContainer'
 import { MobileMenuContainer } from '../containers/MobileMenuContainer'
+import { MobileCalendar } from '../containers/MobileCalendar'
 
 type Props = ComponentProps<'div'> & {
     scrollable?: boolean
@@ -22,6 +23,7 @@ export function Content(props: Props) {
             {...divProps}
         >
             <MobileMenuContainer />
+            <MobileCalendar />
             {restrictMaxWidth ? (
                 <Container>
                     <div className={`${cn}__max-width-wrapper`}>

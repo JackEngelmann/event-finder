@@ -11,5 +11,6 @@ type Props = {
 export function HeaderContainer(props: Props) {
     const dispatch = useDispatch<(action: ReduxAction) => void>()
     const toggleMobileMenu = useCallback(() => dispatch({ type: 'toggleMobilemMenu' }), [dispatch])
-    return <Header {...props} toggleMobileMenu={toggleMobileMenu} />
+    const toggleMobileCalendar = useCallback(() => dispatch({ type: 'toggleMobileCalendar'}), [dispatch])
+    return <Header {...props} toggleMobileMenu={toggleMobileMenu} toggleCalender={toggleMobileCalendar} />
 }

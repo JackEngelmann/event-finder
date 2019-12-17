@@ -5,9 +5,7 @@ import { useDimensions } from '../containers/useDimensions'
 import { useSelectedDate } from '../containers/useSelectedDate'
 import { useHistory, useLocation, Redirect } from 'react-router-dom'
 import { Page } from '../components/Page'
-import classNames from 'classnames'
 import { HeaderContainer } from '../containers/HeaderContainer'
-import { SelectedDate } from '../components/SelectedDate'
 import { Content } from '../components/Content'
 import { ClubListContainer } from '../containers/ClubListContainer'
 import { EventListContainer } from '../containers/EventListContainer'
@@ -26,7 +24,6 @@ export function EventsPage(props: Props) {
     const dimensions = useDimensions()
     const [monthSelection, setMonthSelection] = useState(currentDate)
     const [selectedDate, setSelectedDate] = useSelectedDate()
-    const [displayCalendar, setDisplayCalendar] = useState(!selectedDate)
     const history = useHistory()
     const desktop = Boolean(dimensions.width && dimensions.width > 800)
     const showClubList = Boolean(!dimensions.width || dimensions.width > 1000)
@@ -39,20 +36,13 @@ export function EventsPage(props: Props) {
     return (
         <Page className={cn}>
             <HeaderContainer>
-                {selectedDate ? (
-                    <SelectedDate
-                        date={selectedDate}
-                        onClick={() =>
-                            setDisplayCalendar(
-                                displayCalendar => !displayCalendar
-                            )
-                        }
-                    />
-                ) : (
-                    <PickDate />
-                )}
+                <div>
+                    {selectedDate
+                        ? selectedDate.format('D. MMMM')
+                        : 'Pick a Date'}
+                </div>
             </HeaderContainer>
-            {desktop ? (
+            {desktop && (
                 <>
                     <div className={`${cn}__title`}>
                         Events on {selectedDate.format('D. MMMM')}
@@ -68,22 +58,6 @@ export function EventsPage(props: Props) {
                         </div>
                     </div>
                 </>
-            ) : (
-                <div
-                    className={classNames(`${cn}__calendar-wrapper`, {
-                        [`${cn}__calendar-wrapper--hidden`]: !displayCalendar,
-                    })}
-                >
-                    <Calendar
-                        monthSelection={monthSelection}
-                        setMonthSelection={setMonthSelection}
-                        selectedDate={selectedDate}
-                        setSelectedDate={selectedDate => {
-                            setSelectedDate(selectedDate)
-                            setDisplayCalendar(false)
-                        }}
-                    />
-                </div>
             )}
             <Content scrollable restrictMaxWidth={desktop}>
                 {desktop ? (
