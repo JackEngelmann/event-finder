@@ -2,7 +2,6 @@ import './EventDetailPage.scss'
 import * as R from 'ramda'
 import React from 'react'
 import { useParams, useHistory, useLocation } from 'react-router'
-import { GoBackButton } from '../components/GoBackButton'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
 import { OnlyVisibleForAdmins } from '../containers/OnlyVisibleForAdmins'
@@ -38,13 +37,7 @@ export function EventDetailPage(props: Props) {
 
     return (
         <Page>
-            <HeaderContainer
-                left={
-                    <GoBackButton
-                        onClick={() => history.push(`/event/${search}`)}
-                    />
-                }
-            />
+            <HeaderContainer />
             <Content restrictMaxWidth scrollable>
                 <div className={cn}>
                     <div className={`${cn}__content`}>

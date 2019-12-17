@@ -14,7 +14,6 @@ import { Calendar } from '../components/Calendar'
 type Props = {}
 
 const currentDate = moment()
-const PickDate = () => <span>Pick a date</span>
 
 const cn = 'events-page'
 
@@ -33,55 +32,63 @@ export function EventsPage(props: Props) {
     }
     const onEventClick = (event: { id: number }) =>
         history.push(`/event/${event.id}${search}`)
-    return (
-        <Page className={cn}>
-            <HeaderContainer>
-                <div>
-                    {selectedDate
-                        ? selectedDate.format('D. MMMM')
-                        : 'Pick a Date'}
+
+    function renderDesktopContent() {
+        return (
+            <>
+                <div className={`${cn}__title`}>
+                    Events on {selectedDate!.format('D. MMMM')}
                 </div>
-            </HeaderContainer>
-            {desktop && (
-                <>
-                    <div className={`${cn}__title`}>
-                        Events on {selectedDate.format('D. MMMM')}
+                <div className={`${cn}__calendar-anchor`}>
+                    <div className={`${cn}__calendar-wrapper`}>
+                        <Calendar
+                            monthSelection={monthSelection}
+                            setMonthSelection={setMonthSelection}
+                            selectedDate={selectedDate}
+                            setSelectedDate={setSelectedDate}
+                        />
                     </div>
-                    <div className={`${cn}__calendar-anchor`}>
-                        <div className={`${cn}__calendar-wrapper`}>
-                            <Calendar
-                                monthSelection={monthSelection}
-                                setMonthSelection={setMonthSelection}
-                                selectedDate={selectedDate}
-                                setSelectedDate={setSelectedDate}
-                            />
+                </div>
+                <Content scrollable restrictMaxWidth={desktop}>
+                    {showClubList && (
+                        <div className={`${cn}__club-list-wrapper`}>
+                            <ClubListContainer />
                         </div>
+                    )}
+                    <div className={`${cn}__event-list-wrapper`}>
+                        <EventListContainer
+                            selectedDate={selectedDate}
+                            desktop
+                            onEventClick={onEventClick}
+                        />
                     </div>
-                </>
-            )}
-            <Content scrollable restrictMaxWidth={desktop}>
-                {desktop ? (
-                    <>
-                        {showClubList && (
-                            <div className={`${cn}__club-list-wrapper`}>
-                                <ClubListContainer />
-                            </div>
-                        )}
-                        <div className={`${cn}__event-list-wrapper`}>
-                            <EventListContainer
-                                selectedDate={selectedDate}
-                                desktop
-                                onEventClick={onEventClick}
-                            />
-                        </div>
-                    </>
-                ) : (
+                </Content>
+            </>
+        )
+    }
+
+    function renderMobileContent() {
+        return (
+            <>
+                <HeaderContainer>
+                    <div>
+                        {selectedDate
+                            ? selectedDate.format('D. MMMM')
+                            : 'Pick a Date'}
+                    </div>
+                </HeaderContainer>
+                <Content scrollable restrictMaxWidth={desktop}>
                     <EventListContainer
                         selectedDate={selectedDate}
                         onEventClick={onEventClick}
                     />
-                )}
-            </Content>
+                </Content>
+            </>
+        )
+    }
+    return (
+        <Page className={cn}>
+            {desktop ? renderDesktopContent() : renderMobileContent()}
         </Page>
     )
 }

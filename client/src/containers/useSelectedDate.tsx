@@ -2,7 +2,7 @@ import { useHistory, useLocation } from "react-router"
 import { useUrlSearchParams } from "./useUrlSearchParams"
 import moment, { Moment } from "moment";
 
-function queryStringFromSelectedDate(date: Moment) {
+export function queryStringFromSelectedDate(date: Moment) {
   return date.toISOString()
 }
 
