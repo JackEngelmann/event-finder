@@ -1,4 +1,6 @@
 import "reflect-metadata"
+import dotenv from 'dotenv'
+dotenv.config()
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './schema'
 import { resolvers } from './resolvers'
@@ -6,8 +8,6 @@ import express from 'express'
 import http, { Server } from 'http'
 import { AppContext } from '../appContext'
 import passport from 'passport'
-import { ImageService } from '../service/imageService'
-import { ImageModel, ImageDataModel } from '../database/entity/image'
 import { UserModel, UserDataModel } from '../database/entity/user'
 import session from 'express-session'
 import bodyParser from 'body-parser'
@@ -29,6 +29,8 @@ app.use(session({ secret: SECRET }))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use('/images', express.static(process.env.IMAGE_DIR_PATH!))
 
 /**
  * authentication
@@ -60,19 +62,6 @@ app.post(
         failureRedirect: '/#/login',
     }),
 )
-
-app.get('/images/:imageId', async (req, res) => {
-    const connection = await connectionPromise
-    const imageId = parseInt(req.params.imageId, 10)
-    logger.info(`requesting image with id ${imageId}`)
-    const imageModel = new ImageModel(connection)
-    const imageService = new ImageService(imageModel)
-    if (Number.isNaN(imageId)) return null
-    const file = await imageService.readFile(imageId)
-    if (!file) return res.send(undefined)
-    res.type(file.type)
-    res.send(file.data)
-})
 
 /**
  * GraphQL (implemented using apollo-server)

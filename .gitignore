@@ -1,5 +1,6 @@
 db-backups/
 db.sqlite
+images/
 
 yarn.lock
 
