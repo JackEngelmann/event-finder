@@ -2,6 +2,7 @@ import { AppContext } from '../appContext'
 import { EventModel } from '../database/entity/event'
 import { EventGenreModel } from '../database/entity/eventGenre'
 import { FileUpload } from 'graphql-upload'
+import { ImageModel } from '../database/entity/image'
 import { ImageService } from '../service/imageService'
 
 export type UpdateEventInput = {
@@ -26,7 +27,8 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
     const { db } = appContext
     const eventModel = new EventModel(db)
     const eventGenreModel = new EventGenreModel(db)
-    const imageService = new ImageService()
+    const imageModel = new ImageModel(db)
+    const imageService = new ImageService(imageModel)
     return new Promise(async (resolve, reject) => {
         try {
             if (input.image) {

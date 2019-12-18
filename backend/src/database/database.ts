@@ -6,6 +6,7 @@ import { ClubDataModel } from './entity/club'
 import { EventDataModel } from './entity/event'
 import { EventGenreDataModel } from './entity/eventGenre'
 import { GenreDataModel } from './entity/genre'
+import { ImageDataModel } from './entity/image'
 import { UserDataModel } from './entity/user'
 import { AppliedScriptDataModel } from './entity/appliedScripts'
 import { Logger } from '../logger'
@@ -23,6 +24,7 @@ export const createDbConnection = (dbName?: any) =>
             EventDataModel,
             EventGenreDataModel,
             GenreDataModel,
+            ImageDataModel,
             UserDataModel,
         ],
         database: dbName,

@@ -1,30 +1,55 @@
+import { ImageModel } from "../database/entity/image";
 import { FileUpload } from 'graphql-upload'
-import shortid from 'shortid'
-import { unlink, createWriteStream } from "fs";
-import path from 'path'
+import { Logger } from "../logger";
+
+type File = {
+    data: Buffer
+    type: string
+}
+
+const logger = new Logger()
 
 export class ImageService {
+    imageMode: ImageModel
+
+    constructor(imageModel: ImageModel) {
+        this.imageMode = imageModel
+    }
+
     async storeFile(upload: Promise<FileUpload>): Promise<string> {
-        const { createReadStream, mimetype, filename } = await upload
+        const { createReadStream, mimetype } = await upload
         const readStream = createReadStream()
-
-        const imageId = shortid.generate()
-        const newFileName = imageId + '-' + filename
-
-        const imagePath = path.join(process.env.IMAGE_DIR_PATH!, newFileName)
-
-        const imageUrl = `images/${newFileName}`
-
-        await new Promise((resolve, reject) => {
-            readStream.on('error', error => {
-                unlink(imagePath, () => {
-                    reject(error)
-                })
-            }).pipe(createWriteStream(imagePath))
-            .on('error', reject)
-            .on('finish', resolve)
+        const chunks: Uint8Array[] = []
+        const dataUrl = await new Promise<string>((resolve, reject) => {
+            readStream.on('data', chunk => {
+                chunks.push(chunk)
+            })
+            readStream.on('end', () => {
+                const base64 = Buffer.concat(chunks).toString('base64')
+                resolve(`data:${mimetype};base64,${base64}`)
+            })
         })
+        const id = await this.imageMode.createImage({ dataUrl })
+        return `images/${id}`
+    }
 
-        return imageUrl
+    async readFile(id: number): Promise<File | undefined> {
+        const image = await this.imageMode.getImage(id)
+        if (!image) return undefined
+        logger.info(`read file with id ${id}, its not undefined`)
+        return decodeBase64Image(image.dataUrl)
+    }
+}
+
+function decodeBase64Image(base64Str: string): File {
+    var matches = base64Str.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+    if (!matches || matches.length !== 3) {
+        logger.error(`invalid base64 string`)
+        throw new Error('Invalid base64 string');
+    }
+
+    return {
+        type: matches[1],
+        data: new Buffer(matches[2], 'base64')
     }
 }
