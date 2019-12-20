@@ -1,3 +1,4 @@
+import './AdminUpdateEventPage.scss'
 import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
 import { eventDetailsFragment, EventDetailsEvent } from '../graphqlUtils'
@@ -19,9 +20,8 @@ import { Select } from '../components/Select'
 import { Option } from '../components/Option'
 import { Textarea } from '../components/Textarea'
 import { MultiSelect } from '../components/MultiSelect'
-import { ImageFileInput } from '../components/ImageFileInput'
-import './AdminUpdateEventPage.scss'
 import { NetworkError } from '../components/NetworkError'
+import { ImageUrlsInput } from '../components/ImageUrlsInput'
 
 type Params = {
     eventId: string
@@ -42,8 +42,7 @@ type State = {
         name: string
     }[]
     id?: number
-    image?: File
-    imageUrl?: string
+    imageUrls?: string[]
     link?: string
     minimumAge?: number
     name?: string
@@ -100,7 +99,7 @@ export function AdminUpdateEventPage(props: any) {
                 genreIds: state.genres
                     ? state.genres.map(g => g.id)
                     : undefined,
-                image: state.image,
+                imageUrls: state.imageUrls,
                 link: state.link,
                 minimumAge: state.minimumAge,
                 name: state.name,
@@ -318,10 +317,12 @@ export function AdminUpdateEventPage(props: any) {
                             }
                         />
                     </LabeledInput>
-                    <LabeledInput label="Image">
-                        <ImageFileInput
-                            imageUrl={state.imageUrl}
-                            onChange={image => setState({ ...state, image })}
+                    <LabeledInput label="Images">
+                        <ImageUrlsInput
+                            value={state.imageUrls}
+                            onChange={imageUrls =>
+                                setState({ ...state, imageUrls })
+                            }
                         />
                     </LabeledInput>
                 </div>

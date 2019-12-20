@@ -2,12 +2,30 @@
   img {
     height: 3em;
   }
+
   input {
     z-index: -10;
     width: 0.1px;
     height: 0.1px;
+    left: -1000px;
+    top: 0;
     opacity: 0;
     overflow: hidden;
-    position: absolute;
+    position: fixed;
+  }
+
+  &__entry {
+    display: flex;
+    align-items: center;
+  }
+
+  &__add-image {
+    margin-left: 0.6em;
+  }
+
+  label {
+    display: flex;
+    justify-items: baseline;
+    cursor: pointer;
   }
 }

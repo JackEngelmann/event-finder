@@ -3,10 +3,12 @@ import { useMutation } from '@apollo/react-hooks'
 import React, { useState } from 'react'
 import { Input } from './Input'
 import './ImageUrlsInput.scss'
+import { Button } from './Button'
+import { Icon } from './Icon'
 
 type Props = {
-    value?: string[] | null
-    onChange: (value: string[] | null) => void
+    value?: string[] | undefined
+    onChange: (value: string[] | undefined) => void
 }
 
 const UPLOAD_IMAGE_MUTATION = gql`
@@ -27,7 +29,6 @@ export function ImageUrlsInput(props: Props) {
 
     async function uploadImages(files: FileList) {
         setIsLoading(true)
-        console.log(files)
         const uploadPromises = Array.from(files).map(file =>
             uploadImageMutation({
                 variables: {
@@ -46,12 +47,27 @@ export function ImageUrlsInput(props: Props) {
     return (
         <div className={cn}>
             {value &&
-                value.map(imageUrl => (
-                    <div>
+                value.map((imageUrl, index) => (
+                    <div className={`${cn}__entry`} key={imageUrl}>
+                        <Button
+                            borderless
+                            onClick={() =>
+                                onChange(value!.filter((v, i) => i !== index))
+                            }
+                        >
+                            <Icon icon="times" />
+                        </Button>
                         <img src={imageUrl} />
                     </div>
                 ))}
-            <label htmlFor="image-url-input-input">+</label>
+            <label htmlFor="image-url-input-input">
+                {(!value || value.length === 0) && (
+                    <span className={`${cn}__no-images`}>
+                        No images selected.
+                    </span>
+                )}
+                <Icon icon="plus" className={`${cn}__add-image`} />
+            </label>
             <Input
                 id="image-url-input-input"
                 type="file"

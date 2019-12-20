@@ -1,3 +1,4 @@
+import './AdminAddEventPage.scss'
 import React, { useState } from 'react'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
@@ -17,9 +18,8 @@ import { Select } from '../components/Select'
 import { Option } from '../components/Option'
 import { Textarea } from '../components/Textarea'
 import { MultiSelect } from '../components/MultiSelect'
-import { ImageFileInput } from '../components/ImageFileInput'
-import './AdminAddEventPage.scss'
 import { NetworkError } from '../components/NetworkError'
+import { ImageUrlsInput } from '../components/ImageUrlsInput'
 
 const CREATE_EVENT_MUTATION = gql`
     mutation CreateEvent($input: CreateEventInput!) {
@@ -46,8 +46,7 @@ type State = {
         name: string
     }[]
     id?: number
-    image?: File
-    imageUrl?: string
+    imageUrls?: string[]
     link?: string
     minimumAge?: number
     name?: string
@@ -82,7 +81,7 @@ export function AdminAddEventPage() {
                             state.admissionFeeWithDiscount,
                         amountOfFloors: state.amountOfFloors,
                         id: state.id,
-                        image: state.image,
+                        imageUrls: state.imageUrls,
                         clubId: state.club && state.club.id,
                         date,
                         description: state.description,
@@ -283,10 +282,12 @@ export function AdminAddEventPage() {
                             }
                         />
                     </LabeledInput>
-                    <LabeledInput label="Image">
-                        <ImageFileInput
-                            imageUrl={state.imageUrl}
-                            onChange={image => setState({ ...state, image })}
+                    <LabeledInput label="Images">
+                        <ImageUrlsInput
+                            value={state.imageUrls}
+                            onChange={imageUrls =>
+                                setState({ ...state, imageUrls })
+                            }
                         />
                     </LabeledInput>
                 </div>

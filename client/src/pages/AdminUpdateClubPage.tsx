@@ -5,6 +5,7 @@ import { useMutation } from '@apollo/react-hooks'
 import { useHistory, useParams } from 'react-router'
 import { Page } from '../components/Page'
 import { Content } from '../components/Content'
+import './AdminUpdateClubPage.scss'
 import { useClubWithDetails } from '../containers/useClubWithDetails'
 import { Button } from '../components/Button'
 import { H1Title } from '../components/H1Title'
@@ -34,6 +35,8 @@ const UPDATE_CLUB_MUTATION = gql`
     }
 `
 
+const cn = 'admin-update-club-page'
+
 export function AdminUpdateClubPage() {
     const { clubId } = useParams<Params>()
     const [requestPending, setRequestPending] = useState(false)
@@ -52,7 +55,7 @@ export function AdminUpdateClubPage() {
                 description: clubEditorState.description,
                 email: clubEditorState.email,
                 id: parseInt(clubId),
-                image: clubEditorState.image,
+                imageUrls: clubEditorState.imageUrls,
                 link: clubEditorState.link,
                 name: clubEditorState.name,
                 region: clubEditorState.region,
@@ -72,7 +75,7 @@ export function AdminUpdateClubPage() {
 
     return (
         <Page>
-            <Content restrictMaxWidth scrollable>
+            <Content restrictMaxWidth scrollable className={`${cn}__content`}>
                 <H1Title>Edit Club</H1Title>
                 <ClubEditor
                     state={clubEditorState}

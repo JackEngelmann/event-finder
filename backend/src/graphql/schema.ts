@@ -140,7 +140,7 @@ export const typeDefs = gql`
     }
     
     ###
-    # upload types
+    # image types
     ###
 
     input UploadImageInput {

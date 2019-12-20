@@ -15,8 +15,6 @@ export type UpdateEventInput = {
     description?: string
     genreIds?: number[]
     id: number
-    image?: Promise<FileUpload>
-    imageUrl?: string
     imageUrls?: string[]
     link?: string
     minimumAge?: number
@@ -29,15 +27,9 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
     const { db } = appContext
     const eventModel = new EventModel(db)
     const eventGenreModel = new EventGenreModel(db)
-    const imageModel = new ImageModel(db)
-    const imageService = new ImageService(imageModel)
     const eventImageModel = new EventImageModel(db)
     return new Promise(async (resolve, reject) => {
         try {
-            if (input.image) {
-                input.imageUrl = await imageService.storeFile(input.image)
-                delete input.image
-            }
             await eventModel.updateEvent(input)
             await eventGenreModel.setGenresForAnEvent(input.id, input.genreIds)
             await eventImageModel.setImageUrlsForEvent(input.id, input.imageUrls)

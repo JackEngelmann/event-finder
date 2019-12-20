@@ -10,6 +10,7 @@ export const CLUB_WITH_DETAILS_QUERY = gql`
             description
             email
             id
+            imageUrls
             link
             name
             region
@@ -25,6 +26,7 @@ type QueryResult = {
         | 'description'
         | 'email'
         | 'id'
+        | 'imageUrls'
         | 'link'
         | 'name'
         | 'region'

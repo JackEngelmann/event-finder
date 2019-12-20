@@ -15,11 +15,11 @@ const cn = 'content'
 const ScrollContainer = (props: ComponentProps<'div'>) => <div {...props} />
 
 export function Content(props: Props) {
-    const { restrictMaxWidth, scrollable, children, ...divProps } = props
+    const { restrictMaxWidth, scrollable, children, className, ...divProps } = props
     const Container = scrollable ? ScrollContainer : React.Fragment
     return (
         <div
-            className={classNames(cn, scrollable && `${cn}--scrollable`)}
+            className={classNames(cn, scrollable && `${cn}--scrollable`, className)}
             {...divProps}
         >
             <MobileMenuContainer />

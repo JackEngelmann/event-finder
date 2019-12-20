@@ -3,7 +3,7 @@ import './ClubEditor.scss'
 import { LabeledInput } from './LabeledInput'
 import { Input } from './Input'
 import { Textarea } from './Textarea'
-import { ImageFileInput } from './ImageFileInput'
+import { ImageUrlsInput } from './ImageUrlsInput'
 
 export type ClubEditorState = {
     address?: string
@@ -12,8 +12,7 @@ export type ClubEditorState = {
     email?: string
     id?: number
     link?: string
-    image?: File
-    imageUrl?: string
+    imageUrls?: string[]
     name?: string
     region?: string
     specials?: string
@@ -120,10 +119,10 @@ export function ClubEditor(props: Props) {
                     }
                 />
             </LabeledInput>
-            <LabeledInput label="Image">
-                <ImageFileInput
-                    imageUrl={state.imageUrl}
-                    onChange={image => setState({ ...state, image })}
+            <LabeledInput label="Images">
+                <ImageUrlsInput
+                    value={state.imageUrls}
+                    onChange={imageUrls => setState({ ...state, imageUrls })}
                 />
             </LabeledInput>
         </div>

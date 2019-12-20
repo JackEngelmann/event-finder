@@ -12,7 +12,7 @@ import { ImageUrlsInput } from '../components/ImageUrlsInput'
 const cn = 'component-library'
 
 export function ComponentLibraryPage() {
-    const [imageUrls, setImageUrls] = useState<string[] | null>(null)
+    const [imageUrls, setImageUrls] = useState<string[] | undefined>()
     return (
         <div className={cn}>
             <div className={`${cn}__spacer`}>

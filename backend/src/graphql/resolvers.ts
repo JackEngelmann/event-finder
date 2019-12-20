@@ -97,7 +97,7 @@ export const resolvers: IResolvers<Source, AppContext> = {
             requireAdminPermission(appContext)
             const imageUrl = await uploadImage(appContext, args.input)
             return { imageUrl }
-        }
+        },
     },
     Event: {
         club: (event, args, appContext, info) => {
