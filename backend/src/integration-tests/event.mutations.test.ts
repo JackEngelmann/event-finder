@@ -114,6 +114,7 @@ describe('event mutations: ', () => {
                 clubId: 1,
                 genreIds: [1, 2],
                 special: 'event-special',
+                imageUrls: ['image-url-1', 'image-url-2'],
                 priceCategory: 2,
                 admissionFee: 10.0,
                 admissionFeeWithDiscount: 4.0,
@@ -152,47 +153,6 @@ describe('event mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result.errors).toMatchSnapshot()
-            done()
-        })
-
-        test('create event with an image', async done => {
-            apolloHttpTestServer = await createApolloHttpTestServer({
-                dbName: DB_NAME,
-                isAdmin: true
-            })
-            const { port } = apolloHttpTestServer
-
-            const input: any = {
-                name: 'created-name',
-                date: 'created-date',
-                clubId: 2,
-                image: null,
-            }
-
-            const body = new FormData()
-            body.append(
-                'operations',
-                JSON.stringify({
-                    query: createEventMutation,
-                    variables: { input },
-                })
-            )
-            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-            body.append(
-                '1',
-                createReadStream(join(__dirname, 'testPicture.jpg'))
-            )
-
-            const result: GraphQLResponse = await fetch(
-                `http://localhost:${port!}/graphql`,
-                {
-                    method: 'POST',
-                    body: body as any,
-                }
-            ).then(res => res.json())
-
-            expect(result.errors).toBeUndefined()
-            expect(result.data!.createEvent.event.imageUrl).toBeDefined()
             done()
         })
     })
@@ -289,6 +249,7 @@ describe('event mutations: ', () => {
                 clubId: 2,
                 description: 'updated-description',
                 genreIds: [2, 3],
+                imageUrls: ['image-url-1', 'image-url-2'],
                 special: 'updated-special',
                 priceCategory: 1,
                 admissionFee: 20.0,
@@ -307,49 +268,6 @@ describe('event mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
-        })
-
-        test('update event with an image', async done => {
-            // arrange
-            apolloHttpTestServer = await createApolloHttpTestServer({
-                dbName: DB_NAME,
-                isAdmin: true,
-            })
-            const { port } = apolloHttpTestServer
-            const input: any = {
-                id: 1,
-                name: 'updated-name',
-                date: 'updated-date',
-                clubId: 2,
-                image: null,
-            }
-            const body = new FormData()
-            body.append(
-                'operations',
-                JSON.stringify({
-                    query: updateEventMutation,
-                    variables: { input },
-                })
-            )
-            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-            body.append(
-                '1',
-                createReadStream(join(__dirname, 'testPicture.jpg'))
-            )
-
-            // act
-            const result: GraphQLResponse = await fetch(
-                `http://localhost:${port!}/graphql`,
-                {
-                    method: 'POST',
-                    body: body as any,
-                }
-            ).then(res => res.json())
-
-            // assert
-            expect(result.errors).toBeUndefined()
-            expect(result.data!.updateEvent.event.imageUrl).toBeDefined()
             done()
         })
 

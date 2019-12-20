@@ -20,7 +20,7 @@ const EVENTS_QUERY = gql`
             id
             name
             date
-            imageUrl
+            imageUrls
             club {
                 id
                 name
@@ -29,7 +29,7 @@ const EVENTS_QUERY = gql`
     }
 `
 type EventsQueryData = {
-    events: Pick<Event, 'id' | 'name' | 'date' | 'imageUrl' | 'club'>[]
+    events: Pick<Event, 'id' | 'name' | 'date' | 'imageUrls' | 'club'>[]
 }
 
 export function EventListContainer(props: Props) {

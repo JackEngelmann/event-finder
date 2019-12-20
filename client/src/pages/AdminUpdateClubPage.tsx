@@ -24,7 +24,7 @@ const UPDATE_CLUB_MUTATION = gql`
                 description
                 email
                 id
-                imageUrl
+                imageUrls
                 link
                 name
                 region

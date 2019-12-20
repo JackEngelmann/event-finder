@@ -5,7 +5,7 @@ import classNames from 'classnames'
 type Props = {
     event: {
         name: string
-        imageUrl: string
+        imageUrls?: string[]
         club: { name: string }
     }
     onClick: () => void
@@ -27,7 +27,7 @@ export function EventCard(props: Props) {
             <div className={`${cn}__picture-wrapper`}>
                 <img
                     className={`${cn}__picture`}
-                    src={'./' + event.imageUrl}
+                    src={event.imageUrls ? event.imageUrls[0] : undefined}
                     alt={`event ${event.name}`}
                 />
             </div>

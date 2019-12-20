@@ -1,8 +1,7 @@
 import { AppContext } from '../appContext'
 import { ClubModel } from '../database/entity/club'
 import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../database/entity/image'
-import { ImageService } from '../service/imageService'
+import { ClubImageModel } from '../database/entity/clubImage'
 
 export type UpdateClubInput = {
     address?: string
@@ -11,7 +10,7 @@ export type UpdateClubInput = {
     email?: string
     id: number
     image?: Promise<FileUpload>
-    imageUrl?: string
+    imageUrls?: string[]
     link?: string
     name: string
     region?: string
@@ -21,15 +20,11 @@ export type UpdateClubInput = {
 export function updateClub(appContext: AppContext, input: UpdateClubInput) {
     const { db } = appContext
     const clubModel = new ClubModel(db)
-    const imageModel = new ImageModel(db)
-    const imageService = new ImageService(imageModel)
+    const clubImageModel = new ClubImageModel(db)
     return new Promise(async (resolve, reject) => {
         try {
-            if (input.image) {
-                input.imageUrl = await imageService.storeFile(input.image)
-                delete input.image
-            }
             await clubModel.updateClub(input)
+            await clubImageModel.setImageUrlsForClub(input.id, input.imageUrls)
             resolve()
         } catch (err) {
             console.error(err)

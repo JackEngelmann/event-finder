@@ -1,5 +1,4 @@
 import { Entity, PrimaryGeneratedColumn, Column, Connection } from 'typeorm'
-import { longTextType } from '../database'
 
 @Entity('image')
 export class ImageDataModel {

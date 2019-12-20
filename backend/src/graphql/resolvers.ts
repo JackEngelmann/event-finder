@@ -15,6 +15,9 @@ import { deleteClub } from '../mutations/deleteClub'
 import { AppContext } from '../appContext'
 import { requireAdminPermission } from '../authentication'
 import { Logger } from '../logger'
+import { uploadImage } from '../mutations/uploadImages'
+import { queryImageUrlsForEvent } from '../queries/imageUrlsForEvent'
+import { queryImageUrlsForClub } from '../queries/imageUrlsForClub'
 
 type Source = {
     clubId: number
@@ -73,7 +76,7 @@ export const resolvers: IResolvers<Source, AppContext> = {
             return { id: args.id }
         },
         createClub: async (obj, args, appContext, info) => {
-            requireAdminPermission(appContext)
+            // requireAdminPermission(appContext)
             const clubId = await createClub(appContext, args.input)
             const club = await queryClub(appContext, clubId)
             return { club }
@@ -89,6 +92,12 @@ export const resolvers: IResolvers<Source, AppContext> = {
             await deleteClub(appContext, args.id)
             return { id: args.id }
         },
+
+        uploadImage: async (obj, args, appContext, info) => {
+            requireAdminPermission(appContext)
+            const imageUrl = await uploadImage(appContext, args.input)
+            return { imageUrl }
+        }
     },
     Event: {
         club: (event, args, appContext, info) => {
@@ -96,5 +105,11 @@ export const resolvers: IResolvers<Source, AppContext> = {
         },
         genres: (event, args, appContext, info) =>
             queryGenresForEvent(appContext, event.id),
+        imageUrls: (event, args, appContext, info) =>
+            queryImageUrlsForEvent(appContext, event.id)
     },
+    Club: {
+        imageUrls: (club, args, appContext, info) =>
+            queryImageUrlsForClub(appContext, club.id)
+    }
 }

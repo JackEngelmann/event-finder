@@ -19,7 +19,7 @@ export const EVENT_WITH_DETAILS_QUERY = gql`
                 name
             }
             id
-            imageUrl
+            imageUrls
             link
             minimumAge
             name
@@ -38,7 +38,7 @@ export type EventWithDetails = Pick<
     | 'description'
     | 'id'
     | 'link'
-    | 'imageUrl'
+    | 'imageUrls'
     | 'minimumAge'
     | 'name'
     | 'priceCategory'

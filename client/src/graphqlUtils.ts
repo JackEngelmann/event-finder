@@ -17,7 +17,7 @@ export const eventDetailsFragment = gql`
             name
         }
         id
-        imageUrl
+        imageUrls
         link
         minimumAge
         name
@@ -34,7 +34,7 @@ export type EventDetailsEvent = Pick<
     | 'date'
     | 'description'
     | 'id'
-    | 'imageUrl'
+    | 'imageUrls'
     | 'minimumAge'
     | 'name'
     | 'priceCategory'

@@ -22,14 +22,14 @@ export const eventFragment = `
         id
         name
     }
-    name,
-    description,
-    date,
+    name
+    description
+    date
     id
-    imageUrl,
-    priceCategory,
-    admissionFee,
-    admissionFeeWithDiscount,
+    imageUrls
+    priceCategory
+    admissionFee
+    admissionFeeWithDiscount
     link
     special,
     minimumAge,

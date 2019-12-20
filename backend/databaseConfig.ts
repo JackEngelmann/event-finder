@@ -3,6 +3,7 @@ import { createAdminUser as seed_191212_2000_createAdminUser } from './src/datab
 import { addGenres as seed_191212_2100_addGenres } from './src/database/seeds/191212-2100-addGenres'
 import { Connection, ConnectionOptions } from 'typeorm'
 import { seed_191212_2242_addGenres } from './src/database/seeds/191212-2242-addGenres'
+import { migration_191219_1657_imageUrls } from './src/database/migrations/191219-1657-imageUrls'
 
 export type DbScript = {
     name: string
@@ -25,6 +26,10 @@ const configByMode: Record<string, DatabaseConfig> = {
             seed_191212_2000_createAdminUser,
             seed_191212_2100_addGenres,
             seed_191212_2242_addGenres,
+            /**
+             * TODO: supper ugly to do migration is seed here!
+             */
+            migration_191219_1657_imageUrls,
         ],
         connectionOptions: {
             type: 'mysql',
@@ -43,6 +48,7 @@ const configByMode: Record<string, DatabaseConfig> = {
             seed_191212_2000_createAdminUser,
             seed_191212_2100_addGenres,
             seed_191212_2242_addGenres,
+            migration_191219_1657_imageUrls,
         ],
         connectionOptions: {
             type: 'mysql',
@@ -55,7 +61,10 @@ const configByMode: Record<string, DatabaseConfig> = {
     },
     test: {
         migrations,
-        seeds: [seed_191212_2000_createAdminUser],
+        seeds: [
+            seed_191212_2000_createAdminUser,
+            migration_191219_1657_imageUrls,
+        ],
         connectionOptions: {
             type: 'sqlite',
             database: ':memory:',

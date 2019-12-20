@@ -26,9 +26,6 @@ export class ClubDataModel {
     id!: number
 
     @Column({ type: 'text', nullable: true })
-    imageUrl?: string | null
-
-    @Column({ type: 'text', nullable: true })
     link?: string | null
 
     @Column()
@@ -58,7 +55,6 @@ export class ClubModel {
         contact?: string
         description?: string
         email?: string
-        imageUrl?: string
         link?: string
         name: string
         region?: string
@@ -76,7 +72,6 @@ export class ClubModel {
         description?: string
         email?: string
         id: number
-        imageUrl?: string
         link?: string
         name: string
         region?: string
@@ -91,7 +86,6 @@ export class ClubModel {
         club.contact = input.contact || null
         club.description = input.description || null
         club.email = input.email || null
-        club.imageUrl = input.imageUrl || null
         club.link = input.link || null
         club.name = input.name
         club.region = input.region || null

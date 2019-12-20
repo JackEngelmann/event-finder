@@ -29,9 +29,6 @@ export class EventDataModel {
     id!: number
 
     @Column({ type: 'text', nullable: true })
-    imageUrl?: string | null
-
-    @Column({ type: 'text', nullable: true })
     link?: string | null
 
     @Column({ type: 'int', nullable: true })
@@ -67,7 +64,6 @@ export class EventModel {
         date: string
         description?: String
         genreIds?: number[]
-        imageUrl?: string
         link?: string
         minimumAge?: number
         name: string
@@ -110,7 +106,6 @@ export class EventModel {
         description?: string
         genreIds?: number[]
         id: number
-        imageUrl?: string
         link?: string
         minimumAge?: number
         name: string
@@ -129,7 +124,6 @@ export class EventModel {
         event.clubId = input.clubId
         event.date = input.date
         event.description = input.description || null
-        event.imageUrl = input.imageUrl || null
         event.link = input.link || null
         event.minimumAge = input.minimumAge || null
         event.name = input.name

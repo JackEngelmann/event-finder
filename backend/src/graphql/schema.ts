@@ -1,18 +1,61 @@
 import { gql } from 'apollo-server-express'
 
 export const typeDefs = gql`
+    ###
+    # club types
+    ###
+
     type Club {
         address: String
         contact: String
         description: String
         email: String
         id: Int!
-        imageUrl: String
+        imageUrls: [String]!
         link: String
         name: String!
         region: String
         specials: String
     }
+
+    input CreateClubInput {
+        address: String
+        contact: String
+        description: String
+        email: String
+        imageUrls: [String!]
+        link: String
+        name: String!
+        region: String
+        specials: String
+    }
+    type CreateClubPayload {
+        club: Club
+    }
+
+    input UpdateClubInput {
+        address: String
+        contact: String
+        description: String
+        email: String
+        id: Int!
+        imageUrls: [String!]
+        link: String
+        name: String!
+        region: String
+        specials: String
+    }
+    type UpdateClubPayload {
+        club: Club
+    }
+
+    type DeleteClubPayload {
+        id: Int
+    }
+
+    ###
+    # event types
+    ###
 
     type Event {
         admissionFee: Float
@@ -23,7 +66,7 @@ export const typeDefs = gql`
         description: String
         genres: [Genre]!
         id: Int!
-        imageUrl: String
+        imageUrls: [String!]
         link: String
         minimumAge: Int
         name: String!
@@ -39,13 +82,15 @@ export const typeDefs = gql`
         date: String!
         description: String
         genreIds: [Int]
-        image: Upload
-        imageUrl: String
+        imageUrls: [String!]
         link: String
         minimumAge: Int
         name: String!
         priceCategory: Int
         special: String
+    }
+    type CreateEventPayload {
+        event: Event
     }
 
     input UpdateEventInput {
@@ -57,58 +102,13 @@ export const typeDefs = gql`
         description: String
         genreIds: [Int]
         id: Int!
-        image: Upload
-        imageUrl: String
+        imageUrls: [String!]
         link: String
         minimumAge: Int
         name: String!
         priceCategory: Int
         special: String
     }
-
-    input CreateClubInput {
-        address: String
-        contact: String
-        description: String
-        email: String
-        image: Upload
-        imageUrl: String
-        link: String
-        name: String!
-        region: String
-        specials: String
-    }
-
-    input UpdateClubInput {
-        address: String
-        contact: String
-        description: String
-        email: String
-        id: Int!
-        image: Upload
-        imageUrl: String
-        link: String
-        name: String!
-        region: String
-        specials: String
-    }
-
-    type UpdateClubPayload {
-        club: Club
-    }
-
-    type CreateClubPayload {
-        club: Club
-    }
-
-    type DeleteClubPayload {
-        id: Int
-    }
-
-    type CreateEventPayload {
-        event: Event
-    }
-
     type UpdateEventPayload {
         event: Event
     }
@@ -117,19 +117,43 @@ export const typeDefs = gql`
         id: Int
     }
 
+    input EventsQueryFilter {
+        date: String
+    }
+
+    ###
+    # genre types
+    ###
+
     type Genre {
         id: Int!
         name: String!
     }
 
-    input EventsQueryFilter {
-        date: String
-    }
+    ###
+    # user types
+    ###
 
     type User {
         id: Int!
         name: String
     }
+    
+    ###
+    # upload types
+    ###
+
+    input UploadImageInput {
+        upload: Upload!
+    }
+
+    type UploadImagePayload {
+        imageUrl: String!
+    }
+
+    ###
+    # Root Query and Mutation
+    ###
 
     type Query {
         club(id: Int!): Club
@@ -149,5 +173,7 @@ export const typeDefs = gql`
         createClub(input: CreateClubInput!): CreateClubPayload!
         updateClub(input: UpdateClubInput!): UpdateClubPayload!
         deleteClub(id: Int!): DeleteClubPayload!
+
+        uploadImage(input: UploadImageInput!): UploadImagePayload!
     }
 `

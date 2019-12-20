@@ -4,6 +4,7 @@ import { EventGenreModel } from '../database/entity/eventGenre'
 import { FileUpload } from 'graphql-upload'
 import { ImageModel } from '../database/entity/image'
 import { ImageService } from '../service/imageService'
+import { EventImageModel } from '../database/entity/eventImage'
 
 export type UpdateEventInput = {
     admissionFee?: number
@@ -16,6 +17,7 @@ export type UpdateEventInput = {
     id: number
     image?: Promise<FileUpload>
     imageUrl?: string
+    imageUrls?: string[]
     link?: string
     minimumAge?: number
     name: string
@@ -29,6 +31,7 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
     const eventGenreModel = new EventGenreModel(db)
     const imageModel = new ImageModel(db)
     const imageService = new ImageService(imageModel)
+    const eventImageModel = new EventImageModel(db)
     return new Promise(async (resolve, reject) => {
         try {
             if (input.image) {
@@ -37,6 +40,7 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
             }
             await eventModel.updateEvent(input)
             await eventGenreModel.setGenresForAnEvent(input.id, input.genreIds)
+            await eventImageModel.setImageUrlsForEvent(input.id, input.imageUrls)
             resolve()
         } catch (err) {
             console.error(err)

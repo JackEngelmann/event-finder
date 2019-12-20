@@ -35,7 +35,7 @@ const CLUB_QUERY = gql`
             description
             email
             id
-            imageUrl
+            imageUrls
             link
             name
             region
@@ -55,7 +55,7 @@ type QueriedClub = Pick<
     | 'specials'
     | 'description'
     | 'link'
-    | 'imageUrl'
+    | 'imageUrls'
 >
 type ClubQueryData = {
     club: QueriedClub
@@ -114,11 +114,11 @@ export function ClubDetailPage(props: Props) {
     function renderMobileContent(club: QueriedClub) {
         return (
             <div className={cn}>
-                {club.imageUrl && (
+                {club.imageUrls && (
                     <div className={`${cn}__picture-wrapper`}>
                         <img
                             className={`${cn}__picture`}
-                            src={club.imageUrl}
+                            src={club.imageUrls[0]}
                             alt={`club ${club.name}`}
                         />
                     </div>
@@ -141,11 +141,11 @@ export function ClubDetailPage(props: Props) {
                     {renderEditButton()}
                 </H1Title>
                 <div className={`${cn}__picture-and-short-info`}>
-                    {club.imageUrl && (
+                    {club.imageUrls && (
                         <div className={`${cn}__picture-wrapper`}>
                             <img
                                 className={`${cn}__picture`}
-                                src={club.imageUrl}
+                                src={club.imageUrls[0]}
                                 alt={`club ${club.name}`}
                             />
                         </div>

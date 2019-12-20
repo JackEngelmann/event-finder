@@ -103,46 +103,6 @@ describe('club mutations: ', () => {
             done()
         })
 
-        test('create club with an image', async done => {
-            // arrange
-            apolloHttpTestServer = await createApolloHttpTestServer({
-                isAdmin: true,
-                dbName: DB_NAME,
-            })
-            const { port } = apolloHttpTestServer
-            const input: any = {
-                name: 'created-name',
-                image: null,
-            }
-            const body = new FormData()
-            body.append(
-                'operations',
-                JSON.stringify({
-                    query: createClubMutation,
-                    variables: { input },
-                })
-            )
-            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-            body.append(
-                '1',
-                createReadStream(join(__dirname, 'testPicture.jpg'))
-            )
-
-            // act
-            const result: GraphQLResponse = await fetch(
-                `http://localhost:${port!}/graphql`,
-                {
-                    method: 'POST',
-                    body: body as any,
-                }
-            ).then(res => res.json())
-
-            // assert
-            expect(result.errors).toBeUndefined()
-            expect(result.data!.createClub.club.imageUrl).toBeDefined()
-            done()
-        })
-
         test('create club without being admin should result in error', async done => {
             // arrange
             apolloTestServer = await createApolloTestServer({
@@ -220,48 +180,6 @@ describe('club mutations: ', () => {
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
-        })
-
-        test('update club with an image', async done => {
-            // arrange
-            apolloHttpTestServer = await createApolloHttpTestServer({
-                isAdmin: true,
-                dbName: DB_NAME,
-            })
-            const { port } = apolloHttpTestServer
-            const input: any = {
-                name: 'updated-name',
-                id: 1,
-                image: null,
-            }
-
-            const body = new FormData()
-            body.append(
-                'operations',
-                JSON.stringify({
-                    query: updateClubMutation,
-                    variables: { input },
-                })
-            )
-            body.append('map', JSON.stringify({ 1: ['variables.input.image'] }))
-            body.append(
-                '1',
-                createReadStream(join(__dirname, 'testPicture.jpg'))
-            )
-
-            // act
-            const result: GraphQLResponse = await fetch(
-                `http://localhost:${port!}/graphql`,
-                {
-                    method: 'POST',
-                    body: body as any,
-                }
-            ).then(res => res.json())
-
-            // assert
-            expect(result.errors).toBeUndefined()
-            expect(result.data!.updateClub.club.imageUrl).toBeDefined()
             done()
         })
 

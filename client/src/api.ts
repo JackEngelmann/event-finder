@@ -10,7 +10,7 @@ export type Club = {
     description?: string
     email?: string
     id: number
-    imageUrl?: string
+    imageUrls?: string[]
     link?: string
     name: string
     region?: string
@@ -31,7 +31,7 @@ export type Event = {
     description: string
     genres: Genre[] | undefined
     id: number
-    imageUrl: string
+    imageUrls?: string[]
     link?: string
     minimumAge: number | undefined
     name: string

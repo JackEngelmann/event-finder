@@ -10,13 +10,14 @@ import { ImageDataModel } from './entity/image'
 import { UserDataModel } from './entity/user'
 import { AppliedScriptDataModel } from './entity/appliedScripts'
 import { Logger } from '../logger'
+import { EventImageDataModel } from "./entity/eventImage"
+import { ClubImageDataModel } from "./entity/clubImage"
 
 let startedApplyingDbScript = false
 
 export const createDbConnection = (dbName?: any) =>
     createConnection({
         name: dbName,
-        synchronize: true,
         logging: ['query', 'error', 'info', 'log', 'warn'],
         entities: [
             AppliedScriptDataModel,
@@ -26,6 +27,8 @@ export const createDbConnection = (dbName?: any) =>
             GenreDataModel,
             ImageDataModel,
             UserDataModel,
+            EventImageDataModel,
+            ClubImageDataModel
         ],
         database: dbName,
         ...databaseConfig.connectionOptions,
@@ -42,15 +45,3 @@ export const createDbConnection = (dbName?: any) =>
     })
 
 export const connectionPromise = createDbConnection()
-
-export const longTextType = (() => {
-    const dbType = databaseConfig.connectionOptions.type
-    switch (dbType) {
-        case 'mysql':
-            return 'longtext'
-        case 'sqlite':
-            return 'text'
-        default:
-            throw new Error(`long text is not defined for the database type: ${dbType}`)
-    }
-})()
