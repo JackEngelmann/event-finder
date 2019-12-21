@@ -18,6 +18,7 @@ import { TextWithLineBreaks } from '../../components/TextWithLineBreaks/TextWith
 import { Icon } from '../../components/Icon/Icon'
 import { useDimensions } from '../../components/utils/useDimensions'
 import { NetworkError } from '../../components/NetworkError/NetworkError'
+import { Carousel } from '../../components/carousel'
 
 type Props = {}
 
@@ -115,13 +116,19 @@ export function ClubDetailPage(props: Props) {
         return (
             <div className={cn}>
                 {club.imageUrls && (
-                    <div className={`${cn}__picture-wrapper`}>
-                        <img
-                            className={`${cn}__picture`}
-                            src={club.imageUrls[0]}
-                            alt={`club ${club.name}`}
-                        />
-                    </div>
+                    <Carousel
+                        className={`${cn}__carousel`}
+                        imageCount={club.imageUrls.length}
+                        renderImage={i => (
+                            <div className={`${cn}__picture-wrapper`}>
+                                <img
+                                    className={`${cn}__picture`}
+                                    src={club.imageUrls![i]}
+                                    alt={`club ${club.name}`}
+                                />
+                            </div>
+                        )}
+                    />
                 )}
                 <H1Title hideDivider>
                     {club.name}

@@ -1,0 +1,41 @@
+.carousel {
+    width: 20em;
+    height: 10em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    &__arrow-left {
+        align-items: center;
+        background-color: transparent;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 20%;
+
+        &:hover {
+            background: linear-gradient(to left, rgba(255,255,255,0), rgba(255,255,255,0.2));
+        }
+    }
+
+
+    &__arrow-right {
+        align-items: center;
+        background-color: transparent;
+        bottom: 0;
+        display: flex;
+        justify-content: center;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 20%;
+
+        &:hover {
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.2));
+        }
+    }
+}

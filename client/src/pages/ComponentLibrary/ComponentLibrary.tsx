@@ -6,6 +6,7 @@ import { Select } from '../../components/Select/Select'
 import { Option } from '../../components/Option/Option'
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
 import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
+import { Carousel } from '../../components/carousel'
 
 // TODO: should probably not be available in production
 
@@ -15,6 +16,12 @@ export function ComponentLibraryPage() {
     const [imageUrls, setImageUrls] = useState<string[] | undefined>()
     return (
         <div className={cn}>
+            <div className={`${cn}__spacer`}>
+                <Carousel
+                    renderImage={index => <div>{index}</div>}
+                    imageCount={5}
+                />
+            </div>
             <div className={`${cn}__spacer`}>
                 <Button primary>Primary</Button>
             </div>
