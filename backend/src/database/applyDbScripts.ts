@@ -1,4 +1,4 @@
-import { DatabaseConfig } from '../../databaseConfig'
+import { DatabaseConfig, DbScript } from '../../databaseConfig'
 import { Connection } from 'typeorm'
 import { AppliedScriptModel } from './entity/appliedScripts'
 import { Logger } from '../logger'
@@ -19,6 +19,7 @@ export async function applyDbScripts(
         ...(databaseConfig.migrations || []),
         ...(databaseConfig.seeds || []),
     ]
+    validateUniqScriptNames(scripts)
     const appliedScriptModel = new AppliedScriptModel(connection)
     const appliedScripts = await appliedScriptModel.getAppliedScripts()
     const appliedScriptNames = appliedScripts.map(row => row.name)
@@ -32,4 +33,11 @@ export async function applyDbScripts(
             name: script.name,
         })
     }
+}
+
+export function validateUniqScriptNames(scripts: DbScript[]) {
+    const names = scripts.map(s => s.name)
+    const uniqNames = new Set(names)
+    if (uniqNames.size === names.length) return
+    throw Error('Script names must be uniq!')
 }
