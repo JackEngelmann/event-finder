@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import './index.scss'
 import App from './app/App'
 import * as serviceWorker from './serviceWorker'
+import './i18n'
 
 ReactDOM.render(<App />, document.getElementById('root'))
 

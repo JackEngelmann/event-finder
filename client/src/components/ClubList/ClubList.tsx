@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import './ClubList.scss'
 import * as R from 'ramda'
 import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator'
+import { useTranslation } from 'react-i18next'
 
 type Props = {
     clubs: Club[]
@@ -18,12 +19,15 @@ const cn = 'club-list'
 export function ClubList(props: Props) {
     const { clubs, renderClub, showFirst } = props
     const [showAll, setShowAll] = useState(false)
+    const { t } = useTranslation()
 
     const sortedClubs = sortClubsByName(clubs)
 
     function renderContent() {
         if (sortedClubs === undefined) return <LoadingIndicator />
-        if (sortedClubs.length === 0) return 'No events listed today'
+        if (sortedClubs.length === 0) {
+            return t('listNoClubs')
+        }
         const displayedClubs =
             !showAll && showFirst ? R.take(showFirst, sortedClubs) : sortedClubs
         const difference = sortedClubs.length - displayedClubs.length
@@ -35,7 +39,7 @@ export function ClubList(props: Props) {
                         className={`${cn}__see-more`}
                         onClick={() => setShowAll(true)}
                     >
-                        See More ({difference})
+                        {t('showMore')} ({difference})
                     </div>
                 )}
                 {showAll && (
@@ -43,7 +47,7 @@ export function ClubList(props: Props) {
                         className={`${cn}__see-more`}
                         onClick={() => setShowAll(false)}
                     >
-                        Show Less
+                        {t('showLess')}
                     </div>
                 )}
             </>

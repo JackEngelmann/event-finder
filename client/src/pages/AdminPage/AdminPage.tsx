@@ -15,136 +15,136 @@ import { Icon } from '../../components/Icon/Icon'
 import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { Content } from '../../components/Content/Content'
 import moment from 'moment'
-import { NetworkError } from '../../components/NetworkError/NetworkError'
+import { NetworkError } from '../../components/NetworkError'
+import { useTranslation } from 'react-i18next'
 
 const cn = 'admin-page'
 
 const EVENTS_QUERY = gql`
-    query AdminEventsQuery {
-        events {
-            id
-            date
-            name
-        }
+  query AdminEventsQuery {
+    events {
+      id
+      date
+      name
     }
+  }
 `
 
 const DELETE_EVENT_MUTATION = gql`
-    mutation AdminDeleteEvent($id: Int!) {
-        deleteEvent(id: $id) {
-            id
-        }
+  mutation AdminDeleteEvent($id: Int!) {
+    deleteEvent(id: $id) {
+      id
     }
+  }
 `
 
 const DELETE_CLUB_MUTATION = gql`
-    mutation AdminDeleteClub($id: Int!) {
-        deleteClub(id: $id) {
-            id
-        }
+  mutation AdminDeleteClub($id: Int!) {
+    deleteClub(id: $id) {
+      id
     }
+  }
 `
 
 export function AdminPage() {
-    const [unsortedClubs, clubsQueryResult] = useClubs()
-    const clubs = unsortedClubs ? R.sortBy(R.prop('name'), unsortedClubs) : undefined
-    const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
-    const events =
-        eventsQueryResult.data &&
-        R.sortBy(R.prop('name'), eventsQueryResult.data.events)
-    const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
-    const [deleteClubMutation] = useMutation(DELETE_CLUB_MUTATION)
-    const history = useHistory()
+  const { t } = useTranslation()
+  const [unsortedClubs, clubsQueryResult] = useClubs()
+  const clubs = unsortedClubs
+    ? R.sortBy(R.prop('name'), unsortedClubs)
+    : undefined
+  const eventsQueryResult = useQuery<{ events: Event[] }>(EVENTS_QUERY)
+  const events =
+    eventsQueryResult.data &&
+    R.sortBy(R.prop('name'), eventsQueryResult.data.events)
+  const [deleteEventMutation] = useMutation(DELETE_EVENT_MUTATION)
+  const [deleteClubMutation] = useMutation(DELETE_CLUB_MUTATION)
+  const history = useHistory()
 
-    if (eventsQueryResult.error) return <NetworkError />
-    if (clubsQueryResult.error) return <NetworkError />
+  if (eventsQueryResult.error) return <NetworkError />
+  if (clubsQueryResult.error) return <NetworkError />
 
-    function deleteEvent(id: number) {
-        const isSure = window.confirm('Sure?')
-        if (!isSure) return
-        deleteEventMutation({
-            variables: { id },
-            refetchQueries: [{ query: EVENTS_QUERY }],
-        })
-    }
+  function deleteEvent(id: number) {
+    const isSure = window.confirm('Sure?')
+    if (!isSure) return
+    deleteEventMutation({
+      variables: { id },
+      refetchQueries: [{ query: EVENTS_QUERY }],
+    })
+  }
 
-    function deleteClub(id: number) {
-        const isSure = window.confirm('Sure?')
-        if (!isSure) return
-        deleteClubMutation({
-            variables: { id },
-            refetchQueries: [{ query: CLUBS_QUERY }],
-        })
-    }
+  function deleteClub(id: number) {
+    const isSure = window.confirm('Sure?')
+    if (!isSure) return
+    deleteClubMutation({
+      variables: { id },
+      refetchQueries: [{ query: CLUBS_QUERY }],
+    })
+  }
 
-    return (
-        <Page>
-            <HeaderContainer />
-            <Content className={cn}>
-                <H1Title>Administration</H1Title>
-                <div className={`${cn}__content`}>
-                    <div className={`${cn}__section`}>
-                        <div className={`${cn}__section-header`}>
-                            <h2>Clubs</h2>
-                            <Button
-                                borderless
-                                secondary
-                                onClick={() => history.push('/admin/add-club')}
-                            >
-                                <Icon icon="plus" />
-                            </Button>
-                        </div>
-                        <div className={`${cn}__section-content`}>
-                            {clubs ? (
-                                clubs.map(c => (
-                                    <EditableEntity
-                                        key={c.id}
-                                        onShow={() => history.push(`/club/${c.id}`)}
-                                        onDelete={() => deleteClub(c.id)}
-                                        onEdit={() =>
-                                            history.push(`/admin/club/${c.id}`)
-                                        }
-                                    >
-                                        {c.name}
-                                    </EditableEntity>
-                                ))
-                            ) : (
-                                <LoadingIndicator />
-                            )}
-                        </div>
-                    </div>
-                    <div className={`${cn}__section`}>
-                        <div className={`${cn}__section-header`}>
-                            <h2>Events</h2>
-                            <Button
-                                onClick={() => history.push('/admin/add-event')}
-                                secondary
-                                borderless
-                            >
-                                <Icon icon="plus" />
-                            </Button>
-                        </div>
-                        <div className={`${cn}__section-content`}>
-                            {events ? (
-                                events.map(e => (
-                                    <EditableEntity
-                                        key={e.id}
-                                        onDelete={() => deleteEvent(e.id)}
-                                        onShow={() => history.push(`/event/${e.id}`)}
-                                        onEdit={() =>
-                                            history.push(`/admin/event/${e.id}`)
-                                        }
-                                    >
-                                        {e.name} ({moment(e.date).format('DD.MM.YYYY')})
-                                    </EditableEntity>
-                                ))
-                            ) : (
-                                <LoadingIndicator />
-                            )}
-                        </div>
-                    </div>
-                </div>
-            </Content>
-        </Page>
-    )
+  return (
+    <Page>
+      <HeaderContainer />
+      <Content className={cn}>
+        <H1Title>Administration</H1Title>
+        <div className={`${cn}__content`}>
+          <div className={`${cn}__section`}>
+            <div className={`${cn}__section-header`}>
+              <h2>{t('clubs')}</h2>
+              <Button
+                borderless
+                secondary
+                onClick={() => history.push('/admin/add-club')}
+              >
+                <Icon icon="plus" />
+              </Button>
+            </div>
+            <div className={`${cn}__section-content`}>
+              {clubs ? (
+                clubs.map(c => (
+                  <EditableEntity
+                    key={c.id}
+                    onShow={() => history.push(`/club/${c.id}`)}
+                    onDelete={() => deleteClub(c.id)}
+                    onEdit={() => history.push(`/admin/club/${c.id}`)}
+                  >
+                    {c.name}
+                  </EditableEntity>
+                ))
+              ) : (
+                <LoadingIndicator />
+              )}
+            </div>
+          </div>
+          <div className={`${cn}__section`}>
+            <div className={`${cn}__section-header`}>
+              <h2>{t('events')}</h2>
+              <Button
+                onClick={() => history.push('/admin/add-event')}
+                secondary
+                borderless
+              >
+                <Icon icon="plus" />
+              </Button>
+            </div>
+            <div className={`${cn}__section-content`}>
+              {events ? (
+                events.map(e => (
+                  <EditableEntity
+                    key={e.id}
+                    onDelete={() => deleteEvent(e.id)}
+                    onShow={() => history.push(`/event/${e.id}`)}
+                    onEdit={() => history.push(`/admin/event/${e.id}`)}
+                  >
+                    {e.name} ({moment(e.date).format('DD.MM.YYYY')})
+                  </EditableEntity>
+                ))
+              ) : (
+                <LoadingIndicator />
+              )}
+            </div>
+          </div>
+        </div>
+      </Content>
+    </Page>
+  )
 }

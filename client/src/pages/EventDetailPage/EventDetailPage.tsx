@@ -21,6 +21,7 @@ import { H1Title } from '../../components/H1Title/H1Title'
 import { Icon } from '../../components/Icon/Icon'
 import { Carousel } from '../../components/Carousel'
 import { useDimensions } from '../../components/utils/useDimensions'
+import { useTranslation } from 'react-i18next'
 
 type Props = {}
 
@@ -31,6 +32,7 @@ type Params = {
 const cn = 'event-detail-page'
 
 export function EventDetailPage(props: Props) {
+  const { t } = useTranslation()
   const params = useParams<Params>()
   const eventId = params.eventId ? parseInt(params.eventId, 10) : undefined
   const dimensions = useDimensions()
@@ -58,13 +60,13 @@ export function EventDetailPage(props: Props) {
     return (
       <KeyValueFields>
         <KeyValueField
-          fieldKey="Club"
+          fieldKey={t('club')}
           fieldValue={
             <FakeLink onClick={onClubClick}>{event.club.name}</FakeLink>
           }
         />
         <KeyValueField
-          fieldKey="Price Category"
+          fieldKey={t('priceCategory')}
           fieldValue={
             event.priceCategory
               ? R.times(() => '€', event.priceCategory).join('')
@@ -72,14 +74,14 @@ export function EventDetailPage(props: Props) {
           }
         />
         <KeyValueField
-          fieldKey="Admission Fee"
+          fieldKey={t('admissionFee')}
           // TODO: ignores 0
           fieldValue={
             event.admissionFee ? event.admissionFee.toFixed(2) + '€' : undefined
           }
         />
         <KeyValueField
-          fieldKey="Admission Fee With Discount"
+          fieldKey={t('admissionFeeWithDiscount')}
           // TODO: ignores 0
           fieldValue={
             event.admissionFeeWithDiscount
@@ -87,25 +89,25 @@ export function EventDetailPage(props: Props) {
               : undefined
           }
         />
-        <KeyValueField fieldKey="Special" fieldValue={event.special} />
+        <KeyValueField fieldKey={t('specials')} fieldValue={event.special} />
         <KeyValueField
-          fieldKey="Minimum Age"
+          fieldKey={t('minimumAge')}
           fieldValue={event.minimumAge ? event.minimumAge + '+' : undefined}
         />
         <KeyValueField
-          fieldKey="Amount of Floors"
+          fieldKey={t('amountOfFloors')}
           fieldValue={
             event.amountOfFloors ? event.amountOfFloors.toString() : undefined
           }
         />
         <KeyValueField
-          fieldKey="Genres"
+          fieldKey={t('genres')}
           fieldValue={
             event.genres ? event.genres.map(g => g.name).join(', ') : undefined
           }
         />
         <KeyValueField
-          fieldKey="Link"
+          fieldKey={t('link')}
           fieldValue={event.link && <LinkRenderer href={event.link} />}
         />
       </KeyValueFields>

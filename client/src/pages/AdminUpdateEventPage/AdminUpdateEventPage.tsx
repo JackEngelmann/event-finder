@@ -20,8 +20,9 @@ import { Select } from '../../components/Select/Select'
 import { Option } from '../../components/Option/Option'
 import { Textarea } from '../../components/TextArea/Textarea'
 import { MultiSelect } from '../../components/MultiSelect/MultiSelect'
-import { NetworkError } from '../../components/NetworkError/NetworkError'
 import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
+import { NetworkError } from '../../components/NetworkError'
+import { useTranslation } from 'react-i18next'
 
 type Params = {
   eventId: string
@@ -77,6 +78,7 @@ const cn = 'admin-update-event-page'
 
 export function AdminUpdateEventPage(props: any) {
   const params = useParams<Params>()
+  const { t } = useTranslation()
   const { eventId } = params
   const [requestPending, setRequestPending] = useState(false)
   const [monthSelection, setMonthSelection] = useState(moment())
@@ -137,9 +139,9 @@ export function AdminUpdateEventPage(props: any) {
   return (
     <Page>
       <Content restrictMaxWidth scrollable>
-        <H1Title>Edit Event</H1Title>
+        <H1Title>{t('editEvent')}</H1Title>
         <div className={cn}>
-          <LabeledInput label="Name">
+          <LabeledInput label={t('name')}>
             <Input
               placeholder="name"
               value={state.name || ''}
@@ -151,7 +153,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Date">
+          <LabeledInput label={t('date')}>
             <div className={`${cn}__calendar-wrapper`}>
               <Calendar
                 monthSelection={monthSelection}
@@ -166,7 +168,7 @@ export function AdminUpdateEventPage(props: any) {
               />
             </div>
           </LabeledInput>
-          <LabeledInput label="Club">
+          <LabeledInput label={t('club')}>
             <Select
               value={state.club ? state.club.id : ''}
               onChange={e =>
@@ -186,7 +188,7 @@ export function AdminUpdateEventPage(props: any) {
               ))}
             </Select>
           </LabeledInput>
-          <LabeledInput label="Admission Fee">
+          <LabeledInput label={t('admissionFee')}>
             <Input
               value={state.admissionFee || ''}
               min={0}
@@ -200,7 +202,7 @@ export function AdminUpdateEventPage(props: any) {
               step={0.01}
             />
           </LabeledInput>
-          <LabeledInput label="Admission Fee With Discount">
+          <LabeledInput label={t('admissionFeeWithDiscount')}>
             <Input
               value={state.admissionFeeWithDiscount || ''}
               min={0}
@@ -214,7 +216,7 @@ export function AdminUpdateEventPage(props: any) {
               step={0.01}
             />
           </LabeledInput>
-          <LabeledInput label="Amount of Floors">
+          <LabeledInput label={t('amountOfFloors')}>
             <Input
               value={state.amountOfFloors || ''}
               min={0}
@@ -227,7 +229,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Description">
+          <LabeledInput label={t('description')}>
             <Textarea
               width="20em"
               value={state.description || ''}
@@ -239,7 +241,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Special">
+          <LabeledInput label={t('specials')}>
             <Textarea
               width="20em"
               value={state.special || ''}
@@ -251,7 +253,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Minimum Age">
+          <LabeledInput label={t('minimumAge')}>
             <Input
               value={state.minimumAge || ''}
               min={0}
@@ -264,7 +266,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Price Category">
+          <LabeledInput label={t('priceCategory ')}>
             <Select
               value={state.priceCategory || ''}
               onChange={e => {
@@ -283,7 +285,7 @@ export function AdminUpdateEventPage(props: any) {
               <Option value="3">High</Option>
             </Select>
           </LabeledInput>
-          <LabeledInput label="Genres">
+          <LabeledInput label={t('genres')}>
             <MultiSelect
               getItemKey={item => item.id.toString()}
               renderItem={item => item.name}
@@ -297,7 +299,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Link">
+          <LabeledInput label={t('link')}>
             <Input
               value={state.link || ''}
               onChange={e =>
@@ -308,7 +310,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label="Images">
+          <LabeledInput label={t('images')}>
             <ImageUrlsInput
               value={state.imageUrls}
               onChange={imageUrls => setState({ ...state, imageUrls })}
@@ -317,10 +319,10 @@ export function AdminUpdateEventPage(props: any) {
         </div>
         <Spacer />
         <Button primary disabled={!canSave} onClick={updateEvent}>
-          Save
+          {t('save')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>
-          Cancel
+          {t('cancel')}
         </Button>
         <Spacer />
       </Content>

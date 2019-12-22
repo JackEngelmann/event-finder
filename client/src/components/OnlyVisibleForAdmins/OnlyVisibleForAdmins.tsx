@@ -2,7 +2,7 @@ import React from 'react';
 import { ComponentProps } from "react";
 import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
-import { NetworkError } from '../NetworkError/NetworkError';
+import { NetworkError } from '../NetworkError';
 
 type Props = ComponentProps<'div'>
 

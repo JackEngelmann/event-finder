@@ -4,16 +4,18 @@ import './EventList.scss'
 type Props<Event> = {
     events: Event[]
     renderEvent: (event: Event) => ReactNode
+    texts: {
+        noEventsToday: string
+    }
 }
 
 const cn = 'event-list'
 
-export function EventList<Event>(props: Props<Event>) {
-    const { events, renderEvent } = props
+export function EventListView<Event>(props: Props<Event>) {
+    const { events, renderEvent, texts } = props
 
     function renderContent() {
-        if (events === undefined) return 'Loading...'
-        if (events.length === 0) return 'No events listed today'
+        if (events.length === 0) return texts.noEventsToday
         return events.map(renderEvent)
     }
 

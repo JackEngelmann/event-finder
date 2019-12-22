@@ -1,12 +1,13 @@
 import React from 'react'
-import { EventList } from './EventList'
+import { EventListView } from './EventListView'
 import { EventCard } from '../EventCard/EventCard'
 import gql from 'graphql-tag'
 import { Event } from '../../api'
 import { useQuery } from '@apollo/react-hooks'
 import moment from 'moment'
 import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator'
-import { NetworkError } from '../NetworkError/NetworkError'
+import { useTranslation } from 'react-i18next'
+import { NetworkError } from '../NetworkError'
 
 type Props = {
     selectedDate: moment.Moment | undefined
@@ -34,6 +35,7 @@ type EventsQueryData = {
 
 export function EventListContainer(props: Props) {
     const { selectedDate, desktop, onEventClick } = props
+    const { t } = useTranslation()
     const eventsQueryResult = useQuery<EventsQueryData>(EVENTS_QUERY, {
         variables: {
             eventsQueryFilter: {
@@ -43,8 +45,9 @@ export function EventListContainer(props: Props) {
     })
     const events = eventsQueryResult.data && eventsQueryResult.data.events
     if (eventsQueryResult.error) return <NetworkError />
+    if (eventsQueryResult.loading) return <LoadingIndicator />
     return events ? (
-        <EventList
+        <EventListView
             events={events}
             renderEvent={event => (
                 <EventCard
@@ -54,6 +57,9 @@ export function EventListContainer(props: Props) {
                     onClick={() => onEventClick({ id: event.id })}
                 />
             )}
+            texts={{
+                noEventsToday: t('noEventsToday')
+            }}
         />
     ) : (
         <LoadingIndicator />

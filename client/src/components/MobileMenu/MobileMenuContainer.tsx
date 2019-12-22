@@ -3,6 +3,7 @@ import { MobileMenu } from './MobileMenu'
 import { useSelector, useDispatch } from 'react-redux'
 import { ReduxState, ReduxAction } from '../../redux/store'
 import { MobileMenuItem } from './MobileMenuItem/MobileMenuItem'
+import { useTranslation } from 'react-i18next'
 
 export function MobileMenuContainer() {
     const showMobileMenu = useSelector<ReduxState, any>(
@@ -13,26 +14,27 @@ export function MobileMenuContainer() {
         () => dispatch({ type: 'toggleMobilemMenu' }),
         [dispatch]
     )
+    const { t } = useTranslation()
     if (!showMobileMenu) return null
     return (
         <MobileMenu>
             <MobileMenuItem to="/event" onClick={toggleMobileMenu}>
-                Events
+                {t('events')}
             </MobileMenuItem>
             <MobileMenuItem to="/club" onClick={toggleMobileMenu}>
-                Clubs
+                {t('clubs')}
             </MobileMenuItem>
             <MobileMenuItem to="/impressum" onClick={toggleMobileMenu}>
-                Impressum
+                {t('impressum')}
             </MobileMenuItem>
             <MobileMenuItem to="/data-policy" onClick={toggleMobileMenu}>
-                Data Policy
+                {t('dataPolicy')}
             </MobileMenuItem>
             <MobileMenuItem to="/contact" onClick={toggleMobileMenu}>
-                Contact
+                {t('contact')}
             </MobileMenuItem>
             <MobileMenuItem to="/admin" onClick={toggleMobileMenu}>
-                Administration
+                {t('administration')}
             </MobileMenuItem>
         </MobileMenu>
     )

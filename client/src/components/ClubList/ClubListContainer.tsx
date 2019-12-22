@@ -3,7 +3,7 @@ import { ClubList } from './ClubList'
 import { ClubListItem } from './ClubListItem/ClubListItem'
 import { useHistory } from 'react-router'
 import { useClubs } from '../utils/useClubs'
-import { NetworkError } from '../NetworkError/NetworkError'
+import { NetworkError } from '../NetworkError'
 
 export function ClubListContainer() {
     const [clubs, clubsQueryResult] = useClubs()

@@ -1,6 +1,7 @@
-import * as React from 'react';
-import { Button } from '../Button/Button';
+import * as React from 'react'
+import { Button } from '../Button/Button'
 import './ErrorBoundary.scss'
+import { ErrorMessageContainer } from './ErrorMessage/ErrorMessageContainer'
 
 type Props = {
   children: React.ReactNode
@@ -10,7 +11,6 @@ type State = {
   hasError: boolean
   error: string
   errorInfo: string
-  showDetails: boolean
 }
 
 const cn = 'error-boundary'
@@ -24,11 +24,10 @@ export class ErrorBoundary extends React.Component<Props, State> {
     hasError: false,
     error: '',
     errorInfo: '',
-    showDetails: false
   }
 
   static getDerivedStateFromError(error: any) {
-    return { hasError: true };
+    return { hasError: true }
   }
 
   componentDidCatch(error: any, errorInfo: any) {
@@ -37,20 +36,7 @@ export class ErrorBoundary extends React.Component<Props, State> {
 
   render() {
     if (this.state.hasError) {
-      return (
-        <div className={cn}>
-          An error occured. We're sorry that happened :(
-          <br />
-          <Button onClick={() => this.setState({ showDetails: true })}>
-            Show details
-          </Button>
-          {this.state.showDetails && (
-            <div>
-              {this.state.error}
-            </div>
-          )}
-        </div>
-      )
+      return <ErrorMessageContainer error={this.state.error} />
     }
     return this.props.children
   }

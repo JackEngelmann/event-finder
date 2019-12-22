@@ -3,7 +3,7 @@ import gql from "graphql-tag";
 import { useQuery } from "@apollo/react-hooks";
 import { Redirect } from "react-router-dom";
 import { LoadingIndicator } from "../LoadingIndicator/LoadingIndicator";
-import { NetworkError } from '../NetworkError/NetworkError';
+import { NetworkError } from '../NetworkError';
 
 const ME_QUERY = gql`
     {

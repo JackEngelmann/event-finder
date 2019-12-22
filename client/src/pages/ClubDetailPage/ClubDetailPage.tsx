@@ -17,8 +17,9 @@ import { LinkRenderer } from '../../components/LinkRenderer/LinkRenderer'
 import { TextWithLineBreaks } from '../../components/TextWithLineBreaks/TextWithLineBreaks'
 import { Icon } from '../../components/Icon/Icon'
 import { useDimensions } from '../../components/utils/useDimensions'
-import { NetworkError } from '../../components/NetworkError/NetworkError'
 import { Carousel } from '../../components/Carousel'
+import { NetworkError } from '../../components/NetworkError'
+import { useTranslation } from 'react-i18next'
 
 type Props = {}
 
@@ -64,6 +65,7 @@ type ClubQueryData = {
 
 export function ClubDetailPage(props: Props) {
   const params = useParams<Params>()
+  const { t } = useTranslation()
   const history = useHistory()
   const clubId = parseInt(params.clubId)
   const dimensions = useDimensions()
@@ -86,13 +88,13 @@ export function ClubDetailPage(props: Props) {
   function renderKeyValueFields(club: QueriedClub) {
     return (
       <KeyValueFields>
-        <KeyValueField fieldKey="Adress" fieldValue={club.address} />
-        <KeyValueField fieldKey="Region" fieldValue={club.region} />
-        <KeyValueField fieldKey="Contact" fieldValue={club.contact} />
-        <KeyValueField fieldKey="Email" fieldValue={club.email} />
-        <KeyValueField fieldKey="Specials" fieldValue={club.specials} />
+        <KeyValueField fieldKey={t('adress')} fieldValue={club.address} />
+        <KeyValueField fieldKey={t('region')} fieldValue={club.region} />
+        <KeyValueField fieldKey={t('contact')} fieldValue={club.contact} />
+        <KeyValueField fieldKey={t('email')} fieldValue={club.email} />
+        <KeyValueField fieldKey={t('specials')} fieldValue={club.specials} />
         <KeyValueField
-          fieldKey="Link"
+          fieldKey={t('link')}
           fieldValue={club.link && <LinkRenderer href={club.link} />}
         />
       </KeyValueFields>
