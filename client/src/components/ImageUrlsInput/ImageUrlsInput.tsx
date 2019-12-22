@@ -71,6 +71,7 @@ export function ImageUrlsInput(props: Props) {
                 id="image-url-input-input"
                 type="file"
                 disabled={isLoading}
+                multiple
                 onChange={e => {
                     const files = e.target.files
                     if (!files) return
