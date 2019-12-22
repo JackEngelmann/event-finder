@@ -15,6 +15,7 @@ type Props = {
 const cn = 'calendar'
 
 export function Calendar(props: Props) {
+  // rerenders component when locale changes -> has influence on moment.js
   useTranslation()
   const {
     setSelectedDate,
