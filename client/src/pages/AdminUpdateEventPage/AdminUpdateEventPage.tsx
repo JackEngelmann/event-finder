@@ -266,7 +266,7 @@ export function AdminUpdateEventPage(props: any) {
               }
             />
           </LabeledInput>
-          <LabeledInput label={t('priceCategory ')}>
+          <LabeledInput label={t('priceCategory')}>
             <Select
               value={state.priceCategory || ''}
               onChange={e => {

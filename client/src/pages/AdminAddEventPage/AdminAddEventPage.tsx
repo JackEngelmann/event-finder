@@ -233,18 +233,23 @@ export function AdminAddEventPage() {
             />
           </LabeledInput>
           <LabeledInput label={t('priceCategory')}>
-            <Input
+            <Select
               value={state.priceCategory || ''}
-              min={0}
-              max={3}
-              type="number"
-              onChange={e =>
+              onChange={e => {
                 setState({
                   ...state,
-                  priceCategory: parseInt(e.target.value, 10) as 1 | 2 | 3,
+                  priceCategory:
+                    e.target.value === ''
+                      ? undefined
+                      : (parseInt(e.target.value, 10) as 1 | 2 | 3),
                 })
-              }
-            />
+              }}
+            >
+              <Option value="">No Value</Option>
+              <Option value="1">Low</Option>
+              <Option value="2">Average</Option>
+              <Option value="3">High</Option>
+            </Select>
           </LabeledInput>
           <LabeledInput label={t('genres')}>
             <MultiSelect
