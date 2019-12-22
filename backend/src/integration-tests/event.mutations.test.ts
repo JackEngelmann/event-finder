@@ -1,18 +1,12 @@
-import fetch from 'node-fetch'
-import FormData from 'form-data'
 import {
     eventFragment,
     ApolloHttpTestServer,
     ApolloTestServer,
     createApolloTestServer,
-    createApolloHttpTestServer,
 } from './utils'
 import { CreateEventInput } from '../mutations/createEvent'
 import { UpdateEventInput } from '../mutations/updateEvent'
 import { queryEvent } from '../queries/event'
-import { createReadStream } from 'fs'
-import { join } from 'path'
-import { GraphQLResponse } from 'apollo-server-core'
 
 const DB_NAME = 'eventmutationdb'
 const createEventMutation = `
@@ -42,13 +36,18 @@ const deleteEventMutation = `
 `
 
 let apolloTestServer: ApolloTestServer | undefined
-let apolloHttpTestServer: ApolloHttpTestServer | undefined
+
+beforeEach(async done => {
+    apolloTestServer = await createApolloTestServer({
+        isAdmin: false,
+        dbName: DB_NAME,
+    })
+    done()
+})
 
 afterEach(async done => {
-    if (apolloHttpTestServer) await apolloHttpTestServer.destroy()
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
-    apolloHttpTestServer = undefined
     done()
 })
 
@@ -126,6 +125,7 @@ describe('event mutations: ', () => {
                 mutation: createEventMutation,
                 variables: { input },
             })
+            expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
             done()
@@ -266,6 +266,7 @@ describe('event mutations: ', () => {
             })
 
             // assert
+            expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
             done()

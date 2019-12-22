@@ -7,7 +7,7 @@
     "build-develop": "webpack --config webpack.development.js",
     "start": "node dist/server",
     "build": "webpack --config webpack.production.js",
-    "test": "jest"
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "@types/bcrypt": "^3.0.0",
@@ -17,6 +17,7 @@
     "@types/graphql-upload": "^8.0.3",
     "@types/jest": "^24.0.21",
     "@types/moment": "^2.13.0",
+    "@types/mysql": "^2.15.8",
     "@types/node": "^12.12.3",
     "@types/node-fetch": "^2.5.3",
     "@types/passport": "^1.0.2",

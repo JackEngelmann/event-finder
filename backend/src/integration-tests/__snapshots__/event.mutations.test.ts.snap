@@ -25,7 +25,10 @@ Object {
           },
         ],
         "id": 2,
-        "imageUrl": null,
+        "imageUrls": Array [
+          "image-url-1",
+          "image-url-2",
+        ],
         "link": "http://www.some-link.de",
         "minimumAge": 18,
         "name": "event-name",
@@ -60,7 +63,42 @@ Object {
         "description": null,
         "genres": Array [],
         "id": 2,
-        "imageUrl": null,
+        "imageUrls": Array [],
+        "link": null,
+        "minimumAge": null,
+        "name": "event-name",
+        "priceCategory": null,
+        "special": null,
+      },
+    },
+  },
+  "errors": undefined,
+  "extensions": undefined,
+  "http": Object {
+    "headers": Headers {
+      Symbol(map): Object {},
+    },
+  },
+}
+`;
+
+exports[`event mutations:  create event create an event with empty genres 2`] = `
+Object {
+  "data": Object {
+    "createEvent": Object {
+      "event": Object {
+        "admissionFee": null,
+        "admissionFeeWithDiscount": null,
+        "amountOfFloors": null,
+        "club": Object {
+          "id": 1,
+          "name": "name",
+        },
+        "date": "event-date",
+        "description": null,
+        "genres": Array [],
+        "id": 6,
+        "imageUrls": Array [],
         "link": null,
         "minimumAge": null,
         "name": "event-name",
@@ -95,7 +133,7 @@ Object {
         "description": null,
         "genres": Array [],
         "id": 2,
-        "imageUrl": null,
+        "imageUrls": Array [],
         "link": null,
         "minimumAge": null,
         "name": "event-name",
@@ -142,7 +180,7 @@ Object {
         "description": null,
         "genres": Array [],
         "id": 1,
-        "imageUrl": null,
+        "imageUrls": Array [],
         "link": null,
         "minimumAge": null,
         "name": "updated-name",
@@ -186,7 +224,10 @@ Object {
           },
         ],
         "id": 1,
-        "imageUrl": null,
+        "imageUrls": Array [
+          "image-url-1",
+          "image-url-2",
+        ],
         "link": "http://www.some-link.de",
         "minimumAge": 16,
         "name": "updated-name",
@@ -221,7 +262,7 @@ Object {
         "description": "🍃🔝🎉📢👉🌵🎵",
         "genres": Array [],
         "id": 1,
-        "imageUrl": null,
+        "imageUrls": Array [],
         "link": null,
         "minimumAge": null,
         "name": "updated-name",
@@ -256,7 +297,7 @@ Object {
         "description": null,
         "genres": Array [],
         "id": 1,
-        "imageUrl": null,
+        "imageUrls": Array [],
         "link": null,
         "minimumAge": null,
         "name": "updated-name",

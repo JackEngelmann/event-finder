@@ -42,6 +42,7 @@ export class EventImageModel {
             const eventImage = new EventImageDataModel()
             eventImage.eventId = eventId
             eventImage.imageUrl = imageUrl
+            return eventImage
         })
         await this.connection.manager.save(eventImages)
     }

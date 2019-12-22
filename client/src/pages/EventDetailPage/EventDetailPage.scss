@@ -5,6 +5,10 @@
         color: white;
     }
 
+    &__carousel {
+        width: 100% !important;
+    }
+
     &__picture {
         max-width: 100%;
         height: auto;
@@ -19,9 +23,7 @@
     }
 
     &__content {
-        max-width: 1200px;
-        padding: 0 0.8em;
-        margin: 0 auto;
+        padding-bottom: 2em;
     }
 
     section {
@@ -46,6 +48,7 @@
 
         .event-detail-page__picture-wrapper {
             width: 40%;
+            height: auto;
         }
 
         .key-value-fields {

@@ -1,3 +1,3 @@
-import { CarouselContainer } from "./carousel-container";
+import { CarouselContainer } from "./CarouseContainer";
 
 export const Carousel = CarouselContainer

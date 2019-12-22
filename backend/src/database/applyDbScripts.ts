@@ -9,6 +9,12 @@ export async function applyDbScripts(
     connection: Connection,
     databaseConfig: DatabaseConfig
 ) {
+    await connection.query(`
+        CREATE TABLE IF NOT EXISTS appliedscript (
+            id INT(11) AUTO_INCREMENT PRIMARY KEY,
+            name varchar(255) NOT NULL
+        ) CHARSET=utf8;
+    `)
     const scripts = [
         ...(databaseConfig.migrations || []),
         ...(databaseConfig.seeds || []),
@@ -20,15 +26,10 @@ export async function applyDbScripts(
         if (appliedScriptNames.includes(script.name)) {
             continue
         }
-        try {
-            logger.info(`will run db script: ${script.name}`)
-            await script.up(connection)
-            await appliedScriptModel.createAppliedScript({
-                name: script.name,
-            })
-        } catch (err) {
-            console.error(err)
-            logger.error(err)
-        }
+        logger.info(`will run db script: ${script.name}`)
+        await script.up(connection)
+        await appliedScriptModel.createAppliedScript({
+            name: script.name,
+        })
     }
 }

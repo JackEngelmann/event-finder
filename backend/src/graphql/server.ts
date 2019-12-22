@@ -14,12 +14,18 @@ import bodyParser from 'body-parser'
 import { SECRET, createAuthenticationStrategy } from '../authentication'
 import { connectionPromise } from '../database/database'
 import { Logger } from "../logger"
+import { applyDbScripts } from "../database/applyDbScripts"
+import { databaseConfig } from "../../databaseConfig"
 
 const logger = new Logger()
 
 const PORT = process.env.PORT || 5000
 
 const app = express()
+
+connectionPromise.then(connection => {
+    applyDbScripts(connection, databaseConfig)
+})
 
 /**
  * express middlewares

@@ -25,7 +25,6 @@ export function ImageUrlsInput(props: Props) {
     const { value, onChange } = props
     const [uploadImageMutation] = useMutation(UPLOAD_IMAGE_MUTATION)
     const [isLoading, setIsLoading] = useState(false)
-    console.log(value)
 
     async function uploadImages(files: FileList) {
         setIsLoading(true)

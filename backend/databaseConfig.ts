@@ -4,6 +4,7 @@ import { addGenres as seed_191212_2100_addGenres } from './src/database/seeds/19
 import { Connection, ConnectionOptions } from 'typeorm'
 import { seed_191212_2242_addGenres } from './src/database/seeds/191212-2242-addGenres'
 import { migration_191219_1657_imageUrls } from './src/database/migrations/191219-1657-imageUrls'
+import { migration_initialSchema } from './src/database/migrations/initialSchema'
 
 export type DbScript = {
     name: string
@@ -60,14 +61,15 @@ const configByMode: Record<string, DatabaseConfig> = {
         },
     },
     test: {
-        migrations,
-        seeds: [
-            seed_191212_2000_createAdminUser,
-            migration_191219_1657_imageUrls,
-        ],
+        migrations: [migration_initialSchema, migration_191219_1657_imageUrls],
+        seeds: [seed_191212_2000_createAdminUser],
         connectionOptions: {
-            type: 'sqlite',
-            database: ':memory:',
+            type: 'mysql',
+            host: 'localhost',
+            database: 'lieblingsclubtest',
+            username: 'jack',
+            port: 3306,
+            charset: 'utf8mb4',
         },
     },
 }

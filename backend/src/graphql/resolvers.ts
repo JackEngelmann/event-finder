@@ -76,7 +76,7 @@ export const resolvers: IResolvers<Source, AppContext> = {
             return { id: args.id }
         },
         createClub: async (obj, args, appContext, info) => {
-            // requireAdminPermission(appContext)
+            requireAdminPermission(appContext)
             const clubId = await createClub(appContext, args.input)
             const club = await queryClub(appContext, clubId)
             return { club }

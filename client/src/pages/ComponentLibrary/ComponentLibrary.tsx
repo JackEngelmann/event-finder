@@ -6,7 +6,7 @@ import { Select } from '../../components/Select/Select'
 import { Option } from '../../components/Option/Option'
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
 import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
-import { Carousel } from '../../components/carousel'
+import { Carousel } from '../../components/Carousel'
 
 // TODO: should probably not be available in production
 

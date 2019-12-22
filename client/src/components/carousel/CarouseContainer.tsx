@@ -1,5 +1,5 @@
 import React, { ReactNode, useState, ComponentProps } from 'react'
-import { CarouselView } from './carousel-view'
+import { CarouselView } from './CarouselView'
 
 type Props = {
     renderImage(index: number): ReactNode
@@ -18,7 +18,12 @@ export function CarouselContainer(props: Props) {
     }
 
     return (
-        <CarouselView next={next} previous={previous} {...restProps}>
+        <CarouselView
+            next={next}
+            previous={previous}
+            {...restProps}
+            showArrows={imageCount > 1}
+        >
             {renderImage(imageIndex)}
         </CarouselView>
     )

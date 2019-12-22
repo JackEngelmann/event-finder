@@ -5,8 +5,19 @@ import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from '../graphql/schema'
 import { resolvers } from '../graphql/resolvers'
 import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
-import { Connection } from 'typeorm'
+import { Connection, getConnection, createConnection } from 'typeorm'
 import { createDbConnection } from '../database/database'
+import { databaseConfig } from '../../databaseConfig'
+import { applyDbScripts } from '../database/applyDbScripts'
+import { AppliedScriptDataModel } from '../database/entity/appliedScripts'
+import { ClubDataModel } from '../database/entity/club'
+import { EventDataModel } from '../database/entity/event'
+import { EventGenreDataModel } from '../database/entity/eventGenre'
+import { GenreDataModel } from '../database/entity/genre'
+import { ImageDataModel } from '../database/entity/image'
+import { UserDataModel } from '../database/entity/user'
+import { EventImageDataModel } from '../database/entity/eventImage'
+import { ClubImageDataModel } from '../database/entity/clubImage'
 
 /**
  * GraphQL utils
@@ -46,7 +57,7 @@ export const clubFragment = `
     email
     id
     link
-    imageUrl
+    imageUrls
     name
     region
     specials
@@ -102,7 +113,6 @@ export async function insertTestData(connection: Connection) {
             description,
             date,
             clubId,
-            imageUrl,
             priceCategory,
             admissionFee,
             admissionFeeWithDiscount,
@@ -115,7 +125,6 @@ export async function insertTestData(connection: Connection) {
             'description',
             'date',
             1,
-            'imageUrl',
             2,
             10.0,
             20.0,
@@ -146,16 +155,19 @@ export type ApolloTestServer = {
     destroy: () => Promise<unknown>
 }
 
+const dbPromise = createDbConnection()
+
 export async function createApolloTestServer(options: {
     isAdmin: boolean
     dbName: string
 }) {
     return new Promise<ApolloTestServer>(async (resolve, reject) => {
-        const db = await createDbConnection(options.dbName)
+        let db = await dbPromise
         const appContext: AppContext = {
             db,
             isAdmin: options.isAdmin,
         }
+        await db.synchronize(true)
         await insertTestData(db)
         const server = new ApolloServer({
             typeDefs: typeDefs,
@@ -165,15 +177,12 @@ export async function createApolloTestServer(options: {
         const client = createTestClient(server)
 
         async function destroy() {
-            await db.dropDatabase()
-            await db.close()
-            // return await destroyTestDb(options.dbName)
+            await server.stop()
         }
 
         resolve({ destroy, server, appContext, client })
     })
 }
-
 
 /**
  * ApolloTestHttpServer
@@ -192,7 +201,9 @@ export async function createApolloHttpTestServer(options: {
     dbName: string
 }) {
     return new Promise<ApolloHttpTestServer>(async (resolve, reject) => {
-        const db = await createDbConnection(options.dbName)
+        const db = await dbPromise
+        await db.createQueryRunner().dropDatabase('lieblingsclubtest')
+        await db.createQueryRunner().createDatabase('lieblingsclubtest')
         const appContext: AppContext = {
             db,
             isAdmin: options.isAdmin,
@@ -212,9 +223,9 @@ export async function createApolloHttpTestServer(options: {
 
         async function destroy() {
             if (server) await server.stop()
-            if (httpServer) await httpServer.close()
-            await db.dropDatabase()
-            await db.close()
+            if (httpServer) {
+                await new Promise(resolve => httpServer.close(() => resolve()))
+            }
             // return await destroyTestDb(options.dbName)
         }
 

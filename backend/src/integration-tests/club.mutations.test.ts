@@ -1,9 +1,6 @@
-import fetch from 'node-fetch'
-import FormData from 'form-data'
 import {
     clubFragment,
     createApolloTestServer,
-    createApolloHttpTestServer,
     ApolloTestServer,
     ApolloHttpTestServer,
 } from './utils'
@@ -12,9 +9,6 @@ import { queryEvent } from '../queries/event'
 import { CreateClubInput, createClub } from '../mutations/createClub'
 import { UpdateClubInput } from '../mutations/updateClub'
 import { queryClub } from '../queries/club'
-import { createReadStream } from 'fs'
-import { join } from 'path'
-import { GraphQLResponse } from 'apollo-server-core'
 
 const DB_NAME = 'clubmutationdb'
 
