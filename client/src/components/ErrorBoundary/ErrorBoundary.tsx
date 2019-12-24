@@ -1,6 +1,4 @@
 import * as React from 'react'
-import { Button } from '../Button/Button'
-import './ErrorBoundary.scss'
 import { ErrorMessageContainer } from './ErrorMessage/ErrorMessageContainer'
 
 type Props = {
@@ -13,13 +11,7 @@ type State = {
   errorInfo: string
 }
 
-const cn = 'error-boundary'
-
 export class ErrorBoundary extends React.Component<Props, State> {
-  constructor(props: Props) {
-    super(props)
-  }
-
   state = {
     hasError: false,
     error: '',

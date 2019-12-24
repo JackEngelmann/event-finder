@@ -56,7 +56,7 @@ export function ImageUrlsInput(props: Props) {
                         >
                             <Icon icon="times" />
                         </Button>
-                        <img src={imageUrl} />
+                        <img src={imageUrl} alt="" />
                     </div>
                 ))}
             <label htmlFor="image-url-input-input">

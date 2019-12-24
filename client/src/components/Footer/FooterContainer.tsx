@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Footer } from './Footer'
 import { useHistory } from 'react-router'
 import { useTranslation } from 'react-i18next'

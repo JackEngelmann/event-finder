@@ -3,7 +3,7 @@ import { initReactI18next } from 'react-i18next';
 import 'moment/locale/de'
 
 import LanguageDetector from 'i18next-browser-languagedetector';
-import moment, { weekdays } from 'moment';
+import moment from 'moment';
 import { contact } from './contact';
 
 const resources = {
