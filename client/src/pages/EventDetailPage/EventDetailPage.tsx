@@ -108,7 +108,7 @@ export function EventDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={event.link && <LinkRenderer href={event.link} />}
+          fieldValue={event.link && <LinkRenderer href={event.link} text={t('linkToEvent')} />}
         />
       </KeyValueFields>
     )
