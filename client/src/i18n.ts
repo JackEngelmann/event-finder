@@ -102,7 +102,7 @@ i18n
   .init({
     resources,
     fallbackLng: 'en',
-    debug: true,
+    debug: process.env.NODE_ENV === 'development',
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
