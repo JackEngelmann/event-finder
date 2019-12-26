@@ -7,10 +7,10 @@ type Props = ComponentProps<'input'> & { width?: number | string }
 const cn = 'input'
 
 export function Input(props: Props) {
-    const { style, className, width = props.type === 'checkbox' ? '2em' : '15em' } = props
+    const { style, className, width = props.type === 'checkbox' ? '2em' : '15em', ...restProps } = props
     return (
         <input
-            {...props}
+            {...restProps}
             className={classNames(cn, className)}
             style={{ ...style, width }}
         />

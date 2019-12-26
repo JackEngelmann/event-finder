@@ -88,14 +88,35 @@ export function ClubDetailPage(props: Props) {
   function renderKeyValueFields(club: QueriedClub) {
     return (
       <KeyValueFields>
-        <KeyValueField fieldKey={t('adress')} fieldValue={club.address} />
-        <KeyValueField fieldKey={t('region')} fieldValue={club.region} />
-        <KeyValueField fieldKey={t('contact')} fieldValue={club.contact} />
-        <KeyValueField fieldKey={t('email')} fieldValue={club.email} />
-        <KeyValueField fieldKey={t('specials')} fieldValue={club.specials} />
+        <KeyValueField
+          fieldKey={t('address')}
+          fieldValue={club.address}
+          data-cy="clubdetailpage-address-kv"
+        />
+        <KeyValueField
+          fieldKey={t('region')}
+          fieldValue={club.region}
+          data-cy="clubdetailpage-region-kv"
+        />
+        <KeyValueField
+          fieldKey={t('contact')}
+          fieldValue={club.contact}
+          data-cy="clubdetailpage-contact-kv"
+        />
+        <KeyValueField
+          fieldKey={t('email')}
+          fieldValue={club.email}
+          data-cy="clubdetailpage-email-kv"
+        />
+        <KeyValueField
+          fieldKey={t('specials')}
+          fieldValue={club.specials}
+          data-cy="clubdetailpage-specials-kv"
+        />
         <KeyValueField
           fieldKey={t('link')}
           fieldValue={club.link && <LinkRenderer href={club.link} />}
+          data-cy="clubdetailpage-link-kv"
         />
       </KeyValueFields>
     )
@@ -105,6 +126,7 @@ export function ClubDetailPage(props: Props) {
     return (
       <OnlyVisibleForAdmins>
         <Button
+          data-cy="clubdetailpage-edit-button"
           className={`${cn}__edit-button`}
           onClick={() => history.push(`/admin/club/${clubId}`)}
         >

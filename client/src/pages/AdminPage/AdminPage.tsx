@@ -95,7 +95,7 @@ export function AdminPage() {
                 secondary
                 onClick={() => history.push('/admin/add-club')}
               >
-                <Icon icon="plus" />
+                <Icon icon="plus" data-cy="admin-create-club-button" />
               </Button>
             </div>
             <div className={`${cn}__section-content`}>

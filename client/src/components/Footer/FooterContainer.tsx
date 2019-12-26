@@ -22,7 +22,7 @@ export function FooterContainer() {
         {t('dataPolicy')}
       </button>
       <button onClick={() => history.push('/contact')}>{t('contact')}</button>
-      <button onClick={() => history.push('/admin')}>
+      <button onClick={() => history.push('/admin')} data-cy="footer-admin">
         {t('administration')}
       </button>
       <button

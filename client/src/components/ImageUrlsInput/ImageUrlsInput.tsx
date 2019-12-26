@@ -65,7 +65,7 @@ export function ImageUrlsInput(props: Props) {
                         No images selected.
                     </span>
                 )}
-                <Icon icon="plus" className={`${cn}__add-image`} />
+                <Icon icon="plus" className={`${cn}__add-image`} data-cy="imageurlsinput-add" />
             </label>
             <Input
                 id="image-url-input-input"

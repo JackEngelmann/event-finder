@@ -13,6 +13,7 @@ import { H1Title } from '../../components/H1Title/H1Title'
 import { Spacer } from '../../components/Spacer/Spacer'
 import { CLUBS_QUERY } from '../../components/utils/useClubs'
 import { useTranslation } from 'react-i18next'
+import './AdminAddClubPage.scss'
 
 const CREATE_CLUB_MUTATION = gql`
   mutation CreateClub($input: CreateClubInput!) {
@@ -23,6 +24,8 @@ const CREATE_CLUB_MUTATION = gql`
     }
   }
 `
+
+const cn = 'admin-add-club-page'
 
 export function AdminAddClubPage() {
   const { t } = useTranslation()
@@ -56,11 +59,16 @@ export function AdminAddClubPage() {
 
   return (
     <Page>
-      <Content restrictMaxWidth scrollable>
+      <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         <H1Title>{t('createClub')}</H1Title>
         <ClubEditor state={clubEditorState} setState={setClubEditorState} />
         <Spacer />
-        <Button primary disabled={!canCreate} onClick={createClub}>
+        <Button
+          primary
+          disabled={!canCreate}
+          onClick={createClub}
+          data-cy="adminaddclubpage-create"
+        >
           {t('create')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>
