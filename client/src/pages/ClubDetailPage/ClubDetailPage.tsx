@@ -115,7 +115,11 @@ export function ClubDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={club.link && <LinkRenderer href={club.link} />}
+          fieldValue={
+            club.link && (
+              <LinkRenderer href={club.link} text={t('linkToClub')} />
+            )
+          }
           data-cy="clubdetailpage-link-kv"
         />
       </KeyValueFields>
@@ -126,8 +130,8 @@ export function ClubDetailPage(props: Props) {
     return (
       <OnlyVisibleForAdmins>
         <Button
-          data-cy="clubdetailpage-edit-button"
           className={`${cn}__edit-button`}
+          data-cy="clubdetailpage-edit-button"
           onClick={() => history.push(`/admin/club/${clubId}`)}
         >
           <Icon icon="pen" />

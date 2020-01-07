@@ -45,6 +45,7 @@ const configByMode: Record<string, DatabaseConfig> = {
     development: {
         migrations,
         seeds: [
+            migration_initialSchema,
             seed_191212_1900_initialData,
             seed_191212_2000_createAdminUser,
             seed_191212_2100_addGenres,

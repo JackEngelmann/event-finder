@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react'
 import { Input } from '../Input/Input'
+import './MultiSelect.scss'
 
 type Props<Item> = {
     selectedItems: Item[]
@@ -8,6 +9,8 @@ type Props<Item> = {
     getItemKey?: (item: Item) => string
     onChange: (items: Item[]) => void
 }
+
+const cn = 'multi-select'
 
 export function MultiSelect<Item>(props: Props<Item>) {
     const {
@@ -18,9 +21,9 @@ export function MultiSelect<Item>(props: Props<Item>) {
         onChange,
     } = props
     return (
-        <div>
+        <div className={cn}>
             {items.map(item => (
-                <div>
+                <label>
                     <Input
                         type="checkbox"
                         checked={selectedItems.some(
@@ -40,7 +43,7 @@ export function MultiSelect<Item>(props: Props<Item>) {
                         }}
                     />
                     {renderItem(item)}
-                </div>
+                </label>
             ))}
         </div>
     )

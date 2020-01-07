@@ -15,7 +15,7 @@ import { H1Title } from '../../components/H1Title/H1Title'
 import { Spacer } from '../../components/Spacer/Spacer'
 import { LabeledInput } from '../../components/LabeledInput/LabeledInput'
 import { Input } from '../../components/Input/Input'
-import { Calendar } from '../../components/Calendar/Calendar'
+import { Calendar } from '../../components/Calendar'
 import { Select } from '../../components/Select/Select'
 import { Option } from '../../components/Option/Option'
 import { Textarea } from '../../components/TextArea/Textarea'
@@ -138,11 +138,12 @@ export function AdminUpdateEventPage(props: any) {
 
   return (
     <Page>
-      <Content restrictMaxWidth scrollable>
+      <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         <H1Title>{t('editEvent')}</H1Title>
         <div className={cn}>
           <LabeledInput label={t('name')}>
             <Input
+              data-cy="adminupdateevent-name-input"
               placeholder="name"
               value={state.name || ''}
               onChange={e =>
@@ -170,6 +171,7 @@ export function AdminUpdateEventPage(props: any) {
           </LabeledInput>
           <LabeledInput label={t('club')}>
             <Select
+              data-cy="adminupdateevent-club-select"
               value={state.club ? state.club.id : ''}
               onChange={e =>
                 setState({
@@ -190,9 +192,8 @@ export function AdminUpdateEventPage(props: any) {
           </LabeledInput>
           <LabeledInput label={t('admissionFee')}>
             <Input
-              value={state.admissionFee || ''}
+              data-cy="adminupdateevent-admissionfee-input"
               min={0}
-              type="number"
               onChange={e =>
                 setState({
                   ...state,
@@ -200,13 +201,14 @@ export function AdminUpdateEventPage(props: any) {
                 })
               }
               step={0.01}
+              type="number"
+              value={state.admissionFee || ''}
             />
           </LabeledInput>
           <LabeledInput label={t('admissionFeeWithDiscount')}>
             <Input
-              value={state.admissionFeeWithDiscount || ''}
+              data-cy="adminupdateevent-admissionfeewithdiscount-input"
               min={0}
-              type="number"
               onChange={e =>
                 setState({
                   ...state,
@@ -214,61 +216,67 @@ export function AdminUpdateEventPage(props: any) {
                 })
               }
               step={0.01}
+              type="number"
+              value={state.admissionFeeWithDiscount || ''}
             />
           </LabeledInput>
           <LabeledInput label={t('amountOfFloors')}>
             <Input
-              value={state.amountOfFloors || ''}
+              data-cy="adminupdateevent-amountoffloors-input"
               min={0}
-              type="number"
               onChange={e =>
                 setState({
                   ...state,
                   amountOfFloors: parseInt(e.target.value, 10),
                 })
               }
+              type="number"
+              value={state.amountOfFloors || ''}
             />
           </LabeledInput>
           <LabeledInput label={t('description')}>
             <Textarea
-              width="20em"
-              value={state.description || ''}
+              data-cy="adminupdateevent-description-input"
               onChange={e =>
                 setState({
                   ...state,
                   description: e.target.value,
                 })
               }
+              value={state.description || ''}
+              width="20em"
             />
           </LabeledInput>
           <LabeledInput label={t('specials')}>
             <Textarea
-              width="20em"
-              value={state.special || ''}
+              data-cy="adminupdateevent-specials-input"
               onChange={e =>
                 setState({
                   ...state,
                   special: e.target.value,
                 })
               }
+              value={state.special || ''}
+              width="20em"
             />
           </LabeledInput>
           <LabeledInput label={t('minimumAge')}>
             <Input
-              value={state.minimumAge || ''}
+              data-cy="adminupdateevent-minimumage-input"
               min={0}
-              type="number"
               onChange={e =>
                 setState({
                   ...state,
                   minimumAge: parseInt(e.target.value, 10),
                 })
               }
+              type="number"
+              value={state.minimumAge || ''}
             />
           </LabeledInput>
           <LabeledInput label={t('priceCategory')}>
             <Select
-              value={state.priceCategory || ''}
+              data-cy="adminupdateevent-pricecategory-select"
               onChange={e => {
                 setState({
                   ...state,
@@ -278,6 +286,7 @@ export function AdminUpdateEventPage(props: any) {
                       : (parseInt(e.target.value, 10) as 1 | 2 | 3),
                 })
               }}
+              value={state.priceCategory || ''}
             >
               <Option value="">No Value</Option>
               <Option value="1">Low</Option>
@@ -301,13 +310,14 @@ export function AdminUpdateEventPage(props: any) {
           </LabeledInput>
           <LabeledInput label={t('link')}>
             <Input
-              value={state.link || ''}
+              data-cy="adminupdateevent-link-input"
               onChange={e =>
                 setState({
                   ...state,
                   link: e.target.value,
                 })
               }
+              value={state.link || ''}
             />
           </LabeledInput>
           <LabeledInput label={t('images')}>
@@ -318,7 +328,12 @@ export function AdminUpdateEventPage(props: any) {
           </LabeledInput>
         </div>
         <Spacer />
-        <Button primary disabled={!canSave} onClick={updateEvent}>
+        <Button
+          primary
+          disabled={!canSave}
+          onClick={updateEvent}
+          data-cy="adminupdateevent-save"
+        >
           {t('save')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>

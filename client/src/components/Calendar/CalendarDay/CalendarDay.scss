@@ -1,0 +1,25 @@
+.calendar-day {
+  width: calc(100% / 7);
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+
+  &:hover {
+    background-color: #eee;
+  }
+
+  &--weekend {
+    color: darkgrey;
+  }
+
+  &--selected {
+    background-color: #264653;
+    color: white;
+  }
+
+  &--selected:hover {
+    background-color: darken(#264653, 5%);
+  }
+}

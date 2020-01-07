@@ -1,14 +1,7 @@
 describe('administrate clubs', () => {
-  beforeEach('login', () => {
-    cy.visit('http://localhost:3000/admin')
-    cy.get('[data-cy=footer-admin]').click()
-    cy.get('[data-cy=login-username-input]').type('admin')
-    cy.get('[data-cy=login-password-input]').type('alexfalcojack')
-    cy.get('[data-cy=login-submit-button]').click()
-    cy.url().should('include', 'admin')
-  })
-
   it('create club', () => {
+    cy.login()
+    cy.visit('http://localhost:3000/#/admin')
     cy.get('[data-cy=admin-create-club-button]').click()
     cy.url().should('contain', 'add-club')
 
@@ -64,7 +57,7 @@ describe('administrate clubs', () => {
     )
     cy.get('section').contains(clubInformation.description)
     cy.get('[data-cy=clubdetailpage-email-kv]').contains(clubInformation.email)
-    cy.get('[data-cy=clubdetailpage-link-kv]').contains(clubInformation.link)
+    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e => expect(e.attr('href')).contain(clubInformation.link))
     cy.get('[data-cy=clubdetailpage-region-kv]').contains(
       clubInformation.region
     )
@@ -75,6 +68,9 @@ describe('administrate clubs', () => {
   })
 
   it('update club', () => {
+    cy.login()
+    cy.visit('http://localhost:3000/#/admin')
+
     /**
      * create with required information
      */
@@ -101,9 +97,6 @@ describe('administrate clubs', () => {
       specials: 'specials-updated',
     }
 
-    /**
-     * fill in information
-     */
     cy.get('[data-cy=clubeditor-name-input]')
       .clear()
       .type(clubInformation.name)
@@ -158,7 +151,7 @@ describe('administrate clubs', () => {
     )
     cy.get('section').contains(clubInformation.description)
     cy.get('[data-cy=clubdetailpage-email-kv]').contains(clubInformation.email)
-    cy.get('[data-cy=clubdetailpage-link-kv]').contains(clubInformation.link)
+    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e => expect(e.attr('href')).contain(clubInformation.link))
     cy.get('[data-cy=clubdetailpage-region-kv]').contains(
       clubInformation.region
     )

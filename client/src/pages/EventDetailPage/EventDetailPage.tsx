@@ -22,6 +22,7 @@ import { Icon } from '../../components/Icon/Icon'
 import { Carousel } from '../../components/Carousel'
 import { useDimensions } from '../../components/utils/useDimensions'
 import { useTranslation } from 'react-i18next'
+import moment from 'moment'
 
 type Props = {}
 
@@ -48,6 +49,7 @@ export function EventDetailPage(props: Props) {
       <OnlyVisibleForAdmins>
         <Button
           className={`${cn}__edit-button`}
+          data-cy="eventdetailpage-edit-button"
           onClick={() => history.push(`/admin/event/${eventId}`)}
         >
           <Icon icon="pen" />
@@ -60,10 +62,16 @@ export function EventDetailPage(props: Props) {
     return (
       <KeyValueFields>
         <KeyValueField
+          fieldKey={t('date')}
+          fieldValue={moment(event.date).format('DD.MM.YYYY')}
+          data-cy="eventdetail-date-kv"
+        />
+        <KeyValueField
           fieldKey={t('club')}
           fieldValue={
             <FakeLink onClick={onClubClick}>{event.club.name}</FakeLink>
           }
+          data-cy="eventdetail-club-kv"
         />
         <KeyValueField
           fieldKey={t('priceCategory')}
@@ -72,6 +80,7 @@ export function EventDetailPage(props: Props) {
               ? R.times(() => '€', event.priceCategory).join('')
               : ''
           }
+          data-cy="eventdetail-pricecategory-kv"
         />
         <KeyValueField
           fieldKey={t('admissionFee')}
@@ -79,6 +88,7 @@ export function EventDetailPage(props: Props) {
           fieldValue={
             event.admissionFee ? event.admissionFee.toFixed(2) + '€' : undefined
           }
+          data-cy="eventdetail-admissionfee-kv"
         />
         <KeyValueField
           fieldKey={t('admissionFeeWithDiscount')}
@@ -88,27 +98,40 @@ export function EventDetailPage(props: Props) {
               ? event.admissionFeeWithDiscount.toFixed(2) + '€'
               : undefined
           }
+          data-cy="eventdetail-admissionfeewithdiscount-kv"
         />
-        <KeyValueField fieldKey={t('specials')} fieldValue={event.special} />
+        <KeyValueField
+          fieldKey={t('specials')}
+          fieldValue={event.special}
+          data-cy="eventdetail-specials-kv"
+        />
         <KeyValueField
           fieldKey={t('minimumAge')}
           fieldValue={event.minimumAge ? event.minimumAge + '+' : undefined}
+          data-cy="eventdetail-minimumage-kv"
         />
         <KeyValueField
           fieldKey={t('amountOfFloors')}
           fieldValue={
             event.amountOfFloors ? event.amountOfFloors.toString() : undefined
           }
+          data-cy="eventdetail-amountoffloors-kv"
         />
         <KeyValueField
           fieldKey={t('genres')}
           fieldValue={
             event.genres ? event.genres.map(g => g.name).join(', ') : undefined
           }
+          data-cy="eventdetail-genres-kv"
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={event.link && <LinkRenderer href={event.link} text={t('linkToEvent')} />}
+          fieldValue={
+            event.link && (
+              <LinkRenderer href={event.link} text={t('linkToEvent')} />
+            )
+          }
+          data-cy="eventdetail-link-kv"
         />
       </KeyValueFields>
     )

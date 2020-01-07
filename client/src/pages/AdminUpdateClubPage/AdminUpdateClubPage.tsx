@@ -85,7 +85,12 @@ export function AdminUpdateClubPage() {
         <H1Title>{t('editClub')}</H1Title>
         <ClubEditor state={clubEditorState} setState={setClubEditorState} />
         <Spacer />
-        <Button primary disabled={!canSave} onClick={updateClub} data-cy="adminupdateclub-save">
+        <Button
+          data-cy="adminupdateclub-save"
+          disabled={!canSave}
+          onClick={updateClub}
+          primary
+        >
           {t('save')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>

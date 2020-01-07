@@ -2,7 +2,7 @@ import './AdminAddEventPage.scss'
 import React, { useState } from 'react'
 import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
-import { MultiSelectCalendar } from '../../components/Calendar/MultiSelectCalendar'
+import { MultiSelectCalendar } from '../../components/Calendar'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router'
@@ -104,11 +104,12 @@ export function AdminAddEventPage() {
   if (genresQueryResult.error) return <NetworkError />
   return (
     <Page>
-      <Content restrictMaxWidth scrollable>
+      <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         <H1Title>{t('createEvent')}</H1Title>
         <div className={cn}>
           <LabeledInput label={t('name')}>
             <Input
+              data-cy="addminaddevent-name-input"
               placeholder="name"
               value={state.name || ''}
               onChange={e =>
@@ -137,6 +138,7 @@ export function AdminAddEventPage() {
           <LabeledInput label={t('club')}>
             <Select
               value={state.club ? state.club.id : ''}
+              data-cy="adminaddevent-club-select"
               onChange={e =>
                 setState({
                   ...state,
@@ -156,6 +158,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('admissionFee')}>
             <Input
+              data-cy="adminaddevent-admissionfee-input"
               value={state.admissionFee || ''}
               min={0}
               type="number"
@@ -170,6 +173,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('admissionFeeWithDiscount')}>
             <Input
+              data-cy="adminaddevent-admissionfeewithdiscount-input"
               value={state.admissionFeeWithDiscount || ''}
               min={0}
               type="number"
@@ -184,6 +188,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('amountOfFloors')}>
             <Input
+              data-cy="adminaddevent-amountoffloors-input"
               value={state.amountOfFloors || ''}
               min={0}
               type="number"
@@ -197,6 +202,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('description')}>
             <Textarea
+              data-cy="adminaddevent-description-input"
               width="20em"
               value={state.description || ''}
               onChange={e =>
@@ -209,6 +215,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('specials')}>
             <Textarea
+              data-cy="adminaddevent-specials-input"
               width="20em"
               value={state.special || ''}
               onChange={e =>
@@ -221,6 +228,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('minimumAge')}>
             <Input
+              data-cy="adminaddevent-minimumage-input"
               value={state.minimumAge || ''}
               min={0}
               type="number"
@@ -234,6 +242,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('priceCategory')}>
             <Select
+              data-cy="adminaddevent-pricecategory-select"
               value={state.priceCategory || ''}
               onChange={e => {
                 setState({
@@ -267,6 +276,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('link')}>
             <Input
+              data-cy="adminaddevent-link-input"
               value={state.link || ''}
               onChange={e =>
                 setState({
@@ -284,7 +294,7 @@ export function AdminAddEventPage() {
           </LabeledInput>
         </div>
         <Spacer />
-        <Button primary disabled={!canCreate} onClick={createEvent}>
+        <Button primary disabled={!canCreate} onClick={createEvent} data-cy="adminaddevent-create">
           {t('create')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>

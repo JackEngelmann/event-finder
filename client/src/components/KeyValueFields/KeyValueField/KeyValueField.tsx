@@ -13,8 +13,12 @@ export function KeyValueField(props: Props) {
   if (!fieldValue) return null
   return (
     <div className={cn} {...divProps}>
-      <div className={`${cn}__value`}>{fieldValue}</div>
-      <div className={`${cn}__key`}>{fieldKey}</div>
+      <div className={`${cn}__value`} data-cy="keyvaluefield-value">
+        {fieldValue}
+      </div>
+      <div className={`${cn}__key`} data-cy="keyvaluefield-key">
+        {fieldKey}
+      </div>
     </div>
   )
 }
