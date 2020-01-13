@@ -1,5 +1,5 @@
 import './EventsPage.scss'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import moment from 'moment'
 import { useDimensions } from '../../components/utils/useDimensions'
 import { useSelectedDate } from '../../components/utils/useSelectedDate'
@@ -12,6 +12,9 @@ import { EventListContainer } from '../../components/EventList/EventListContaine
 import { Calendar } from '../../components/Calendar'
 import { Button } from '../../components/Button/Button'
 import { Icon } from '../../components/Icon/Icon'
+import { useTranslation } from 'react-i18next'
+import { DayQuickSwitchView } from '../../components/DayQuickSwitch/DayQuickSwitchView'
+import { DayQuickSwitch } from '../../components/DayQuickSwitch'
 
 type Props = {}
 
@@ -19,12 +22,22 @@ const currentDate = moment()
 
 const cn = 'events-page'
 
-// TODO: refactor
-
 export function EventsPage(props: Props) {
   const dimensions = useDimensions()
-  const [monthSelection, setMonthSelection] = useState(currentDate)
+
+  // rerenders component when locale changes -> has influence on moment.js
+  const { t } = useTranslation()
+
   const [selectedDate, setSelectedDate] = useSelectedDate()
+  const [monthSelection, setMonthSelection] = useState(
+    selectedDate || currentDate
+  )
+  const locale = t('locale').toString()
+
+  useEffect(() => {
+    monthSelection.locale(locale) // MUTATES the date
+    setMonthSelection(moment(monthSelection)) // trigger rerender
+  }, [locale])
   const history = useHistory()
   const desktop = Boolean(dimensions.width && dimensions.width > 800)
   const showClubList = Boolean(!dimensions.width || dimensions.width > 1000)
@@ -75,25 +88,10 @@ export function EventsPage(props: Props) {
         <HeaderContainer>
           <div>
             {selectedDate ? (
-              <div>
-                <Button
-                  borderless
-                  onClick={() =>
-                    setSelectedDate(selectedDate.subtract(1, 'day'))
-                  }
-                  className={`${cn}__select-day-arrow-button`}
-                >
-                  <Icon icon="arrow-left" />
-                </Button>
-                <span>{selectedDate.format('D. MMMM')}</span>
-                <Button
-                  borderless
-                  onClick={() => setSelectedDate(selectedDate.add(1, 'day'))}
-                  className={`${cn}__select-day-arrow-button`}
-                >
-                  <Icon icon="arrow-right" />
-                </Button>
-              </div>
+              <DayQuickSwitch
+                selectedDate={selectedDate}
+                setSelectedDate={setSelectedDate}
+              />
             ) : (
               'Pick a Date'
             )}

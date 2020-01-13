@@ -29,6 +29,7 @@ export function FooterContainer() {
         onClick={() =>
           language === 'de' ? changeLanguage('en') : changeLanguage('de')
         }
+        data-cy="language-toggle"
       >
         {language === 'en' && (
           <CountryFlagGermany

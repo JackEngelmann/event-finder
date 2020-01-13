@@ -56,7 +56,7 @@ export function CalendarView(props: Props) {
   }
 
   return (
-    <div className={`${cn}__wrapper`}>
+    <div className={`${cn}__wrapper`} data-cy="calendar">
       {renderHeader()}
       {renderWeekdayHeader()}
       {weeksInMonth.map(renderWeek)}
