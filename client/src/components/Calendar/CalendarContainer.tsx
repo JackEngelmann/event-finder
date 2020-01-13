@@ -1,4 +1,4 @@
-import moment, { Moment, months } from 'moment'
+import moment, { Moment } from 'moment'
 import { useTranslation } from 'react-i18next'
 import { getWeeksInMonth } from './getWeeksInMonth'
 import { CalendarView } from './CalendarView'

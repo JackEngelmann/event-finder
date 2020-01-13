@@ -10,10 +10,7 @@ import { Content } from '../../components/Content/Content'
 import { ClubListContainer } from '../../components/ClubList/ClubListContainer'
 import { EventListContainer } from '../../components/EventList/EventListContainer'
 import { Calendar } from '../../components/Calendar'
-import { Button } from '../../components/Button/Button'
-import { Icon } from '../../components/Icon/Icon'
 import { useTranslation } from 'react-i18next'
-import { DayQuickSwitchView } from '../../components/DayQuickSwitch/DayQuickSwitchView'
 import { DayQuickSwitch } from '../../components/DayQuickSwitch'
 
 type Props = {}
@@ -35,9 +32,11 @@ export function EventsPage(props: Props) {
   const locale = t('locale').toString()
 
   useEffect(() => {
-    monthSelection.locale(locale) // MUTATES the date
-    setMonthSelection(moment(monthSelection)) // trigger rerender
-  }, [locale])
+    if (monthSelection.locale() !== locale) {
+      setMonthSelection(moment(monthSelection.locale(locale)))
+    }
+  }, [locale, monthSelection])
+
   const history = useHistory()
   const desktop = Boolean(dimensions.width && dimensions.width > 800)
   const showClubList = Boolean(!dimensions.width || dimensions.width > 1000)
