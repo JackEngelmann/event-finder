@@ -20,6 +20,7 @@ import { LoginRedirect } from '../components/LoginRedirect/LoginRedirect'
 import { store } from '../redux/store'
 import { ClubsPage } from '../pages/ClubsPage/ClubsPage'
 import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary'
+import { CookieBanner } from '../components/CookieBanner'
 
 const App: React.FC = () => {
     return (
@@ -78,6 +79,7 @@ const App: React.FC = () => {
                             <Redirect from="/" exact to="/event" />
                         </Switch>
                     </Provider>
+                    <CookieBanner />
                 </HashRouter>
             </ApolloProvider>
         </ErrorBoundary>

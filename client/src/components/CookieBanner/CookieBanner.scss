@@ -1,0 +1,53 @@
+.cookie-banner {
+  background-color: #222;
+  bottom: 0;
+  left: 0;
+  padding: 1em;
+  position: fixed;
+  right: 0;
+  user-select: none;
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__links {
+    margin-top: 0.5em;
+  }
+
+  label {
+    margin-left: 0.2em;
+  }
+
+  a {
+    text-decoration: underline;
+    margin-right: 0.5em;
+    margin-top: 0.5em;
+  }
+
+  &__text-and-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+
+  &__buttons {
+    margin-bottom: 1em;
+  }
+}
+
+@media only screen and (min-width: 800px) {
+  .cookie-banner {
+    &__content {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__text-and-selection {
+      display: block;
+    }
+  }
+}

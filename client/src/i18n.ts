@@ -1,10 +1,10 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
 import 'moment/locale/de'
 
-import LanguageDetector from 'i18next-browser-languagedetector';
-import moment from 'moment';
-import { contact } from './contact';
+import LanguageDetector from 'i18next-browser-languagedetector'
+import moment from 'moment'
+import { contact } from './contact'
 
 const resources = {
   en: {
@@ -27,7 +27,7 @@ const resources = {
       editClub: 'Edit Club',
       editEvent: 'Edit Event',
       email: 'Email',
-      errorOccured: 'An error occured. We\'re sorry that happend :(',
+      errorOccured: "An error occured. We're sorry that happend :(",
       events: 'Events',
       genres: 'Genres',
       images: 'Images',
@@ -49,7 +49,11 @@ const resources = {
       showLess: 'Show Less',
       showMore: 'Show More',
       specials: 'Specials',
-    }
+      cookieInformation: 'We use cookies to improve our site.',
+      allCookies: 'Accept all',
+      selectedCookies: 'Accept selection',
+      neededCookies: 'Essential',
+    },
   },
   de: {
     translation: {
@@ -84,7 +88,8 @@ const resources = {
       minimumAge: 'Mindestalter',
       name: 'Name',
       networkErrorHint: `Versuche neuzuladen oder kontaktiere uns (${contact.email}) wenn der Fehler mehrfach auftritt.`,
-      networkErrorOccured: 'Ein Netzwerk-Fehler ist aufgetrete. Tut uns leid :(',
+      networkErrorOccured:
+        'Ein Netzwerk-Fehler ist aufgetrete. Tut uns leid :(',
       noEventsToday: 'Heute finden keine Events statt',
       priceCategory: 'Preis-Kategorie',
       region: 'Region',
@@ -93,8 +98,12 @@ const resources = {
       showLess: 'Weniger anzeigen',
       showMore: 'Mehr anzeigen',
       specials: 'Angebote',
-    }
-  }
+      cookieInformation: 'Wir nutzen Cookies um unsere Seite zu verbessern.',
+      allCookies: 'Alle akzeptieren',
+      selectedCookies: 'Auswahl akzeptieren',
+      neededCookies: 'Technisch notwendige',
+    },
+  },
 }
 
 i18n
@@ -110,7 +119,7 @@ i18n
 
     interpolation: {
       escapeValue: false, // not needed for react as it escapes by default
-    }
+    },
   })
 
 i18n.on('languageChanged', lng => {
@@ -118,5 +127,4 @@ i18n.on('languageChanged', lng => {
   moment.locale(isGerman ? 'de' : 'en')
 })
 
-
-export default i18n;
+export default i18n
