@@ -16,6 +16,7 @@ import { connectionPromise } from '../database/database'
 import { Logger } from "../logger"
 import { applyDbScripts } from "../database/applyDbScripts"
 import { databaseConfig } from "../../databaseConfig"
+import { SitemapGenerator } from "../service/sitemapGenerator"
 
 const logger = new Logger()
 
@@ -66,6 +67,14 @@ app.post(
         failureRedirect: '/#/login',
     }),
 )
+
+app.get('/sitemap.xml', async (req, res) => {
+    const connection = await connectionPromise
+    const sitemapGenerator = new SitemapGenerator(connection)
+    const sitemapXml = await sitemapGenerator.generateSitemapXml()
+    res.type('xml')
+    res.send(sitemapXml)
+})
 
 app.get('/images/:imageId', async (req, res) => {
     const connection = await connectionPromise
