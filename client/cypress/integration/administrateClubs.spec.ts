@@ -2,6 +2,7 @@ describe('administrate clubs', () => {
   it('create club', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
+    cy.contains('Auswahl akzeptieren').click()
     cy.get('[data-cy=admin-create-club-button]').click()
     cy.url().should('contain', 'add-club')
 
@@ -70,6 +71,7 @@ describe('administrate clubs', () => {
   it('update club', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
+    cy.contains('Auswahl akzeptieren').click()
 
     /**
      * create with required information

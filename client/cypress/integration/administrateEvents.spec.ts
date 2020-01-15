@@ -2,6 +2,7 @@ describe('adinistrate events', () => {
   it('create single date event', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
+    cy.contains('Auswahl akzeptieren').click()
     cy.get('[data-cy=admin-create-event-button]').click()
     cy.url().should('contain', 'add-event')
 
@@ -106,6 +107,7 @@ describe('adinistrate events', () => {
   it('update event', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
+    cy.contains('Auswahl akzeptieren').click()
 
     /**
      * create event with required information
