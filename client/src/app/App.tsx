@@ -21,69 +21,72 @@ import { store } from '../redux/store'
 import { ClubsPage } from '../pages/ClubsPage/ClubsPage'
 import { ErrorBoundary } from '../components/ErrorBoundary/ErrorBoundary'
 import { CookieBanner } from '../components/CookieBanner'
+import { CookiesProvider } from 'react-cookie'
 
 const App: React.FC = () => {
-    return (
-        <ErrorBoundary>
-            <ApolloProvider client={apolloClient}>
-                <HashRouter>
-                    <Provider store={store}>
-                        <Switch>
-                            <Route path="/login">
-                                <LoginPage />
-                            </Route>
-                            <Route path="/component-library">
-                                <ComponentLibraryPage />
-                            </Route>
-                            <Route exact path="/admin">
-                                <LoginRedirect />
-                                <AdminPage />
-                            </Route>
-                            <Route path="/admin/add-event">
-                                <LoginRedirect />
-                                <AdminAddEventPage />
-                            </Route>
-                            <Route path="/admin/event/:eventId">
-                                <LoginRedirect />
-                                <AdminUpdateEventPage />
-                            </Route>
-                            <Route path="/admin/add-club">
-                                <LoginRedirect />
-                                <AdminAddClubPage />
-                            </Route>
-                            <Route path="/admin/club/:clubId">
-                                <LoginRedirect />
-                                <AdminUpdateClubPage />
-                            </Route>
-                            <Route path="/impressum">
-                                <ImpressumPage />
-                            </Route>
-                            <Route path="/data-policy">
-                                <DataPolicyPage />
-                            </Route>
-                            <Route path="/contact">
-                                <ContactPage />
-                            </Route>
-                            <Route path="/event/:eventId">
-                                <EventDetailPage />
-                            </Route>
-                            <Route path="/event">
-                                <EventsPage />
-                            </Route>
-                            <Route path="/club/:clubId">
-                                <ClubDetailPage />
-                            </Route>
-                            <Route path="/club">
-                                <ClubsPage />
-                            </Route>
-                            <Redirect from="/" exact to="/event" />
-                        </Switch>
-                    </Provider>
-                    <CookieBanner />
-                </HashRouter>
-            </ApolloProvider>
-        </ErrorBoundary>
-    )
+  return (
+    <ErrorBoundary>
+      <ApolloProvider client={apolloClient}>
+        <CookiesProvider>
+          <HashRouter>
+            <Provider store={store}>
+              <Switch>
+                <Route path="/login">
+                  <LoginPage />
+                </Route>
+                <Route path="/component-library">
+                  <ComponentLibraryPage />
+                </Route>
+                <Route exact path="/admin">
+                  <LoginRedirect />
+                  <AdminPage />
+                </Route>
+                <Route path="/admin/add-event">
+                  <LoginRedirect />
+                  <AdminAddEventPage />
+                </Route>
+                <Route path="/admin/event/:eventId">
+                  <LoginRedirect />
+                  <AdminUpdateEventPage />
+                </Route>
+                <Route path="/admin/add-club">
+                  <LoginRedirect />
+                  <AdminAddClubPage />
+                </Route>
+                <Route path="/admin/club/:clubId">
+                  <LoginRedirect />
+                  <AdminUpdateClubPage />
+                </Route>
+                <Route path="/impressum">
+                  <ImpressumPage />
+                </Route>
+                <Route path="/data-policy">
+                  <DataPolicyPage />
+                </Route>
+                <Route path="/contact">
+                  <ContactPage />
+                </Route>
+                <Route path="/event/:eventId">
+                  <EventDetailPage />
+                </Route>
+                <Route path="/event">
+                  <EventsPage />
+                </Route>
+                <Route path="/club/:clubId">
+                  <ClubDetailPage />
+                </Route>
+                <Route path="/club">
+                  <ClubsPage />
+                </Route>
+                <Redirect from="/" exact to="/event" />
+              </Switch>
+            </Provider>
+            <CookieBanner />
+          </HashRouter>
+        </CookiesProvider>
+      </ApolloProvider>
+    </ErrorBoundary>
+  )
 }
 
 export default App

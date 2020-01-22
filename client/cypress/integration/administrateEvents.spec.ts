@@ -2,7 +2,7 @@ describe('adinistrate events', () => {
   it('create single date event', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
-    cy.contains('Auswahl akzeptieren').click()
+    cy.acceptCookies()
     cy.get('[data-cy=admin-create-event-button]').click()
     cy.url().should('contain', 'add-event')
 
@@ -23,9 +23,7 @@ describe('adinistrate events', () => {
     /**
      * fill in information
      */
-    cy.get('[data-cy=addminaddevent-name-input]').type(
-      eventInformation.name
-    )
+    cy.get('[data-cy=addminaddevent-name-input]').type(eventInformation.name)
 
     // select the 15th of the current month as a date for the event
     cy.get('[data-cy=calendar-day-15').click()
@@ -107,7 +105,7 @@ describe('adinistrate events', () => {
   it('update event', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
-    cy.contains('Auswahl akzeptieren').click()
+    cy.acceptCookies()
 
     /**
      * create event with required information
@@ -142,38 +140,40 @@ describe('adinistrate events', () => {
       pricecategory: 'High',
     }
 
-    cy.get('[data-cy=adminupdateevent-name-input]').type(
-      eventInformation.name
-    )
+    cy.get('[data-cy=adminupdateevent-name-input]').type(eventInformation.name)
 
     // select the 16th of the current month as a date for the event
     cy.get('[data-cy=calendar-day-16').click()
-    cy.get('[data-cy=adminupdateevent-club-select]').select(eventInformation.club)
-    cy.get('[data-cy=adminupdateevent-admissionfee-input]').clear().type(
-      eventInformation.admissionfee
+    cy.get('[data-cy=adminupdateevent-club-select]').select(
+      eventInformation.club
     )
-    cy.get('[data-cy=adminupdateevent-admissionfeewithdiscount-input]').clear().type(
-      eventInformation.admissionfeewithdiscount
-    )
-    cy.get('[data-cy=adminupdateevent-amountoffloors-input]').clear().type(
-      eventInformation.amountoffloors
-    )
-    cy.get('[data-cy=adminupdateevent-description-input]').clear().type(
-      eventInformation.description
-    )
-    cy.get('[data-cy=adminupdateevent-specials-input]').clear().type(
-      eventInformation.specials
-    )
-    cy.get('[data-cy=adminupdateevent-minimumage-input]').clear().type(
-      eventInformation.minimumage
-    )
+    cy.get('[data-cy=adminupdateevent-admissionfee-input]')
+      .clear()
+      .type(eventInformation.admissionfee)
+    cy.get('[data-cy=adminupdateevent-admissionfeewithdiscount-input]')
+      .clear()
+      .type(eventInformation.admissionfeewithdiscount)
+    cy.get('[data-cy=adminupdateevent-amountoffloors-input]')
+      .clear()
+      .type(eventInformation.amountoffloors)
+    cy.get('[data-cy=adminupdateevent-description-input]')
+      .clear()
+      .type(eventInformation.description)
+    cy.get('[data-cy=adminupdateevent-specials-input]')
+      .clear()
+      .type(eventInformation.specials)
+    cy.get('[data-cy=adminupdateevent-minimumage-input]')
+      .clear()
+      .type(eventInformation.minimumage)
     cy.get('[data-cy=adminupdateevent-pricecategory-select]').select(
       eventInformation.pricecategory
     )
     for (let genre of eventInformation.genres) {
       cy.contains(genre).click()
     }
-    cy.get('[data-cy=adminupdateevent-link-input]').clear().type(eventInformation.link)
+    cy.get('[data-cy=adminupdateevent-link-input]')
+      .clear()
+      .type(eventInformation.link)
     cy.fixture('testPicture.jpg').then(fileContent => {
       cy.get('input[type=file]').upload({
         fileContent,

@@ -2,7 +2,7 @@ describe('administrate clubs', () => {
   it('create club', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
-    cy.contains('Auswahl akzeptieren').click()
+    cy.acceptCookies()
     cy.get('[data-cy=admin-create-club-button]').click()
     cy.url().should('contain', 'add-club')
 
@@ -58,7 +58,9 @@ describe('administrate clubs', () => {
     )
     cy.get('section').contains(clubInformation.description)
     cy.get('[data-cy=clubdetailpage-email-kv]').contains(clubInformation.email)
-    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e => expect(e.attr('href')).contain(clubInformation.link))
+    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e =>
+      expect(e.attr('href')).contain(clubInformation.link)
+    )
     cy.get('[data-cy=clubdetailpage-region-kv]').contains(
       clubInformation.region
     )
@@ -71,7 +73,7 @@ describe('administrate clubs', () => {
   it('update club', () => {
     cy.login()
     cy.visit('http://localhost:3000/#/admin')
-    cy.contains('Auswahl akzeptieren').click()
+    cy.acceptCookies()
 
     /**
      * create with required information
@@ -123,8 +125,7 @@ describe('administrate clubs', () => {
     cy.get('[data-cy=clubeditor-specials-input]')
       .clear()
       .type(clubInformation.specials)
-    cy.get('[data-cy=imageurlsinput-add]')
-      .click()
+    cy.get('[data-cy=imageurlsinput-add]').click()
     cy.fixture('testPicture.jpg').then(fileContent => {
       cy.get('input[type=file]').upload({
         fileContent,
@@ -153,7 +154,9 @@ describe('administrate clubs', () => {
     )
     cy.get('section').contains(clubInformation.description)
     cy.get('[data-cy=clubdetailpage-email-kv]').contains(clubInformation.email)
-    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e => expect(e.attr('href')).contain(clubInformation.link))
+    cy.get('[data-cy=clubdetailpage-link-kv] a').should(e =>
+      expect(e.attr('href')).contain(clubInformation.link)
+    )
     cy.get('[data-cy=clubdetailpage-region-kv]').contains(
       clubInformation.region
     )

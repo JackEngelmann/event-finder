@@ -3,7 +3,8 @@
 /// <reference types="cypress" />
 
 declare namespace Cypress {
-    interface Chainable {
-        login(): void
-    }
+  interface Chainable {
+    login(): void
+    acceptCookies(): void
   }
+}
