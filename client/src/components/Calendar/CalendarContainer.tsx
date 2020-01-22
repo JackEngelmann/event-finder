@@ -33,6 +33,7 @@ export function CalendarContainer(props: Props) {
       weeksInMonth={weeksInMonth}
       renderDay={day => (
         <CalendarDayView
+          key={day.toISOString()}
           day={day}
           onClick={() => setSelectedDate(day)}
           isInMonth={day.isSame(monthSelection, 'month')}
