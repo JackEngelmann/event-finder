@@ -160,6 +160,7 @@ const dbPromise = createDbConnection()
 export async function createApolloTestServer(options: {
     isAdmin: boolean
     dbName: string
+    insertTestData: boolean
 }) {
     return new Promise<ApolloTestServer>(async (resolve, reject) => {
         let db = await dbPromise
@@ -168,7 +169,9 @@ export async function createApolloTestServer(options: {
             isAdmin: options.isAdmin,
         }
         await db.synchronize(true)
-        await insertTestData(db)
+        if (options.insertTestData) {
+            await insertTestData(db)
+        }
         const server = new ApolloServer({
             typeDefs: typeDefs,
             resolvers: resolvers,
@@ -198,6 +201,7 @@ export type ApolloHttpTestServer = {
 
 export async function createApolloHttpTestServer(options: {
     isAdmin: boolean
+    insertTestData: boolean
     dbName: string
 }) {
     return new Promise<ApolloHttpTestServer>(async (resolve, reject) => {
@@ -208,7 +212,9 @@ export async function createApolloHttpTestServer(options: {
             db,
             isAdmin: options.isAdmin,
         }
-        await insertTestData(db)
+        if (options.insertTestData) {
+            await insertTestData(db)
+        }
         const server = new ApolloServer({
             typeDefs: typeDefs,
             resolvers: resolvers,

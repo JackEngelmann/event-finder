@@ -3,6 +3,7 @@ import {
     createApolloTestServer,
     ApolloTestServer,
     ApolloHttpTestServer,
+    insertTestData,
 } from './utils'
 import { createEvent } from '../mutations/createEvent'
 import { queryEvent } from '../queries/event'
@@ -51,6 +52,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateClubInput = {
                 name: 'test',
@@ -73,6 +75,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateClubInput = {
                 address: 'address',
@@ -102,6 +105,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
                 isAdmin: false,
+                insertTestData: true,
             })
             const input: CreateClubInput = {
                 name: 'test',
@@ -127,6 +131,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: UpdateClubInput = {
                 name: 'updated-name',
@@ -150,6 +155,7 @@ describe('club mutations: ', () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
+                insertTestData: true,
                 dbName: DB_NAME,
             })
             const input: UpdateClubInput = {
@@ -181,7 +187,8 @@ describe('club mutations: ', () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
-                isAdmin: false
+                isAdmin: false,
+                insertTestData: true,
             })
             const input: UpdateClubInput = {
                 name: 'test',
@@ -208,6 +215,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const { client, appContext } = apolloTestServer
             const clubId = await createClub(appContext, {
@@ -234,13 +242,14 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const { client } = apolloTestServer
 
             // act
             const result = await client.mutate({
                 mutation: deleteClubMutation,
-                variables: { id: 1 }
+                variables: { id: 1 },
             })
 
             // assert
@@ -254,6 +263,7 @@ describe('club mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const { client, appContext } = apolloTestServer
             const clubId = await createClub(appContext, {

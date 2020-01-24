@@ -41,6 +41,7 @@ beforeEach(async done => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
+        insertTestData: true,
     })
     done()
 })
@@ -58,6 +59,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateEventInput = {
                 name: 'event-name',
@@ -81,6 +83,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateEventInput = {
                 name: 'event-name',
@@ -105,6 +108,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateEventInput = {
                 name: 'event-name',
@@ -136,6 +140,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: CreateEventInput = {
                 name: 'event-name',
@@ -163,6 +168,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: UpdateEventInput = {
                 id: 1,
@@ -188,6 +194,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: UpdateEventInput = {
                 id: 10000,
@@ -215,6 +222,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: UpdateEventInput = {
                 id: 1,
@@ -241,6 +249,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
                 isAdmin: true,
+                insertTestData: true,
             })
             const input: UpdateEventInput = {
                 id: 1,
@@ -277,6 +286,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const input: UpdateEventInput = {
                 id: 1,
@@ -303,6 +313,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
+                insertTestData: true,
             })
             const emojiDescription = '🍃🔝🎉📢👉🌵🎵'
             const input: UpdateEventInput = {
@@ -321,7 +332,9 @@ describe('event mutations: ', () => {
 
             // assert
             expect(result.data).toBeDefined()
-            expect(result.data!.updateEvent.event.description).toBe(emojiDescription)
+            expect(result.data!.updateEvent.event.description).toBe(
+                emojiDescription
+            )
             expect(result).toMatchSnapshot()
             done()
         })
@@ -333,6 +346,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
                 isAdmin: true,
+                insertTestData: true,
             })
             const { appContext, client } = apolloTestServer
             const id = 1
@@ -357,6 +371,7 @@ describe('event mutations: ', () => {
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
                 isAdmin: false,
+                insertTestData: true,
             })
             const { client } = apolloTestServer
 

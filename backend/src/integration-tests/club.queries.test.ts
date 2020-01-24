@@ -8,6 +8,7 @@ beforeEach(async done => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
+        insertTestData: true,
     })
     done()
 })

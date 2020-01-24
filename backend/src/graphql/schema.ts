@@ -118,6 +118,7 @@ export const typeDefs = gql`
     }
 
     input EventsQueryFilter {
+        clubId: Int
         date: String
     }
 
@@ -138,7 +139,7 @@ export const typeDefs = gql`
         id: Int!
         name: String
     }
-    
+
     ###
     # image types
     ###

@@ -1,4 +1,8 @@
-import { genreFragment, ApolloTestServer, createApolloTestServer } from "./utils"
+import {
+    genreFragment,
+    ApolloTestServer,
+    createApolloTestServer,
+} from './utils'
 
 let apolloTestServer: ApolloTestServer | undefined
 
@@ -8,6 +12,7 @@ beforeEach(async done => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
+        insertTestData: true,
     })
     done()
 })
