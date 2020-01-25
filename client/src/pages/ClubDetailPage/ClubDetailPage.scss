@@ -1,60 +1,66 @@
 .club-detail-page {
-    &__edit-button {
-        margin-left: 0.5em;
-        background-color: transparent;
-        color: white;
-    }
+  &__edit-button {
+    margin-left: 0.5em;
+    background-color: transparent;
+    color: white;
+  }
 
-    &__carousel {
-        width: 100% !important;
-    }
+  &__carousel {
+    width: 100% !important;
+  }
 
-    &__picture {
-        max-width: 100%;
-        height: auto;
-        width: auto;
-        display: block;
-    }
+  &__picture {
+    max-width: 100%;
+    height: auto;
+    width: auto;
+    display: block;
+  }
 
-    &__picture-wrapper {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+  &__picture-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-    &__content {
-        padding-bottom: 2em;
-    }
+  &__content {
+    padding-bottom: 2em;
+  }
 
-    section {
-        padding: 0.5em;
-        max-width: 80%;
-    }
+  section {
+    padding: 0.5em;
+    max-width: 80%;
+  }
 
-    &__picture-and-short-info {
-        padding: 0.5em;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        margin-bottom: 2em;
-    }
+  &__picture-and-short-info {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 2em;
+  }
+
+  h2 {
+    margin-top: 1em;
+    font-size: 1.6em;
+    padding: 0.5em;
+  }
 }
 
 @media only screen and (min-width: 800px) {
-    .club-detail-page__picture-and-short-info {
-        flex-direction: row;
-        justify-content: space-around;
+  .club-detail-page__picture-and-short-info {
+    flex-direction: row;
+    justify-content: space-around;
 
-        .club-detail-page__picture-wrapper {
-            width: 40%;
-        }
-
-        .key-value-fields {
-            width: 60%;
-        }
-
-        .key-value-field {
-            width: 50%;
-        }
+    .club-detail-page__picture-wrapper {
+      width: 40%;
     }
+
+    .key-value-fields {
+      width: 60%;
+    }
+
+    .key-value-field {
+      width: 50%;
+    }
+  }
 }

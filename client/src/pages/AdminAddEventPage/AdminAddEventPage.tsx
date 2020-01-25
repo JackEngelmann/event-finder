@@ -21,6 +21,7 @@ import { MultiSelect } from '../../components/MultiSelect/MultiSelect'
 import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
+import { CLUB_DETAIL_QUERY, today } from '../ClubDetailPage/ClubDetailPage'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation CreateEvent($input: CreateEventInput!) {
@@ -94,6 +95,15 @@ export function AdminAddEventPage() {
             special: state.special,
           },
         },
+        refetchQueries: [
+          {
+            query: CLUB_DETAIL_QUERY,
+            variables: {
+              clubId: state.club && state.club.id,
+              fromDay: today.toISOString(),
+            },
+          },
+        ],
       })
     )
     const results = await Promise.all(mutations)
@@ -294,7 +304,12 @@ export function AdminAddEventPage() {
           </LabeledInput>
         </div>
         <Spacer />
-        <Button primary disabled={!canCreate} onClick={createEvent} data-cy="adminaddevent-create">
+        <Button
+          primary
+          disabled={!canCreate}
+          onClick={createEvent}
+          data-cy="adminaddevent-create"
+        >
           {t('create')}
         </Button>
         <Button secondary onClick={() => history.push('/admin')}>

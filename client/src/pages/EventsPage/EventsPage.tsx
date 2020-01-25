@@ -8,12 +8,36 @@ import { Page } from '../../components/Page/Page'
 import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { Content } from '../../components/Content/Content'
 import { ClubListContainer } from '../../components/ClubList/ClubListContainer'
-import { EventListContainer } from '../../components/EventList/EventListContainer'
 import { Calendar } from '../../components/Calendar'
 import { useTranslation } from 'react-i18next'
 import { DayQuickSwitch } from '../../components/DayQuickSwitch'
+import gql from 'graphql-tag'
+import { Event } from '../../api'
+import { NetworkError } from '../../components/NetworkError'
+import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
+import { useQuery } from '@apollo/react-hooks'
+import { EventList } from '../../components/EventList'
+import { EventCard } from '../../components/EventCard/EventCard'
 
 type Props = {}
+
+const EVENTS_QUERY = gql`
+  query eventsPageEventsQuery($eventsQueryFilter: EventsQueryFilter) {
+    events(filter: $eventsQueryFilter) {
+      id
+      name
+      date
+      imageUrls
+      club {
+        id
+        name
+      }
+    }
+  }
+`
+type EventsQueryData = {
+  events: Pick<Event, 'id' | 'name' | 'date' | 'imageUrls' | 'club'>[]
+}
 
 const currentDate = moment()
 
@@ -37,13 +61,26 @@ export function EventsPage(props: Props) {
     }
   }, [locale, monthSelection])
 
+  const eventsQueryResult = useQuery<EventsQueryData>(EVENTS_QUERY, {
+    variables: {
+      eventsQueryFilter: {
+        date: selectedDate && selectedDate.toISOString(),
+      },
+    },
+  })
+  const events = eventsQueryResult.data && eventsQueryResult.data.events
+
   const history = useHistory()
   const desktop = Boolean(dimensions.width && dimensions.width > 800)
   const showClubList = Boolean(!dimensions.width || dimensions.width > 1000)
   const search = useLocation().search
+
   if (!selectedDate) {
     return <Redirect to={`/event?date=${moment().toISOString()}`} />
   }
+  if (eventsQueryResult.error) return <NetworkError />
+  if (eventsQueryResult.loading) return <LoadingIndicator />
+
   const onEventClick = (event: { id: number }) =>
     history.push(`/event/${event.id}${search}`)
 
@@ -70,10 +107,17 @@ export function EventsPage(props: Props) {
             </div>
           )}
           <div className={`${cn}__event-list-wrapper`}>
-            <EventListContainer
-              selectedDate={selectedDate}
-              desktop
-              onEventClick={onEventClick}
+            <EventList
+              events={events}
+              renderEvent={event => (
+                <EventCard
+                  desktop
+                  key={event.id}
+                  event={event}
+                  onClick={() => onEventClick({ id: event.id })}
+                />
+              )}
+              texts={{ empty: t('noEventsToday') }}
             />
           </div>
         </Content>
@@ -97,9 +141,16 @@ export function EventsPage(props: Props) {
           </div>
         </HeaderContainer>
         <Content scrollable restrictMaxWidth={desktop}>
-          <EventListContainer
-            selectedDate={selectedDate}
-            onEventClick={onEventClick}
+          <EventList
+            events={events}
+            renderEvent={event => (
+              <EventCard
+                key={event.id}
+                event={event}
+                onClick={() => onEventClick({ id: event.id })}
+              />
+            )}
+            texts={{ empty: t('noEventsToday') }}
           />
         </Content>
       </>

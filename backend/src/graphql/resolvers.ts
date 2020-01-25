@@ -18,6 +18,7 @@ import { Logger } from '../logger'
 import { uploadImage } from '../mutations/uploadImages'
 import { queryImageUrlsForEvent } from '../queries/imageUrlsForEvent'
 import { queryImageUrlsForClub } from '../queries/imageUrlsForClub'
+import { queryEventsForClub } from '../queries/eventsForClub'
 
 type Source = {
     clubId: number
@@ -55,7 +56,7 @@ export const resolvers: IResolvers<Source, AppContext> = {
         me: (obj, args, appContext, info) => {
             logger.info('query me')
             return appContext.user
-        }
+        },
     },
     Mutation: {
         createEvent: async (obj, args, appContext, info) => {
@@ -106,10 +107,12 @@ export const resolvers: IResolvers<Source, AppContext> = {
         genres: (event, args, appContext, info) =>
             queryGenresForEvent(appContext, event.id),
         imageUrls: (event, args, appContext, info) =>
-            queryImageUrlsForEvent(appContext, event.id)
+            queryImageUrlsForEvent(appContext, event.id),
     },
     Club: {
         imageUrls: (club, args, appContext, info) =>
-            queryImageUrlsForClub(appContext, club.id)
-    }
+            queryImageUrlsForClub(appContext, club.id),
+        events: (club, args, appContext, info) =>
+            queryEventsForClub(appContext, club.id, args.fromDay),
+    },
 }
