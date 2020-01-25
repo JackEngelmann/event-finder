@@ -40,13 +40,14 @@ export const CLUB_DETAIL_QUERY = gql`
       description
       email
       events(fromDay: $fromDay) {
-        id
-        name
-        date
         club {
           id
           name
         }
+        date
+        id
+        imageUrls
+        name
       }
       id
       imageUrls
