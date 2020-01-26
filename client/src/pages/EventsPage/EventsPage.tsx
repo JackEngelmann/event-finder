@@ -28,6 +28,11 @@ const EVENTS_QUERY = gql`
       name
       date
       imageUrls
+      genres {
+        id
+        name
+      }
+      priceCategory
       club {
         id
         name
@@ -36,7 +41,21 @@ const EVENTS_QUERY = gql`
   }
 `
 type EventsQueryData = {
-  events: Pick<Event, 'id' | 'name' | 'date' | 'imageUrls' | 'club'>[]
+  events: {
+    id: number
+    name: string
+    date: string
+    imageUrls: string[] | undefined
+    club: {
+      id: number
+      name: string
+    }
+    genres: {
+      id: number
+      name: string
+    }[]
+    priceCategory: number
+  }[]
 }
 
 const currentDate = moment()

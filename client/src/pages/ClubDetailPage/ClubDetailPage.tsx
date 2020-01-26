@@ -45,9 +45,14 @@ export const CLUB_DETAIL_QUERY = gql`
           name
         }
         date
+        genres {
+          id
+          name
+        }
         id
         imageUrls
         name
+        priceCategory
       }
       id
       imageUrls
@@ -72,6 +77,11 @@ type QueriedClub = {
       id: number
       name: string
     }
+    genres: {
+      id: number
+      name: string
+    }[]
+    priceCategory: number
   }[]
   id: number
   imageUrls?: string[]
@@ -180,6 +190,7 @@ export function ClubDetailPage(props: Props) {
               key={event.id}
               event={event}
               onClick={() => onEventClick({ id: event.id })}
+              showDate
             />
           )}
         />

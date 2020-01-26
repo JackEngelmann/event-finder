@@ -47,20 +47,25 @@
 }
 
 @media only screen and (min-width: 800px) {
-  .club-detail-page__picture-and-short-info {
-    flex-direction: row;
-    justify-content: space-around;
+  .club-detail-page {
+    &__picture-and-short-info {
+      flex-direction: row;
+      justify-content: space-around;
 
-    .club-detail-page__picture-wrapper {
-      width: 40%;
+      .club-detail-page__picture-wrapper {
+        width: 40%;
+      }
+
+      .key-value-fields {
+        width: 60%;
+      }
+
+      .key-value-field {
+        width: 50%;
+      }
     }
-
-    .key-value-fields {
-      width: 60%;
-    }
-
-    .key-value-field {
-      width: 50%;
+    .event-list {
+      max-width: 35em;
     }
   }
 }
