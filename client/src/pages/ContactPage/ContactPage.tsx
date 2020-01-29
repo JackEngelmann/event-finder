@@ -6,7 +6,7 @@ import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { useTranslation } from 'react-i18next'
 import { contact } from '../../contact'
 
-export function ContactPage() {
+export default function ContactPage() {
   const { t } = useTranslation()
   return (
     <Page>

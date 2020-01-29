@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { Button } from '../../components/Button/Button'
 import { stopGoogleAnalytics } from '../../googleAnalytics'
 
-export function DataPolicyPage() {
+export default function DataPolicyPage() {
   const { t } = useTranslation()
   return (
     <Page>
@@ -338,10 +338,7 @@ export function DataPolicyPage() {
             zu verhindern, müssen Sie das Opt-Out auf allen genutzten Systemen
             durchführen. Wenn Sie hier klicken, wird das Opt-Out-Cookie gesetzt:{' '}
             <br />
-            <Button
-              secondary
-              onClick={stopGoogleAnalytics}
-            >
+            <Button secondary onClick={stopGoogleAnalytics}>
               Google Analytics deaktivieren
             </Button>
           </p>

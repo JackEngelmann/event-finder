@@ -27,7 +27,7 @@ const CREATE_CLUB_MUTATION = gql`
 
 const cn = 'admin-add-club-page'
 
-export function AdminAddClubPage() {
+export default function AdminAddClubPage() {
   const { t } = useTranslation()
   const [clubEditorState, setClubEditorState] = useState<ClubEditorState>({})
   const [requestPending, setRequestPending] = useState(false)

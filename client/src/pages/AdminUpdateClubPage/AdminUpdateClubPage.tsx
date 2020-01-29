@@ -41,7 +41,7 @@ const UPDATE_CLUB_MUTATION = gql`
 
 const cn = 'admin-update-club-page'
 
-export function AdminUpdateClubPage() {
+export default function AdminUpdateClubPage() {
   const { t } = useTranslation()
   const { clubId } = useParams<Params>()
   const [requestPending, setRequestPending] = useState(false)

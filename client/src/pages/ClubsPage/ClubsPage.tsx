@@ -5,7 +5,7 @@ import { Content } from '../../components/Content/Content'
 import { ClubListContainer } from '../../components/ClubList/ClubListContainer'
 import { useTranslation } from 'react-i18next'
 
-export function ClubsPage() {
+export default function ClubsPage() {
   const { t } = useTranslation()
   return (
     <Page>

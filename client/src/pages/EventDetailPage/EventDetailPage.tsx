@@ -32,7 +32,7 @@ type Params = {
 
 const cn = 'event-detail-page'
 
-export function EventDetailPage(props: Props) {
+export default function EventDetailPage(props: Props) {
   const { t } = useTranslation()
   const params = useParams<Params>()
   const eventId = params.eventId ? parseInt(params.eventId, 10) : undefined

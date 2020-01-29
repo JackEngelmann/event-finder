@@ -7,7 +7,7 @@ import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { useTranslation } from 'react-i18next'
 import { contact } from '../../contact'
 
-export function ImpressumPage() {
+export default function ImpressumPage() {
   const { t } = useTranslation()
   return (
     <Page>

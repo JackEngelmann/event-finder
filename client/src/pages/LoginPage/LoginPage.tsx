@@ -9,7 +9,7 @@ type Props = {}
 
 const cn = 'login-page'
 
-export function LoginPage(props: Props) {
+export default function LoginPage(props: Props) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   return (

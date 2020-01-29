@@ -61,7 +61,7 @@ const currentDate = moment()
 
 const cn = 'events-page'
 
-export function EventsPage(props: Props) {
+export default function EventsPage(props: Props) {
   const dimensions = useDimensions()
 
   // rerenders component when locale changes -> has influence on moment.js

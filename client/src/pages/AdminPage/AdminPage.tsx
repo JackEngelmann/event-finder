@@ -46,7 +46,7 @@ const DELETE_CLUB_MUTATION = gql`
   }
 `
 
-export function AdminPage() {
+export default function AdminPage() {
   const { t } = useTranslation()
   const [unsortedClubs, clubsQueryResult] = useClubs()
   const clubs = unsortedClubs

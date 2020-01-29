@@ -76,7 +76,7 @@ const UPDATE_EVENT_MUTATION = gql`
 
 const cn = 'admin-update-event-page'
 
-export function AdminUpdateEventPage(props: any) {
+export default function AdminUpdateEventPage(props: any) {
   const params = useParams<Params>()
   const { t } = useTranslation()
   const { eventId } = params

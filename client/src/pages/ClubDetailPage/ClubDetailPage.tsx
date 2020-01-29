@@ -95,7 +95,7 @@ type ClubQueryData = {
 
 export const today = moment()
 
-export function ClubDetailPage(props: Props) {
+export default function ClubDetailPage(props: Props) {
   const params = useParams<Params>()
   const { t } = useTranslation()
   const history = useHistory()

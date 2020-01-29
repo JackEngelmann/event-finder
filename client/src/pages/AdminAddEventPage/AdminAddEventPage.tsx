@@ -58,7 +58,7 @@ type State = {
 
 const cn = 'admin-add-event-page'
 
-export function AdminAddEventPage() {
+export default function AdminAddEventPage() {
   const { t } = useTranslation()
   const [monthSelection, setMonthSelection] = useState(moment())
   const [requestPending, setRequestPending] = useState(false)

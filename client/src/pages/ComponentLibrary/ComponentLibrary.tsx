@@ -12,58 +12,55 @@ import { Carousel } from '../../components/Carousel'
 
 const cn = 'component-library'
 
-export function ComponentLibraryPage() {
-    const [imageUrls, setImageUrls] = useState<string[] | undefined>()
-    return (
-        <div className={cn}>
-            <div className={`${cn}__spacer`}>
-                <Carousel
-                    renderImage={index => <div>{index}</div>}
-                    imageCount={5}
-                />
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button primary>Primary</Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button secondary>Secondary</Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button danger>Danger</Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button disabled primary>
-                    Primary
-                </Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button disabled secondary>
-                    Secondary
-                </Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Button disabled danger>
-                    Danger
-                </Button>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Input />
-            </div>
-            <div className={`${cn}__spacer`}>
-                <Select>
-                    <Option>1</Option>
-                    <Option>2</Option>
-                </Select>
-            </div>
-            <div className={`${cn}__spacer`}>
-                <LoadingIndicator />
-            </div>
-            <div className={`${cn}__spacer`}>
-                <ImageUrlsInput
-                    value={imageUrls}
-                    onChange={imageUrls => setImageUrls(imageUrls)}
-                />
-            </div>
-        </div>
-    )
+export default function ComponentLibraryPage() {
+  const [imageUrls, setImageUrls] = useState<string[] | undefined>()
+  return (
+    <div className={cn}>
+      <div className={`${cn}__spacer`}>
+        <Carousel renderImage={index => <div>{index}</div>} imageCount={5} />
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button primary>Primary</Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button secondary>Secondary</Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button danger>Danger</Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button disabled primary>
+          Primary
+        </Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button disabled secondary>
+          Secondary
+        </Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Button disabled danger>
+          Danger
+        </Button>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Input />
+      </div>
+      <div className={`${cn}__spacer`}>
+        <Select>
+          <Option>1</Option>
+          <Option>2</Option>
+        </Select>
+      </div>
+      <div className={`${cn}__spacer`}>
+        <LoadingIndicator />
+      </div>
+      <div className={`${cn}__spacer`}>
+        <ImageUrlsInput
+          value={imageUrls}
+          onChange={imageUrls => setImageUrls(imageUrls)}
+        />
+      </div>
+    </div>
+  )
 }
