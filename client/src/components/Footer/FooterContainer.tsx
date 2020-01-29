@@ -22,9 +22,6 @@ export function FooterContainer() {
         {t('dataPolicy')}
       </button>
       <button onClick={() => history.push('/contact')}>{t('contact')}</button>
-      <button onClick={() => history.push('/admin')} data-cy="footer-admin">
-        {t('administration')}
-      </button>
       <button
         onClick={() =>
           language === 'de' ? changeLanguage('en') : changeLanguage('de')
@@ -35,7 +32,7 @@ export function FooterContainer() {
           <CountryFlagGermany
             style={{
               width: '1.6em',
-              height: '1.2em'
+              height: '1.2em',
             }}
           />
         )}
@@ -43,7 +40,7 @@ export function FooterContainer() {
           <CountryFlagGreatBritain
             style={{
               width: '1.6em',
-              height: '1.2em'
+              height: '1.2em',
             }}
           />
         )}

@@ -27,9 +27,8 @@ import 'cypress-file-upload'
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add('login', () => {
-  cy.visit('http://localhost:3000/admin')
+  cy.visit('http://localhost:3000/#/admin')
   cy.contains('Auswahl akzeptieren').click()
-  cy.get('[data-cy=footer-admin]').click()
   cy.get('[data-cy=login-username-input]').type('admin')
   cy.get('[data-cy=login-password-input]').type('alexfalcojack')
   cy.get('[data-cy=login-submit-button]').click()
