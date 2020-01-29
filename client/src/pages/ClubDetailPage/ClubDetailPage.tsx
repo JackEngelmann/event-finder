@@ -7,7 +7,6 @@ import { OnlyVisibleForAdmins } from '../../components/OnlyVisibleForAdmins/Only
 import { Button } from '../../components/Button/Button'
 import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import gql from 'graphql-tag'
-import { Club } from '../../api'
 import { useQuery } from '@apollo/react-hooks'
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
 import { H1Title } from '../../components/H1Title/H1Title'

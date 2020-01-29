@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, ComponentProps } from 'react'
 import { CookieBannerView } from './CookieBannerView'
 import { useHistory } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
@@ -16,7 +16,7 @@ export function CookieBannerContainer() {
 
   if (shownCookieBanner) return null
 
-  const links = [
+  const links: ComponentProps<'a'>[] = [
     {
       children: t('impressum'),
       onClick: () => history.push('/impressum'),

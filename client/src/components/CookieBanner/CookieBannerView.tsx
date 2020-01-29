@@ -47,7 +47,7 @@ export const CookieBannerView = (props: Props) => (
     </div>
     <div className={`${cn}__links`}>
       {props.links.map(l => (
-        <a {...l} />
+        <a {...l}>{l.children}</a>
       ))}
     </div>
   </div>
