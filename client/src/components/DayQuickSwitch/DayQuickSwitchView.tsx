@@ -19,6 +19,7 @@ export function DayQuickSwitchView(props: Props) {
         borderless
         onClick={() => setSelectedDate(selectedDate.subtract(1, 'day'))}
         className={`${cn}__select-day-arrow-button`}
+        aria-label="go back one day"
       >
         <Icon icon="arrow-left" />
       </Button>
@@ -27,6 +28,7 @@ export function DayQuickSwitchView(props: Props) {
         borderless
         onClick={() => setSelectedDate(selectedDate.add(1, 'day'))}
         className={`${cn}__select-day-arrow-button`}
+        aria-label="go forward one day"
       >
         <Icon icon="arrow-right" />
       </Button>

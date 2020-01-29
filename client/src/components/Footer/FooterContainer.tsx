@@ -27,6 +27,7 @@ export function FooterContainer() {
           language === 'de' ? changeLanguage('en') : changeLanguage('de')
         }
         data-cy="language-toggle"
+        aria-label={t('switchLanguage')}
       >
         {language === 'en' && (
           <CountryFlagGermany
