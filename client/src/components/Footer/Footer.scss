@@ -16,6 +16,8 @@
     height: 100%;
     margin: 0 auto;
     max-width: 1200px;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
     white-space: nowrap;
     width: 100%;
 
