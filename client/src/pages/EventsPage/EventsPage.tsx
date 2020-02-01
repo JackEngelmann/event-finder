@@ -96,8 +96,25 @@ export default function EventsPage(props: Props) {
   if (!selectedDate) {
     return <Redirect to={`/event?date=${moment().toISOString()}`} />
   }
-  if (eventsQueryResult.error) return <NetworkError />
-  if (eventsQueryResult.loading) return <LoadingIndicator />
+
+  function renderEventsList() {
+    if (eventsQueryResult.error) return <NetworkError />
+    if (eventsQueryResult.loading) return <LoadingIndicator />
+    return (
+      <EventList
+        events={events}
+        renderEvent={event => (
+          <EventCard
+            desktop
+            key={event.id}
+            event={event}
+            onClick={() => onEventClick({ id: event.id })}
+          />
+        )}
+        texts={{ empty: t('noEventsToday') }}
+      />
+    )
+  }
 
   const onEventClick = (event: { id: number }) =>
     history.push(`/event/${event.id}${search}`)
@@ -125,18 +142,7 @@ export default function EventsPage(props: Props) {
             </div>
           )}
           <div className={`${cn}__event-list-wrapper`}>
-            <EventList
-              events={events}
-              renderEvent={event => (
-                <EventCard
-                  desktop
-                  key={event.id}
-                  event={event}
-                  onClick={() => onEventClick({ id: event.id })}
-                />
-              )}
-              texts={{ empty: t('noEventsToday') }}
-            />
+            {renderEventsList()}
           </div>
         </Content>
       </>

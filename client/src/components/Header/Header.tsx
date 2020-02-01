@@ -7,7 +7,6 @@ type Props = {
   children?: ReactNode
   toggleMobileMenu: () => void
   toggleCalender: () => void
-  left?: ReactNode
   right?: ReactNode
   onLogoClick: () => void
 }
@@ -18,7 +17,6 @@ export function Header(props: Props) {
   const {
     children,
     toggleMobileMenu,
-    left,
     right,
     toggleCalender,
     onLogoClick,
@@ -26,8 +24,8 @@ export function Header(props: Props) {
   return (
     <div className={cn}>
       <div className={`${cn}__header`}>
-        <div className={`${cn}__left`}>
-          <Logo onClick={onLogoClick} />
+        <div className={`${cn}__left`} onClick={onLogoClick}>
+          <Logo />
         </div>
         <div className={`${cn}__content`}>
           <button
@@ -41,13 +39,8 @@ export function Header(props: Props) {
         <div className={`${cn}__right`} />
       </div>
       <div className={`${cn}__sub-header`}>
-        <div className={`${cn}__left`}>
-          <Icon
-            icon="bars"
-            className={`${cn}__menu-icon`}
-            onClick={toggleMobileMenu}
-          />
-          {left}
+        <div className={`${cn}__left`} onClick={toggleMobileMenu}>
+          <Icon icon="bars" className={`${cn}__menu-icon`} />
         </div>
         <div className={`${cn}__content`}>{children}</div>
         <div className={`${cn}__right`}>{right}</div>
