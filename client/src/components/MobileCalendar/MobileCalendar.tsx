@@ -4,7 +4,7 @@ import {
   queryStringFromSelectedDate,
 } from '../utils/useSelectedDate'
 import moment from 'moment'
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { ReduxState, ReduxAction } from '../../redux/store'
 import './MobileCalendar.scss'
@@ -26,7 +26,15 @@ export function MobileCalendar() {
     [dispatch]
   )
   const history = useHistory()
+
+  useEffect(() => {
+    history.listen(() => {
+      hideMobileCalendar()
+    })
+  }, [])
+
   if (!showMobileCalendar) return null
+
   return (
     <div className={cn}>
       <Calendar
