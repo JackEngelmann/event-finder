@@ -1,4 +1,4 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { ClubModel } from '../database/entity/club'
 import { FileUpload } from 'graphql-upload'
 import { ClubImageModel } from '../database/entity/clubImage'
@@ -30,5 +30,5 @@ export function updateClub(appContext: AppContext, input: UpdateClubInput) {
             console.error(err)
             reject(err)
         }
-    }) 
+    })
 }

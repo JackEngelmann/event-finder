@@ -1,4 +1,4 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { EventModel, EventDataModel } from '../database/entity/event'
 import moment = require('moment')
 

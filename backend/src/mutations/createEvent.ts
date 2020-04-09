@@ -1,9 +1,7 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { EventModel } from '../database/entity/event'
 import { EventGenreModel } from '../database/entity/eventGenre'
 import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../database/entity/image'
-import { ImageService } from '../service/imageService'
 import { EventImageModel } from '../database/entity/eventImage'
 
 export type CreateEventInput = {

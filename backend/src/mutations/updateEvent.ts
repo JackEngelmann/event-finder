@@ -1,9 +1,6 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { EventModel } from '../database/entity/event'
 import { EventGenreModel } from '../database/entity/eventGenre'
-import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../database/entity/image'
-import { ImageService } from '../service/imageService'
 import { EventImageModel } from '../database/entity/eventImage'
 
 export type UpdateEventInput = {
@@ -32,7 +29,10 @@ export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
         try {
             await eventModel.updateEvent(input)
             await eventGenreModel.setGenresForAnEvent(input.id, input.genreIds)
-            await eventImageModel.setImageUrlsForEvent(input.id, input.imageUrls)
+            await eventImageModel.setImageUrlsForEvent(
+                input.id,
+                input.imageUrls
+            )
             resolve()
         } catch (err) {
             console.error(err)

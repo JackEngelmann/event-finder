@@ -1,10 +1,10 @@
-import { AppContext } from "../appContext";
-import { FileUpload } from "graphql-upload";
-import { ImageModel } from "../database/entity/image";
-import { ImageService } from "../service/imageService";
+import { AppContext } from '../infrastructure/appContext'
+import { FileUpload } from 'graphql-upload'
+import { ImageModel } from '../database/entity/image'
+import { ImageService } from '../service/imageService'
 
 export type UpladImageInput = {
-  upload: Promise<FileUpload>
+    upload: Promise<FileUpload>
 }
 
 export function uploadImage(appContext: AppContext, input: UpladImageInput) {

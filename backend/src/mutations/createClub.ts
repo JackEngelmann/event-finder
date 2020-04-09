@@ -1,7 +1,8 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { ClubModel } from '../database/entity/club'
 import { FileUpload } from 'graphql-upload'
 import { ClubImageModel } from '../database/entity/clubImage'
+
 export type CreateClubInput = {
     address?: string
     contact?: string

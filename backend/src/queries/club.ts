@@ -1,4 +1,4 @@
-import { AppContext } from "../appContext";
+import { AppContext } from "../infrastructure/appContext";
 import { ClubModel } from "../database/entity/club";
 
 export function queryClub(appContext: AppContext, id: number) {

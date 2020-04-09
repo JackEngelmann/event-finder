@@ -1,6 +1,5 @@
 import 'reflect-metadata'
 import { databaseConfig } from '../../databaseConfig'
-import { applyDbScripts } from './applyDbScripts'
 import { createConnection, Connection } from 'typeorm'
 import { ClubDataModel } from './entity/club'
 import { EventDataModel } from './entity/event'
@@ -31,10 +30,9 @@ export const createDbConnection = (dbName?: any) => {
         logger: 'file',
     })
 }
-// .catch(err => {
-//     const logger = new Logger()
-//     logger.error(err)
-//     throw new Error(err)
-// })
 
-export const connectionPromise = createDbConnection()
+const connectionPromise = createDbConnection()
+
+export async function getDbConnection() {
+    return await connectionPromise
+}

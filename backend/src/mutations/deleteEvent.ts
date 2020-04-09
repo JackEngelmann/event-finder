@@ -1,12 +1,12 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import { EventModel } from '../database/entity/event'
-import { EventGenreModel } from '../database/entity/eventGenre';
-import { Logger } from '../logger';
+import { EventGenreModel } from '../database/entity/eventGenre'
+import { Logger } from '../logger'
 
 export function deleteEvent(appContext: AppContext, id: number) {
     const { db } = appContext
-    const eventModel = new EventModel(db);
-    const eventGenreModel = new EventGenreModel(db);
+    const eventModel = new EventModel(db)
+    const eventGenreModel = new EventGenreModel(db)
     const logger = new Logger()
     return new Promise(async (resolve, reject) => {
         try {
@@ -14,7 +14,7 @@ export function deleteEvent(appContext: AppContext, id: number) {
             // TODO: comment in
             // await eventGenreModel.deleteAllGenresForEvent(id);
             resolve()
-        } catch(err) {
+        } catch (err) {
             logger.error(err)
             reject(err)
         }

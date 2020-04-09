@@ -1,4 +1,4 @@
-import { AppContext } from '../appContext'
+import { AppContext } from '../infrastructure/appContext'
 import moment from 'moment'
 import { EventModel, EventDataModel } from '../database/entity/event'
 

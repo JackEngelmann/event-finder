@@ -1,4 +1,4 @@
-import { startServer, stopServer } from './graphql/server'
+import { startServer, stopServer } from './server'
 
 if ((module as any).hot) {
     startServer()
