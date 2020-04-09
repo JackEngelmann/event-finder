@@ -17,7 +17,6 @@ export function CalendarDayView(props: Props) {
   const isWeekend = [0, 6].includes(day.day())
   return (
     <div
-      key={day.toISOString()}
       className={classNames(cn, {
         [`${cn}--weekend`]: isWeekend,
         [`${cn}--selected`]: isSelected,

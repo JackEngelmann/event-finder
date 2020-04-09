@@ -75,7 +75,7 @@ export default function AdminAddEventPage() {
 
   const createEvent = async () => {
     setRequestPending(true)
-    const mutations = state.dates.map(date =>
+    const mutations = state.dates.map((date) =>
       createEventMutation({
         variables: {
           input: {
@@ -87,7 +87,7 @@ export default function AdminAddEventPage() {
             clubId: state.club && state.club.id,
             date,
             description: state.description,
-            genreIds: state.genres ? state.genres.map(g => g.id) : undefined,
+            genreIds: state.genres ? state.genres.map((g) => g.id) : undefined,
             link: state.link,
             minimumAge: state.minimumAge,
             name: state.name,
@@ -122,7 +122,7 @@ export default function AdminAddEventPage() {
               data-cy="addminaddevent-name-input"
               placeholder="name"
               value={state.name || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   name: e.target.value,
@@ -135,11 +135,11 @@ export default function AdminAddEventPage() {
               <MultiSelectCalendar
                 monthSelection={monthSelection}
                 setMonthSelection={setMonthSelection}
-                selectedDates={state.dates.map(d => moment(d))}
-                setSelectedDates={dates =>
+                selectedDates={state.dates.map((d) => moment(d))}
+                setSelectedDates={(dates) =>
                   setState({
                     ...state,
-                    dates: dates.map(d => d.toISOString()),
+                    dates: dates.map((d) => d.toISOString()),
                   })
                 }
               />
@@ -149,20 +149,22 @@ export default function AdminAddEventPage() {
             <Select
               value={state.club ? state.club.id : ''}
               data-cy="adminaddevent-club-select"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   club: (clubs || []).find(
-                    c => c.id === parseInt(e.target.value, 10)
+                    (c) => c.id === parseInt(e.target.value, 10)
                   ),
                 })
               }
             >
-              <Option disabled value="">
+              <Option key="initial" disabled value="">
                 --select--
               </Option>
-              {(clubs || []).map(c => (
-                <Option value={c.id}>{c.name}</Option>
+              {(clubs || []).map((c) => (
+                <Option key={c.id} value={c.id}>
+                  {c.name}
+                </Option>
               ))}
             </Select>
           </LabeledInput>
@@ -172,7 +174,7 @@ export default function AdminAddEventPage() {
               value={state.admissionFee || ''}
               min={0}
               type="number"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   admissionFee: parseFloat(e.target.value),
@@ -187,7 +189,7 @@ export default function AdminAddEventPage() {
               value={state.admissionFeeWithDiscount || ''}
               min={0}
               type="number"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   admissionFeeWithDiscount: parseFloat(e.target.value),
@@ -202,7 +204,7 @@ export default function AdminAddEventPage() {
               value={state.amountOfFloors || ''}
               min={0}
               type="number"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   amountOfFloors: parseInt(e.target.value, 10),
@@ -215,7 +217,7 @@ export default function AdminAddEventPage() {
               data-cy="adminaddevent-description-input"
               width="20em"
               value={state.description || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   description: e.target.value,
@@ -228,7 +230,7 @@ export default function AdminAddEventPage() {
               data-cy="adminaddevent-specials-input"
               width="20em"
               value={state.special || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   special: e.target.value,
@@ -242,7 +244,7 @@ export default function AdminAddEventPage() {
               value={state.minimumAge || ''}
               min={0}
               type="number"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   minimumAge: parseInt(e.target.value, 10),
@@ -254,7 +256,7 @@ export default function AdminAddEventPage() {
             <Select
               data-cy="adminaddevent-pricecategory-select"
               value={state.priceCategory || ''}
-              onChange={e => {
+              onChange={(e) => {
                 setState({
                   ...state,
                   priceCategory:
@@ -272,11 +274,11 @@ export default function AdminAddEventPage() {
           </LabeledInput>
           <LabeledInput label={t('genres')}>
             <MultiSelect
-              getItemKey={item => item.id.toString()}
-              renderItem={item => item.name}
+              getItemKey={(item) => item.id.toString()}
+              renderItem={(item) => item.name}
               items={genres || []}
               selectedItems={state.genres || []}
-              onChange={genres =>
+              onChange={(genres) =>
                 setState({
                   ...state,
                   genres,
@@ -288,7 +290,7 @@ export default function AdminAddEventPage() {
             <Input
               data-cy="adminaddevent-link-input"
               value={state.link || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   link: e.target.value,
@@ -299,7 +301,7 @@ export default function AdminAddEventPage() {
           <LabeledInput label={t('images')}>
             <ImageUrlsInput
               value={state.imageUrls}
-              onChange={imageUrls => setState({ ...state, imageUrls })}
+              onChange={(imageUrls) => setState({ ...state, imageUrls })}
             />
           </LabeledInput>
         </div>
