@@ -10,7 +10,7 @@ export const typeDefs = gql`
         contact: String
         description: String
         email: String
-        events(fromDay: String): [Event]!
+        events(fromDay: String): [Event!]!
         id: Int!
         imageUrls: [String]!
         link: String
