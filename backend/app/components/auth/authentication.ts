@@ -6,7 +6,7 @@ import { Strategy } from 'passport-local'
 import { UserModel, UserDataModel } from './orm/user'
 import passport from 'passport'
 import { Express } from 'express'
-import { getDbConnection } from '../../infrastructure/database'
+import { getConnection } from 'typeorm'
 
 const BCRYPT_SALT_ROUNDS = 11
 const ADMIN_PASSWORD_PLAINTEXT = 'alexfalcojack'
@@ -28,7 +28,7 @@ async function isSamePassword(password1: string, password2: string) {
 
 const createAuthenticationStrategy = () =>
     new Strategy(async function(userName, password, done) {
-        const connection = await getDbConnection()
+        const connection = getConnection()
         const userModel = new UserModel(connection)
         try {
             const user = await userModel.getUserByName(userName)
@@ -54,7 +54,7 @@ export function initializePassportAuthentication(app: Express) {
     passport.serializeUser((user: UserDataModel, done) => done(null, user.id))
     passport.deserializeUser(async (id: number, done) => {
         try {
-            const connection = await getDbConnection()
+            const connection = getConnection()
             const userModel = new UserModel(connection)
             const user = await userModel.getUser(id)
             done(null, user)

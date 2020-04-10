@@ -1,7 +1,7 @@
 import { Logger } from '../infrastructure/logger'
 import { ImageModel } from '../components/image/orm/image'
-import { getDbConnection } from '../infrastructure/database'
 import express from 'express'
+import { getConnection } from 'typeorm'
 
 type File = {
     data: Buffer
@@ -12,7 +12,7 @@ const app = express()
 const logger = new Logger()
 
 app.get('/:imageId', async (req, res) => {
-    const connection = await getDbConnection()
+    const connection = getConnection()
     const imageId = parseInt(req.params.imageId, 10)
 
     logger.info(`requesting image with id ${imageId}`)

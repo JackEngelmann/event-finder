@@ -87,7 +87,9 @@ function createEvent(idx: number) {
         admissionFeeWithDiscount: randomInt(5, 20),
         amountOfFloors: randomInt(1, 4),
         clubId: randomInt(1, AMOUNT_CLUBS),
-        date: moment().toISOString(),
+        date: moment()
+            .add(randomInt(0, 7), 'day')
+            .toISOString(),
         description: `Description for event ${idx}`,
         link: 'www.event.de',
         priceCategory: randomInt(1, 3),

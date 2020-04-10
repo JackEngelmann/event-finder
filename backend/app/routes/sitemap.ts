@@ -1,13 +1,12 @@
 import express from 'express'
-import { getDbConnection } from '../infrastructure/database'
-import { Connection } from 'typeorm'
+import { Connection, getConnection } from 'typeorm'
 import { EventModel } from '../components/event/orm/event'
 import { ClubModel } from '../components/club/orm/club'
 
 const app = express()
 
 app.get('/sitemap.xml', async (req, res) => {
-    const connection = await getDbConnection()
+    const connection = getConnection()
     const sitemapXml = await generateSitemapXml(connection)
     res.type('xml')
     res.send(sitemapXml)

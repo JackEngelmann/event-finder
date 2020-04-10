@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 import { databaseConfig } from '../../databaseConfig'
-import { createConnection, Connection } from 'typeorm'
+import { createConnection, Connection, getConnection, getConnectionManager } from 'typeorm'
 import { ClubDataModel } from '../components/club/orm/club'
 import { EventDataModel } from '../components/event/orm/event'
 import { EventGenreDataModel } from '../components/genre/orm/eventGenre'
@@ -11,7 +11,10 @@ import { AppliedScriptDataModel } from '../components/scripts/orm/appliedScripts
 import { EventImageDataModel } from '../components/image/orm/eventImage'
 import { ClubImageDataModel } from '../components/image/orm/clubImage'
 
-export const createDbConnection = (dbName?: any) => {
+export async function createDbConnection(dbName?: any) {
+    if (getConnectionManager().has('default')) {
+        return
+    }
     return createConnection({
         name: dbName,
         logging: ['query', 'error', 'info', 'log', 'warn'],
@@ -29,10 +32,4 @@ export const createDbConnection = (dbName?: any) => {
         ...databaseConfig.connectionOptions,
         logger: 'file',
     })
-}
-
-const connectionPromise = createDbConnection()
-
-export async function getDbConnection() {
-    return await connectionPromise
 }

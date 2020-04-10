@@ -1,5 +1,4 @@
 import express from 'express'
-import { getDbConnection } from '../infrastructure/database'
 import { applyDbScripts } from '../components/scripts/commands/applyDbScripts'
 import { databaseConfig } from '../../databaseConfig'
 import { resetAuthTables } from '../components/auth/commands/resetAuthTables'
@@ -8,6 +7,7 @@ import { resetClubTables } from '../components/club/commands/resetClubTables'
 import { resetEventTables } from '../components/event/commands/resetEventTables'
 import { resetGenreTables } from '../components/genre/commands/resetGenreTables'
 import { resetImageTables } from '../components/image/commands/resetImageTables'
+import { getConnection } from 'typeorm'
 
 const app = express()
 
@@ -17,7 +17,7 @@ if (process.env.NODE_ENV !== 'production') {
             console.log('reset tables')
             await resetTables({
                 isAdmin: true,
-                db: await getDbConnection(),
+                db: getConnection(),
             })
             console.log('apply seeds')
             await applySeeds()

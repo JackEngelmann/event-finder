@@ -1,12 +1,12 @@
 import { DbScript } from '../../../../databaseConfig'
 import { AppliedScriptModel } from '../orm/appliedScripts'
 import { Logger } from '../../../infrastructure/logger'
-import { getDbConnection } from '../../../infrastructure/database'
+import { getConnection } from 'typeorm'
 
 const logger = new Logger()
 
 export async function applyDbScripts(scripts: DbScript[], ignoreAppliedScripts?: boolean) {
-    const connection = await getDbConnection()
+    const connection = getConnection()
     await connection.query(`
         CREATE TABLE IF NOT EXISTS appliedscript (
             id INT(11) AUTO_INCREMENT PRIMARY KEY,

@@ -7,15 +7,12 @@ import routes from './routes'
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './infrastructure/schema'
 import { resolvers } from './infrastructure/resolvers'
-import { getDbConnection } from './infrastructure/database'
 import { AppContext } from './infrastructure/appContext'
 import { UserDataModel } from './components/auth/orm/user'
+import { getConnection } from 'typeorm'
+import { createDbConnection } from './infrastructure/database'
 
 const app = express()
-
-applyDbScripts(databaseConfig.migrations || [])
-applyDbScripts(databaseConfig.seeds || [])
-initializePassportAuthentication(app)
 
 app.use(routes)
 
@@ -24,7 +21,7 @@ export const apolloServer = new ApolloServer({
     resolvers,
     context: async req => {
         const isAdmin = Boolean(req.req.user)
-        const connection = await getDbConnection()
+        const connection = getConnection()
         const appContext: AppContext = {
             db: connection,
             isAdmin,
@@ -39,3 +36,9 @@ export const apolloServer = new ApolloServer({
 apolloServer.applyMiddleware({ app })
 
 export default app
+
+createDbConnection().then(() => {
+    applyDbScripts(databaseConfig.migrations || [])
+    applyDbScripts(databaseConfig.seeds || [])
+    initializePassportAuthentication(app)
+})
