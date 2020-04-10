@@ -12,7 +12,7 @@ import { EventImageDataModel } from '../components/image/orm/eventImage'
 import { ClubImageDataModel } from '../components/image/orm/clubImage'
 
 export async function createDbConnection(dbName?: any) {
-    if (getConnectionManager().has('default')) {
+    if (getConnectionManager().has(dbName)) {
         return
     }
     return createConnection({

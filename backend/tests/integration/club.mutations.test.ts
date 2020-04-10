@@ -3,7 +3,6 @@ import {
     createApolloTestServer,
     ApolloTestServer,
     ApolloHttpTestServer,
-    insertTestData,
 } from './utils'
 import { createEvent } from '../../app/components/event/commands/createEvent'
 import { queryEvent } from '../../app/components/event/queries/event'

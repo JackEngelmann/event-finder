@@ -5,7 +5,7 @@ import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from '../../app/infrastructure/schema'
 import { resolvers } from '../../app/infrastructure/resolvers'
 import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
-import { Connection } from 'typeorm'
+import { Connection, getConnection } from 'typeorm'
 import { createDbConnection } from '../../app/infrastructure/database'
 
 /**
@@ -144,7 +144,6 @@ export type ApolloTestServer = {
     destroy: () => Promise<unknown>
 }
 
-const dbPromise = createDbConnection()
 
 export async function createApolloTestServer(options: {
     isAdmin: boolean
@@ -152,7 +151,8 @@ export async function createApolloTestServer(options: {
     insertTestData: boolean
 }) {
     return new Promise<ApolloTestServer>(async (resolve, reject) => {
-        let db = await dbPromise
+        await createDbConnection(options.dbName)
+        let db = getConnection(options.dbName)
         const appContext: AppContext = {
             db,
             isAdmin: options.isAdmin,
@@ -194,7 +194,8 @@ export async function createApolloHttpTestServer(options: {
     dbName: string
 }) {
     return new Promise<ApolloHttpTestServer>(async (resolve, reject) => {
-        const db = await dbPromise
+        await createDbConnection(options.dbName)
+        const db = getConnection(options.dbName)
         await db.createQueryRunner().dropDatabase('lieblingsclubtest')
         await db.createQueryRunner().createDatabase('lieblingsclubtest')
         const appContext: AppContext = {
@@ -221,7 +222,6 @@ export async function createApolloHttpTestServer(options: {
             if (httpServer) {
                 await new Promise(resolve => httpServer.close(() => resolve()))
             }
-            // return await destroyTestDb(options.dbName)
         }
 
         resolve({ destroy, httpServer, appContext, port, server })
