@@ -1,10 +1,10 @@
-import { initalData as seed_191212_1900_initialData } from './src/database/seeds/191212-1900-initialData'
-import { createAdminUser as seed_191212_2000_createAdminUser } from './src/database/seeds/191212-2000-createAdminUser'
-import { addGenres as seed_191212_2100_addGenres } from './src/database/seeds/191212-2100-addGenres'
+import { initalData as seed_191212_1900_initialData } from './seeds/191212-1900-initialData'
+import { createAdminUser as seed_191212_2000_createAdminUser } from './seeds/191212-2000-createAdminUser'
+import { addGenres as seed_191212_2100_addGenres } from './seeds/191212-2100-addGenres'
 import { Connection, ConnectionOptions } from 'typeorm'
-import { seed_191212_2242_addGenres } from './src/database/seeds/191212-2242-addGenres'
-import { migration_191219_1657_imageUrls } from './src/database/migrations/191219-1657-imageUrls'
-import { migration_initialSchema } from './src/database/migrations/initialSchema'
+import { seed_191212_2242_addGenres } from './seeds/191212-2242-addGenres'
+import { migration_191219_1657_imageUrls } from './migrations/191219-1657-imageUrls'
+import { migration_initialSchema } from './migrations/initialSchema'
 
 export type DbScript = {
     name: string
