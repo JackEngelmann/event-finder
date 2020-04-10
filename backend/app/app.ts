@@ -12,7 +12,9 @@ import { UserDataModel } from './components/auth/orm/user'
 import { getConnection } from 'typeorm'
 import { createDbConnection } from './infrastructure/database'
 
-const app = express()
+let app = express()
+ 
+initializePassportAuthentication(app)
 
 app.use(routes)
 
@@ -35,10 +37,10 @@ export const apolloServer = new ApolloServer({
 
 apolloServer.applyMiddleware({ app })
 
-export default app
-
 createDbConnection().then(() => {
     applyDbScripts(databaseConfig.migrations || [])
     applyDbScripts(databaseConfig.seeds || [])
-    initializePassportAuthentication(app)
 })
+
+export default app
+

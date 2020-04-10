@@ -24,8 +24,6 @@ const AMOUNT_EVENT_GENRES = 40
 export const testData: DbScript = {
     name: 'testData3',
     async up(connection) {
-        console.log('test data')
-        console.log('clubs')
         await connection
             .createQueryBuilder()
             .insert()
@@ -105,7 +103,6 @@ function createEventGenres() {
         combinations,
         AMOUNT_EVENT_GENRES
     )
-    console.log({ combinations, selected })
     return selected.map(([eventId, genreId]) => ({
         eventId,
         genreId,
