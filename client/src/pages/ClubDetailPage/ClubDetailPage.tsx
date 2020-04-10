@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import './ClubDetailPage.scss'
 import React from 'react'
 import { Page } from '../../components/Page/Page'
@@ -92,6 +93,7 @@ type QueriedClub = {
 type ClubQueryData = {
   club: QueriedClub
 }
+type QueriedEvent = QueriedClub['events'][number]
 
 export const today = moment()
 
@@ -179,11 +181,11 @@ export default function ClubDetailPage(props: Props) {
       <div>
         <h2>{t('upcomingEvents')}</h2>
         <EventList
-          events={club.events}
+          events={sortEventsByDate(club.events)}
           texts={{
             empty: t('noUpcomingEvents'),
           }}
-          renderEvent={event => (
+          renderEvent={(event) => (
             <EventCard
               desktop={desktop}
               key={event.id}
@@ -204,7 +206,7 @@ export default function ClubDetailPage(props: Props) {
           <Carousel
             className={`${cn}__carousel`}
             imageCount={club.imageUrls.length}
-            renderImage={i => (
+            renderImage={(i) => (
               <div className={`${cn}__picture-wrapper`}>
                 <img
                   className={`${cn}__picture`}
@@ -238,7 +240,7 @@ export default function ClubDetailPage(props: Props) {
             <Carousel
               className={`${cn}__picture-wrapper`}
               imageCount={club.imageUrls.length}
-              renderImage={i => (
+              renderImage={(i) => (
                 <img
                   className={`${cn}__picture`}
                   src={club.imageUrls![i]}
@@ -264,3 +266,7 @@ export default function ClubDetailPage(props: Props) {
     </Page>
   )
 }
+
+const sortEventsByDate = R.sortBy((event: QueriedEvent) =>
+  moment(event.date).unix()
+)
