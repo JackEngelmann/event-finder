@@ -22,7 +22,7 @@ export class EventGenreModel {
     async setGenresForAnEvent(eventId: number, genreIds = [] as number[]) {
         return new Promise(async (resolve, reject) => {
             try {
-                await this.deleteAllGenresForEvent(eventId)
+                await this.clearGenresForEvent(eventId)
                 if (genreIds.length === 0) {
                     resolve()
                 } else {
@@ -50,7 +50,7 @@ export class EventGenreModel {
         await this.connection.manager.save(eventGenre)
     }
 
-    async deleteAllGenresForEvent(eventId: number) {
+    async clearGenresForEvent(eventId: number) {
         const eventGenres = await this.getAllEventGenresForAnEvent(eventId)
         await this.connection.manager.remove(eventGenres)
     }
@@ -59,5 +59,9 @@ export class EventGenreModel {
         return await this.connection.manager.find(EventGenreDataModel, {
             eventId,
         })
+    }
+    
+    async clear() {
+        await this.connection.manager.clear(EventGenreDataModel)
     }
 }

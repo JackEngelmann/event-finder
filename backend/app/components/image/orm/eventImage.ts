@@ -57,4 +57,8 @@ export class EventImageModel {
         )
         return eventImages.map(e => e.imageUrl)
     }
+
+    async clear() {
+        await this.connection.manager.clear(EventImageDataModel)
+    }
 }

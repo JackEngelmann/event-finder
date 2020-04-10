@@ -132,4 +132,8 @@ export class EventModel {
 
         await this.connection.manager.save(event)
     }
+
+    async clear() {
+        await this.connection.manager.clear(EventDataModel)
+    }
 }

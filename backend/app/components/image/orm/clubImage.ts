@@ -57,4 +57,8 @@ export class ClubImageModel {
         )
         return clubImages.map(e => e.imageUrl)
     }
+
+    async clear() {
+        await this.connection.manager.clear(ClubImageDataModel)
+    }
 }

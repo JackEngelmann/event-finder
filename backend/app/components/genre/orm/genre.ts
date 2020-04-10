@@ -33,4 +33,8 @@ export class GenreModel {
         const genreIds = eventGenres.map(e => e.genreId)
         return await this.connection.manager.findByIds(GenreDataModel, genreIds)
     }
+
+    async clear() {
+        await this.connection.manager.clear(GenreDataModel)
+    }
 }

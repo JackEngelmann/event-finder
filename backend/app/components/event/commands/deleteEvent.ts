@@ -12,7 +12,7 @@ export function deleteEvent(appContext: AppContext, id: number) {
         try {
             await eventModel.deleteEvent(id)
             // TODO: comment in
-            // await eventGenreModel.deleteAllGenresForEvent(id);
+            // await eventGenreModel.clearGenresForEvent(id);
             resolve()
         } catch (err) {
             logger.error(err)

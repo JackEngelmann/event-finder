@@ -116,4 +116,8 @@ export class ClubModel {
         )
         await this.connection.manager.remove(club)
     }
+
+    async clear() {
+        await this.connection.manager.clear(ClubDataModel)
+    }
 }

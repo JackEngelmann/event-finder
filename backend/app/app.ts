@@ -13,7 +13,8 @@ import { UserDataModel } from './components/auth/orm/user'
 
 const app = express()
 
-applyDbScripts(databaseConfig)
+applyDbScripts(databaseConfig.migrations || [])
+applyDbScripts(databaseConfig.seeds || [])
 initializePassportAuthentication(app)
 
 app.use(routes)

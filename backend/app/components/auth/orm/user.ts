@@ -35,4 +35,8 @@ export class UserModel {
         }
         return users[0]
     }
+
+    async clear() {
+        return await this.connection.manager.clear(UserDataModel)
+    }
 }

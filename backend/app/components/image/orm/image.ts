@@ -34,4 +34,8 @@ export class ImageModel {
     async getImage(id: number) {
         return await this.connection.manager.findOne(ImageDataModel, id)
     }
+
+    async clear() {
+        await this.connection.manager.clear(ImageDataModel)
+    }
 }

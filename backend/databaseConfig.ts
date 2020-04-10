@@ -1,10 +1,7 @@
-import { initalData as seed_191212_1900_initialData } from './seeds/191212-1900-initialData'
-import { createAdminUser as seed_191212_2000_createAdminUser } from './seeds/191212-2000-createAdminUser'
-import { addGenres as seed_191212_2100_addGenres } from './seeds/191212-2100-addGenres'
 import { Connection, ConnectionOptions } from 'typeorm'
-import { seed_191212_2242_addGenres } from './seeds/191212-2242-addGenres'
 import { migration_191219_1657_imageUrls } from './migrations/191219-1657-imageUrls'
 import { migration_initialSchema } from './migrations/initialSchema'
+import { testData } from './seeds/testData'
 
 export type DbScript = {
     name: string
@@ -17,21 +14,15 @@ export interface DatabaseConfig {
     connectionOptions: ConnectionOptions
 }
 
-const migrations: DbScript[] = []
+const migrations: DbScript[] = [
+    migration_initialSchema,
+    migration_191219_1657_imageUrls,
+]
 
 const configByMode: Record<string, DatabaseConfig> = {
     production: {
         migrations,
-        seeds: [
-            seed_191212_1900_initialData,
-            seed_191212_2000_createAdminUser,
-            seed_191212_2100_addGenres,
-            seed_191212_2242_addGenres,
-            /**
-             * TODO: supper ugly to do migration is seed here!
-             */
-            migration_191219_1657_imageUrls,
-        ],
+        seeds: [],
         connectionOptions: {
             type: 'mysql',
             database: process.env.DATABASE!,
@@ -44,14 +35,7 @@ const configByMode: Record<string, DatabaseConfig> = {
     },
     development: {
         migrations,
-        seeds: [
-            migration_initialSchema,
-            seed_191212_1900_initialData,
-            seed_191212_2000_createAdminUser,
-            seed_191212_2100_addGenres,
-            seed_191212_2242_addGenres,
-            migration_191219_1657_imageUrls,
-        ],
+        seeds: [testData],
         connectionOptions: {
             type: 'mysql',
             database: 'lieblingsclub',
@@ -62,8 +46,8 @@ const configByMode: Record<string, DatabaseConfig> = {
         },
     },
     test: {
-        migrations: [migration_initialSchema, migration_191219_1657_imageUrls],
-        seeds: [seed_191212_2000_createAdminUser],
+        migrations,
+        seeds: [testData],
         connectionOptions: {
             type: 'mysql',
             host: 'localhost',
