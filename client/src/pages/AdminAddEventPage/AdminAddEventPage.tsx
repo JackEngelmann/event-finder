@@ -11,7 +11,6 @@ import { useGenres } from '../../components/utils/useGenres'
 import { useClubs } from '../../components/utils/useClubs'
 import { Button } from '../../components/Button/Button'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { Spacer } from '../../components/Spacer/Spacer'
 import { LabeledInput } from '../../components/LabeledInput/LabeledInput'
 import { Input } from '../../components/Input/Input'
 import { Select } from '../../components/Select/Select'
@@ -22,6 +21,7 @@ import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
 import { CLUB_DETAIL_QUERY, today } from '../ClubDetailPage/ClubDetailPage'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation CreateEvent($input: CreateEventInput!) {
@@ -305,7 +305,7 @@ export default function AdminAddEventPage() {
             />
           </LabeledInput>
         </div>
-        <Spacer />
+        <Spacer marginBottom={3} />
         <Button
           primary
           disabled={!canCreate}
@@ -317,7 +317,7 @@ export default function AdminAddEventPage() {
         <Button secondary onClick={() => history.push('/admin')}>
           {t('cancel')}
         </Button>
-        <Spacer />
+        <Spacer marginBottom={3} />
       </Content>
     </Page>
   )

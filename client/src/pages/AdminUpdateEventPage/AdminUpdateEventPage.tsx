@@ -12,7 +12,6 @@ import { useGenres } from '../../components/utils/useGenres'
 import { useClubs } from '../../components/utils/useClubs'
 import { Button } from '../../components/Button/Button'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { Spacer } from '../../components/Spacer/Spacer'
 import { LabeledInput } from '../../components/LabeledInput/LabeledInput'
 import { Input } from '../../components/Input/Input'
 import { Calendar } from '../../components/Calendar'
@@ -23,6 +22,7 @@ import { MultiSelect } from '../../components/MultiSelect/MultiSelect'
 import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 type Params = {
   eventId: string
@@ -98,7 +98,7 @@ export default function AdminUpdateEventPage(props: any) {
         clubId: state.club && state.club.id,
         date: state.date,
         description: state.description,
-        genreIds: state.genres ? state.genres.map(g => g.id) : undefined,
+        genreIds: state.genres ? state.genres.map((g) => g.id) : undefined,
         imageUrls: state.imageUrls,
         link: state.link,
         minimumAge: state.minimumAge,
@@ -146,7 +146,7 @@ export default function AdminUpdateEventPage(props: any) {
               data-cy="adminupdateevent-name-input"
               placeholder="name"
               value={state.name || ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   name: e.target.value,
@@ -160,7 +160,7 @@ export default function AdminUpdateEventPage(props: any) {
                 monthSelection={monthSelection}
                 setMonthSelection={setMonthSelection}
                 selectedDate={state.date ? moment(state.date) : undefined}
-                setSelectedDate={date =>
+                setSelectedDate={(date) =>
                   setState({
                     ...state,
                     date: date.toISOString(),
@@ -173,11 +173,11 @@ export default function AdminUpdateEventPage(props: any) {
             <Select
               data-cy="adminupdateevent-club-select"
               value={state.club ? state.club.id : ''}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   club: (clubs || []).find(
-                    c => c.id === parseInt(e.target.value, 10)
+                    (c) => c.id === parseInt(e.target.value, 10)
                   ),
                 })
               }
@@ -185,7 +185,7 @@ export default function AdminUpdateEventPage(props: any) {
               <Option disabled value="">
                 --select--
               </Option>
-              {(clubs || []).map(c => (
+              {(clubs || []).map((c) => (
                 <Option value={c.id}>{c.name}</Option>
               ))}
             </Select>
@@ -194,7 +194,7 @@ export default function AdminUpdateEventPage(props: any) {
             <Input
               data-cy="adminupdateevent-admissionfee-input"
               min={0}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   admissionFee: parseFloat(e.target.value),
@@ -209,7 +209,7 @@ export default function AdminUpdateEventPage(props: any) {
             <Input
               data-cy="adminupdateevent-admissionfeewithdiscount-input"
               min={0}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   admissionFeeWithDiscount: parseFloat(e.target.value),
@@ -224,7 +224,7 @@ export default function AdminUpdateEventPage(props: any) {
             <Input
               data-cy="adminupdateevent-amountoffloors-input"
               min={0}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   amountOfFloors: parseInt(e.target.value, 10),
@@ -237,7 +237,7 @@ export default function AdminUpdateEventPage(props: any) {
           <LabeledInput label={t('description')}>
             <Textarea
               data-cy="adminupdateevent-description-input"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   description: e.target.value,
@@ -250,7 +250,7 @@ export default function AdminUpdateEventPage(props: any) {
           <LabeledInput label={t('specials')}>
             <Textarea
               data-cy="adminupdateevent-specials-input"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   special: e.target.value,
@@ -264,7 +264,7 @@ export default function AdminUpdateEventPage(props: any) {
             <Input
               data-cy="adminupdateevent-minimumage-input"
               min={0}
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   minimumAge: parseInt(e.target.value, 10),
@@ -277,7 +277,7 @@ export default function AdminUpdateEventPage(props: any) {
           <LabeledInput label={t('priceCategory')}>
             <Select
               data-cy="adminupdateevent-pricecategory-select"
-              onChange={e => {
+              onChange={(e) => {
                 setState({
                   ...state,
                   priceCategory:
@@ -296,11 +296,11 @@ export default function AdminUpdateEventPage(props: any) {
           </LabeledInput>
           <LabeledInput label={t('genres')}>
             <MultiSelect
-              getItemKey={item => item.id.toString()}
-              renderItem={item => item.name}
+              getItemKey={(item) => item.id.toString()}
+              renderItem={(item) => item.name}
               items={genres || []}
               selectedItems={state.genres || []}
-              onChange={genres =>
+              onChange={(genres) =>
                 setState({
                   ...state,
                   genres,
@@ -311,7 +311,7 @@ export default function AdminUpdateEventPage(props: any) {
           <LabeledInput label={t('link')}>
             <Input
               data-cy="adminupdateevent-link-input"
-              onChange={e =>
+              onChange={(e) =>
                 setState({
                   ...state,
                   link: e.target.value,
@@ -323,11 +323,11 @@ export default function AdminUpdateEventPage(props: any) {
           <LabeledInput label={t('images')}>
             <ImageUrlsInput
               value={state.imageUrls}
-              onChange={imageUrls => setState({ ...state, imageUrls })}
+              onChange={(imageUrls) => setState({ ...state, imageUrls })}
             />
           </LabeledInput>
         </div>
-        <Spacer />
+        <Spacer marginBottom={3} />
         <Button
           primary
           disabled={!canSave}
@@ -339,7 +339,7 @@ export default function AdminUpdateEventPage(props: any) {
         <Button secondary onClick={() => history.push('/admin')}>
           {t('cancel')}
         </Button>
-        <Spacer />
+        <Spacer marginBottom={3} />
       </Content>
     </Page>
   )

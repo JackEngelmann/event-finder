@@ -17,6 +17,7 @@ import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndic
 import { useQuery } from '@apollo/react-hooks'
 import { EventList } from '../../components/EventList'
 import { EventCard } from '../../components/EventCard/EventCard'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 type Props = {}
 
@@ -101,18 +102,20 @@ export default function EventsPage(props: Props) {
     if (eventsQueryResult.error) return <NetworkError />
     if (eventsQueryResult.loading) return <LoadingIndicator />
     return (
-      <EventList
-        events={events}
-        renderEvent={event => (
-          <EventCard
-            desktop
-            key={event.id}
-            event={event}
-            onClick={() => onEventClick({ id: event.id })}
-          />
-        )}
-        texts={{ empty: t('noEventsToday') }}
-      />
+      <Spacer padding={3}>
+        <EventList
+          events={events}
+          renderEvent={(event) => (
+            <EventCard
+              desktop
+              key={event.id}
+              event={event}
+              onClick={() => onEventClick({ id: event.id })}
+            />
+          )}
+          texts={{ empty: t('noEventsToday') }}
+        />
+      </Spacer>
     )
   }
 
@@ -165,17 +168,19 @@ export default function EventsPage(props: Props) {
           </div>
         </HeaderContainer>
         <Content scrollable restrictMaxWidth={desktop}>
-          <EventList
-            events={events}
-            renderEvent={event => (
-              <EventCard
-                key={event.id}
-                event={event}
-                onClick={() => onEventClick({ id: event.id })}
-              />
-            )}
-            texts={{ empty: t('noEventsToday') }}
-          />
+          <Spacer padding={3}>
+            <EventList
+              events={events}
+              renderEvent={(event) => (
+                <EventCard
+                  key={event.id}
+                  event={event}
+                  onClick={() => onEventClick({ id: event.id })}
+                />
+              )}
+              texts={{ empty: t('noEventsToday') }}
+            />
+          </Spacer>
         </Content>
       </>
     )

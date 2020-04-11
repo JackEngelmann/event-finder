@@ -12,9 +12,9 @@ import './AdminUpdateClubPage.scss'
 import { useClubWithDetails } from '../../components/utils/useClubWithDetails'
 import { Button } from '../../components/Button/Button'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { Spacer } from '../../components/Spacer/Spacer'
 import { CLUBS_QUERY } from '../../components/utils/useClubs'
 import { useTranslation } from 'react-i18next'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 type Params = {
   clubId: string
@@ -84,7 +84,7 @@ export default function AdminUpdateClubPage() {
       <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         <H1Title>{t('editClub')}</H1Title>
         <ClubEditor state={clubEditorState} setState={setClubEditorState} />
-        <Spacer />
+        <Spacer marginBottom={3} />
         <Button
           data-cy="adminupdateclub-save"
           disabled={!canSave}
@@ -96,7 +96,7 @@ export default function AdminUpdateClubPage() {
         <Button secondary onClick={() => history.push('/admin')}>
           {t('cancel')}
         </Button>
-        <Spacer />
+        <Spacer marginBottom={3} />
       </Content>
     </Page>
   )

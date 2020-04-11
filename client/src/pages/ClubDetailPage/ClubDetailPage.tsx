@@ -22,6 +22,7 @@ import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import { EventCard } from '../../components/EventCard/EventCard'
 import { UpcomingEvents } from './UpcomingEvents/UpcomingEvents'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 type Props = {}
 
@@ -201,19 +202,21 @@ export default function ClubDetailPage(props: Props) {
         </H1Title>
         {renderKeyValueFields(club)}
         {renderDescription(club)}
-        <UpcomingEvents
-          events={club.events}
-          showFirst={EVENTS_SHOW_FIRST}
-          renderEvent={event => (
-            <EventCard
-              desktop={desktop}
-              key={event.id}
-              event={event}
-              onClick={() => onEventClick({ id: event.id })}
-              showDate
-            />
-          )}
-        />
+        <Spacer marginTop={4} marginLeft={2}>
+          <UpcomingEvents
+            events={club.events}
+            showFirst={EVENTS_SHOW_FIRST}
+            renderEvent={(event) => (
+              <EventCard
+                desktop={desktop}
+                key={event.id}
+                event={event}
+                onClick={() => onEventClick({ id: event.id })}
+                showDate
+              />
+            )}
+          />
+        </Spacer>
       </div>
     )
   }
@@ -242,19 +245,21 @@ export default function ClubDetailPage(props: Props) {
           {renderKeyValueFields(club)}
         </div>
         {renderDescription(club)}
-        <UpcomingEvents
-          events={club.events}
-          renderEvent={event => (
-            <EventCard
-              desktop={desktop}
-              key={event.id}
-              event={event}
-              onClick={() => onEventClick({ id: event.id })}
-              showDate
-            />
-          )}
-          showFirst={EVENTS_SHOW_FIRST}
-        />
+        <Spacer marginTop={4} marginLeft={2}>
+          <UpcomingEvents
+            events={club.events}
+            renderEvent={(event) => (
+              <EventCard
+                desktop={desktop}
+                key={event.id}
+                event={event}
+                onClick={() => onEventClick({ id: event.id })}
+                showDate
+              />
+            )}
+            showFirst={EVENTS_SHOW_FIRST}
+          />
+        </Spacer>
       </div>
     )
   }

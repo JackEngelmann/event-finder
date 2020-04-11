@@ -10,10 +10,10 @@ import { useMutation } from '@apollo/react-hooks'
 import { useHistory } from 'react-router'
 import { Button } from '../../components/Button/Button'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { Spacer } from '../../components/Spacer/Spacer'
 import { CLUBS_QUERY } from '../../components/utils/useClubs'
 import { useTranslation } from 'react-i18next'
 import './AdminAddClubPage.scss'
+import { Spacer } from '../../components/Layouting/Spacer'
 
 const CREATE_CLUB_MUTATION = gql`
   mutation CreateClub($input: CreateClubInput!) {
@@ -62,7 +62,7 @@ export default function AdminAddClubPage() {
       <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         <H1Title>{t('createClub')}</H1Title>
         <ClubEditor state={clubEditorState} setState={setClubEditorState} />
-        <Spacer />
+        <Spacer marginBottom={3} />
         <Button
           primary
           disabled={!canCreate}
@@ -74,7 +74,7 @@ export default function AdminAddClubPage() {
         <Button secondary onClick={() => history.push('/admin')}>
           {t('cancel')}
         </Button>
-        <Spacer />
+        <Spacer marginBottom={3} />
       </Content>
     </Page>
   )
