@@ -1,4 +1,3 @@
-import * as R from 'ramda'
 import './ClubDetailPage.scss'
 import React from 'react'
 import { Page } from '../../components/Page/Page'
@@ -20,9 +19,9 @@ import { useDimensions } from '../../components/utils/useDimensions'
 import { Carousel } from '../../components/Carousel'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
-import { EventList } from '../../components/EventList'
 import moment from 'moment'
 import { EventCard } from '../../components/EventCard/EventCard'
+import { UpcomingEvents } from './UpcomingEvents/UpcomingEvents'
 
 type Props = {}
 
@@ -31,6 +30,8 @@ type Params = {
 }
 
 const cn = 'club-detail-page'
+
+const EVENTS_SHOW_FIRST = 3
 
 export const CLUB_DETAIL_QUERY = gql`
   query clubDetailQuery($clubId: Int!, $fromDay: String!) {
@@ -176,29 +177,6 @@ export default function ClubDetailPage(props: Props) {
     )
   }
 
-  function renderUpcomingEvents(club: QueriedClub) {
-    return (
-      <div>
-        <h2>{t('upcomingEvents')}</h2>
-        <EventList
-          events={sortEventsByDate(club.events)}
-          texts={{
-            empty: t('noUpcomingEvents'),
-          }}
-          renderEvent={(event) => (
-            <EventCard
-              desktop={desktop}
-              key={event.id}
-              event={event}
-              onClick={() => onEventClick({ id: event.id })}
-              showDate
-            />
-          )}
-        />
-      </div>
-    )
-  }
-
   function renderMobileContent(club: QueriedClub) {
     return (
       <div className={cn}>
@@ -223,7 +201,19 @@ export default function ClubDetailPage(props: Props) {
         </H1Title>
         {renderKeyValueFields(club)}
         {renderDescription(club)}
-        {renderUpcomingEvents(club)}
+        <UpcomingEvents
+          events={club.events}
+          showFirst={EVENTS_SHOW_FIRST}
+          renderEvent={event => (
+            <EventCard
+              desktop={desktop}
+              key={event.id}
+              event={event}
+              onClick={() => onEventClick({ id: event.id })}
+              showDate
+            />
+          )}
+        />
       </div>
     )
   }
@@ -252,7 +242,19 @@ export default function ClubDetailPage(props: Props) {
           {renderKeyValueFields(club)}
         </div>
         {renderDescription(club)}
-        {renderUpcomingEvents(club)}
+        <UpcomingEvents
+          events={club.events}
+          renderEvent={event => (
+            <EventCard
+              desktop={desktop}
+              key={event.id}
+              event={event}
+              onClick={() => onEventClick({ id: event.id })}
+              showDate
+            />
+          )}
+          showFirst={EVENTS_SHOW_FIRST}
+        />
       </div>
     )
   }
@@ -266,7 +268,3 @@ export default function ClubDetailPage(props: Props) {
     </Page>
   )
 }
-
-const sortEventsByDate = R.sortBy((event: QueriedEvent) =>
-  moment(event.date).unix()
-)

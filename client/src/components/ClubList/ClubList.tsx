@@ -5,11 +5,14 @@ import './ClubList.scss'
 import * as R from 'ramda'
 import { LoadingIndicator } from '../LoadingIndicator/LoadingIndicator'
 import { useTranslation } from 'react-i18next'
+import { ShortenedListContainer } from '../ShortenedList/ShortenedListContainer'
+import { ShortenedListList } from '../ShortenedList/ShortenedListList'
+import { ShortenedListToggle } from '../ShortenedList/ShortenedListToggle'
 
 type Props = {
-    clubs: Club[]
-    renderClub: (club: Club) => ReactNode
-    showFirst?: number
+  clubs: Club[]
+  renderClub: (club: Club) => ReactNode
+  showFirst?: number
 }
 
 const sortClubsByName = R.sortBy(R.prop('name'))
@@ -17,47 +20,29 @@ const sortClubsByName = R.sortBy(R.prop('name'))
 const cn = 'club-list'
 
 export function ClubList(props: Props) {
-    const { clubs, renderClub, showFirst } = props
-    const [showAll, setShowAll] = useState(false)
-    const { t } = useTranslation()
-
-    const sortedClubs = sortClubsByName(clubs)
-
-    function renderContent() {
-        if (sortedClubs === undefined) return <LoadingIndicator />
-        if (sortedClubs.length === 0) {
-            return t('listNoClubs')
-        }
-        const displayedClubs =
-            !showAll && showFirst ? R.take(showFirst, sortedClubs) : sortedClubs
-        const difference = sortedClubs.length - displayedClubs.length
-        return (
-            <>
-                {displayedClubs.map(renderClub)}
-                {difference > 0 && (
-                    <div
-                        className={`${cn}__see-more`}
-                        onClick={() => setShowAll(true)}
-                    >
-                        {t('showMore')} ({difference})
-                    </div>
-                )}
-                {showAll && (
-                    <div
-                        className={`${cn}__see-more`}
-                        onClick={() => setShowAll(false)}
-                    >
-                        {t('showLess')}
-                    </div>
-                )}
-            </>
-        )
-    }
-
-    return (
-        <div className={cn}>
-            <div className={`${cn}__header`}>Clubs</div>
-            <div className={`${cn}__content`}>{renderContent()}</div>
-        </div>
-    )
+  const { clubs, renderClub, showFirst } = props
+  const { t } = useTranslation()
+  const sortedClubs = sortClubsByName(clubs)
+  const noClubsText = t('listNoClubs')!
+  return (
+    <div className={cn}>
+      <div className={`${cn}__header`}>Clubs</div>
+      {sortedClubs === undefined ? (
+        <LoadingIndicator />
+      ) : (
+        <ShortenedListContainer
+          showFirst={showFirst}
+          listLenght={sortedClubs.length}
+        >
+          <ShortenedListList
+            renderList={(items) =>
+              items.length === 0 ? noClubsText : items.map(renderClub)
+            }
+            items={sortedClubs}
+          />
+          <ShortenedListToggle />
+        </ShortenedListContainer>
+      )}
+    </div>
+  )
 }
