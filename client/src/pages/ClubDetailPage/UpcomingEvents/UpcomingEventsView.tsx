@@ -1,4 +1,4 @@
-import React, { ComponentProps, ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 import { EventList } from '../../../components/EventList'
 import { ShortenedListToggle } from '../../../components/ShortenedList/ShortenedListToggle'
 import { ShortenedListContainer } from '../../../components/ShortenedList/ShortenedListContainer'

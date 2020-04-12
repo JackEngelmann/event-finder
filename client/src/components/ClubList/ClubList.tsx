@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Club } from '../../api'
 import { ReactNode } from 'react'
 import './ClubList.scss'

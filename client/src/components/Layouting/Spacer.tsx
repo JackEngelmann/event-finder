@@ -30,18 +30,6 @@ type Props = {
 } & ComponentProps<'div'>
 
 export function Spacer(props: Props) {
-  const {
-    margin,
-    marginBottom,
-    marginLeft,
-    marginRight,
-    marginTop,
-    padding,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-    paddingTop,
-  } = props
   const style = useMemo(() => {
     const style: CSSProperties = {}
     for (let attribute of attributes) {
@@ -50,18 +38,7 @@ export function Spacer(props: Props) {
       }
     }
     return style
-  }, [
-    margin,
-    marginBottom,
-    marginLeft,
-    marginRight,
-    marginTop,
-    padding,
-    paddingBottom,
-    paddingLeft,
-    paddingRight,
-    paddingTop,
-  ])
+  }, [props])
   return (
     <div style={style} {...R.omit(attributes, props)}>
       {props.children}

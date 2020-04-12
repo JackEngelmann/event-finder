@@ -1,9 +1,8 @@
 import * as R from 'ramda'
-import React, { ComponentProps, ReactNode, useState } from 'react'
+import React, { ReactNode, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import { UpcomingEventsView } from './UpcomingEventsView'
-import { apply } from 'ramda'
 
 type Props<Event> = {
   events: Event[]
@@ -33,7 +32,7 @@ export function UpcomingEvents<Event extends EventWithDate>(
       events={sortedEvents}
       texts={texts}
       renderEvent={renderEvent}
-      toggleShowAll={() => setShowAll(showAll => !showAll)}
+      toggleShowAll={() => setShowAll((showAll) => !showAll)}
     />
   )
 }
