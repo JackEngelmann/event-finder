@@ -30,7 +30,6 @@ type Props = {
 } & ComponentProps<'div'>
 
 export function Spacer(props: Props) {
-  const memoValues = attributes.map((a) => props[a])
   const {
     margin,
     marginBottom,
