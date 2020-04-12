@@ -15,6 +15,7 @@ import {
     EventGenreModel,
     EventGenreDataModel,
 } from '../app/components/genre/orm/eventGenre'
+import { EventImageDataModel } from '../app/components/image/orm/eventImage'
 
 const AMOUNT_CLUBS = 20
 const AMOUNT_EVENTS = 20
@@ -58,6 +59,12 @@ export const testData: DbScript = {
             .insert()
             .into(EventGenreDataModel)
             .values(createEventGenres())
+            .execute()
+        await connection
+            .createQueryBuilder()
+            .insert()
+            .into(EventImageDataModel)
+            .values(createEventImages())
             .execute()
     },
 }
@@ -107,4 +114,22 @@ function createEventGenres() {
         eventId,
         genreId,
     }))
+}
+
+function createEventImages() {
+    const eventIds = R.range(1, AMOUNT_EVENTS + 1)
+    return eventIds.flatMap(eventId => {
+        return [
+            {
+                eventId,
+                imageUrl:
+                    'https://cdn.pixabay.com/photo/2015/03/17/14/05/sparkler-677774_960_720.jpg',
+            },
+            {
+                eventId,
+                imageUrl:
+                    'https://cdn.pixabay.com/photo/2015/07/10/17/53/cheers-839865_960_720.jpg',
+            },
+        ]
+    })
 }
