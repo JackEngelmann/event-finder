@@ -1,26 +1,19 @@
-import './Header.scss'
+import './MobileHeader.scss'
 import React, { ReactNode } from 'react'
-import { Icon } from '../Icon/Icon'
-import { Logo } from '../Logo/Logo'
+import { Icon } from '../../Icon/Icon'
+import { Logo } from '../../Logo/Logo'
 
 type Props = {
   children?: ReactNode
   toggleMobileMenu: () => void
   toggleCalender: () => void
-  right?: ReactNode
   onLogoClick: () => void
 }
 
-const cn = 'header'
+const cn = 'mobile-header'
 
-export function Header(props: Props) {
-  const {
-    children,
-    toggleMobileMenu,
-    right,
-    toggleCalender,
-    onLogoClick,
-  } = props
+export function HeaderView(props: Props) {
+  const { children, toggleMobileMenu, toggleCalender, onLogoClick } = props
   return (
     <div className={cn}>
       <div className={`${cn}__header`}>
@@ -43,7 +36,7 @@ export function Header(props: Props) {
           <Icon icon="bars" className={`${cn}__menu-icon`} />
         </div>
         <div className={`${cn}__content`}>{children}</div>
-        <div className={`${cn}__right`}>{right}</div>
+        <div className={`${cn}__right`} />
       </div>
     </div>
   )

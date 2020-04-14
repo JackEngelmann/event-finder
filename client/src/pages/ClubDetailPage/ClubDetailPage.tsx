@@ -5,7 +5,6 @@ import { Content } from '../../components/Content/Content'
 import { useParams, useHistory } from 'react-router'
 import { OnlyVisibleForAdmins } from '../../components/OnlyVisibleForAdmins/OnlyVisibleForAdmins'
 import { Button } from '../../components/Button/Button'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import gql from 'graphql-tag'
 import { useQuery } from '@apollo/react-hooks'
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
@@ -23,6 +22,7 @@ import moment from 'moment'
 import { EventCard } from '../../components/EventCard/EventCard'
 import { UpcomingEvents } from './UpcomingEvents/UpcomingEvents'
 import { Spacer } from '../../components/Layouting/Spacer'
+import { Header } from '../../components/Header'
 
 type Props = {}
 
@@ -266,7 +266,7 @@ export default function ClubDetailPage(props: Props) {
 
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         {desktop ? renderDesktopContent(club) : renderMobileContent(club)}
       </Content>

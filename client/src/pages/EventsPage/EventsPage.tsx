@@ -5,7 +5,6 @@ import { useDimensions } from '../../components/utils/useDimensions'
 import { useSelectedDate } from '../../components/utils/useSelectedDate'
 import { useHistory, useLocation, Redirect } from 'react-router-dom'
 import { Page } from '../../components/Page/Page'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { Content } from '../../components/Content/Content'
 import { ClubListContainer } from '../../components/ClubList/ClubListContainer'
 import { Calendar } from '../../components/Calendar'
@@ -18,6 +17,7 @@ import { useQuery } from '@apollo/react-hooks'
 import { EventList } from '../../components/EventList'
 import { EventCard } from '../../components/EventCard/EventCard'
 import { Spacer } from '../../components/Layouting/Spacer'
+import { Header } from '../../components/Header'
 
 type Props = {}
 
@@ -125,6 +125,8 @@ export default function EventsPage(props: Props) {
   function renderDesktopContent() {
     return (
       <>
+        <Header />
+        <Spacer marginBottom={2} />
         <div className={`${cn}__title`}>
           Events on {selectedDate!.format('D. MMMM')}
         </div>
@@ -155,7 +157,7 @@ export default function EventsPage(props: Props) {
   function renderMobileContent() {
     return (
       <>
-        <HeaderContainer>
+        <Header>
           <div>
             {selectedDate ? (
               <DayQuickSwitch
@@ -166,7 +168,7 @@ export default function EventsPage(props: Props) {
               'Pick a Date'
             )}
           </div>
-        </HeaderContainer>
+        </Header>
         <Content scrollable restrictMaxWidth={desktop}>
           <Spacer padding={3}>
             <EventList

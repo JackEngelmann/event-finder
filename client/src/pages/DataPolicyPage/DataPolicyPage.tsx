@@ -3,17 +3,17 @@ import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
 import { FormattedHtml } from '../../components/FormattedHtml/FormattedHtml'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { contact } from '../../contact'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../../components/Button/Button'
 import { stopGoogleAnalytics } from '../../googleAnalytics'
+import { Header } from '../../components/Header'
 
 export default function DataPolicyPage() {
   const { t } = useTranslation()
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content restrictMaxWidth scrollable>
         <H1Title>{t('dataPolicy')}</H1Title>
         <FormattedHtml>

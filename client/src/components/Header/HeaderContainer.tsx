@@ -1,31 +1,15 @@
-import React, { ReactNode, useCallback } from 'react'
-import { Header } from './Header'
-import { useDispatch } from 'react-redux'
-import { ReduxAction } from '../../redux/store'
-import { useHistory } from 'react-router'
+import React, { ReactNode } from 'react'
+import { useDimensions } from '../utils/useDimensions'
+import { MobileHeader } from './MobileHeader'
+import { DesktopHeader } from './DesktopHeader'
 
 type Props = {
-    children?: ReactNode
-    left?: ReactNode
-    right?: ReactNode
+  children?: ReactNode
 }
+
 export function HeaderContainer(props: Props) {
-    const dispatch = useDispatch<(action: ReduxAction) => void>()
-    const toggleMobileMenu = useCallback(
-        () => dispatch({ type: 'toggleMobilemMenu' }),
-        [dispatch]
-    )
-    const toggleMobileCalendar = useCallback(
-        () => dispatch({ type: 'toggleMobileCalendar' }),
-        [dispatch]
-    )
-    const history = useHistory()
-    return (
-        <Header
-            {...props}
-            onLogoClick={() => history.push('/')}
-            toggleMobileMenu={toggleMobileMenu}
-            toggleCalender={toggleMobileCalendar}
-        />
-    )
+  const dimensions = useDimensions()
+  const desktop = Boolean(dimensions.width && dimensions.width > 800)
+
+  return desktop ? <DesktopHeader /> : <MobileHeader {...props} />
 }

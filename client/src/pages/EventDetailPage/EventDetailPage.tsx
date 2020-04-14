@@ -6,7 +6,6 @@ import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
 import { OnlyVisibleForAdmins } from '../../components/OnlyVisibleForAdmins/OnlyVisibleForAdmins'
 import { Button } from '../../components/Button/Button'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import {
   useEventWithDetails,
   EventWithDetails,
@@ -23,6 +22,7 @@ import { Carousel } from '../../components/Carousel'
 import { useDimensions } from '../../components/utils/useDimensions'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
+import { Header } from '../../components/Header'
 
 type Props = {}
 
@@ -120,7 +120,9 @@ export default function EventDetailPage(props: Props) {
         <KeyValueField
           fieldKey={t('genres')}
           fieldValue={
-            event.genres ? event.genres.map(g => g.name).join(', ') : undefined
+            event.genres
+              ? event.genres.map((g) => g.name).join(', ')
+              : undefined
           }
           data-cy="eventdetail-genres-kv"
         />
@@ -144,7 +146,7 @@ export default function EventDetailPage(props: Props) {
           <Carousel
             className={`${cn}__carousel`}
             imageCount={event.imageUrls.length}
-            renderImage={i => (
+            renderImage={(i) => (
               <div className={`${cn}__picture-wrapper`}>
                 <img
                   className={`${cn}__picture`}
@@ -177,7 +179,7 @@ export default function EventDetailPage(props: Props) {
             <Carousel
               className={`${cn}__picture-wrapper`}
               imageCount={event.imageUrls.length}
-              renderImage={i => (
+              renderImage={(i) => (
                 <img
                   className={`${cn}__picture`}
                   src={event.imageUrls![i]}
@@ -203,7 +205,7 @@ export default function EventDetailPage(props: Props) {
 
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content restrictMaxWidth scrollable className={`${cn}__content`}>
         {desktop ? renderDesktopContent(event) : renderMobileContent(event)}
       </Content>

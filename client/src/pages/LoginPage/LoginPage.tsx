@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import './LoginPage.scss'
 import { Button } from '../../components/Button/Button'
 import { Page } from '../../components/Page/Page'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { Content } from '../../components/Content/Content'
+import { Header } from '../../components/Header'
 
 type Props = {}
 
@@ -14,7 +14,7 @@ export default function LoginPage(props: Props) {
   const [password, setPassword] = useState('')
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content className={cn}>
         <form action="/login" method="post">
           <h1>Login</h1>
@@ -25,7 +25,7 @@ export default function LoginPage(props: Props) {
               type="text"
               name="username"
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
               data-cy="login-username-input"
             />
           </div>
@@ -36,7 +36,7 @@ export default function LoginPage(props: Props) {
               type="password"
               name="password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               data-cy="login-password-input"
             />
           </div>

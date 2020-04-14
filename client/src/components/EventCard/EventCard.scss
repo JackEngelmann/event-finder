@@ -1,5 +1,7 @@
+@import 'scss/colors.scss';
+
 .event-card {
-  background-color: #252525;
+  background-color: $secondary-background-color;
   box-shadow: 3px 3px 8px 0px rgba(0, 0, 0, 1);
   color: white;
   cursor: pointer;

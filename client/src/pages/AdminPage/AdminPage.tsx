@@ -12,11 +12,11 @@ import { useClubs, CLUBS_QUERY } from '../../components/utils/useClubs'
 import { Button } from '../../components/Button/Button'
 import { H1Title } from '../../components/H1Title/H1Title'
 import { Icon } from '../../components/Icon/Icon'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { Content } from '../../components/Content/Content'
 import moment from 'moment'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
+import { Header } from '../../components/Header'
 
 const cn = 'admin-page'
 
@@ -83,7 +83,7 @@ export default function AdminPage() {
 
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content className={cn}>
         <H1Title>Administration</H1Title>
         <div className={`${cn}__content`}>
@@ -101,7 +101,7 @@ export default function AdminPage() {
             </div>
             <div className={`${cn}__section-content`}>
               {clubs ? (
-                clubs.map(c => (
+                clubs.map((c) => (
                   <EditableEntity
                     key={c.id}
                     onShow={() => history.push(`/club/${c.id}`)}
@@ -130,7 +130,7 @@ export default function AdminPage() {
             </div>
             <div className={`${cn}__section-content`}>
               {events ? (
-                events.map(e => (
+                events.map((e) => (
                   <EditableEntity
                     key={e.id}
                     onDelete={() => deleteEvent(e.id)}

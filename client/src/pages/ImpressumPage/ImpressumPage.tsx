@@ -3,15 +3,15 @@ import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
 import { FormattedHtml } from '../../components/FormattedHtml/FormattedHtml'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { HeaderContainer } from '../../components/Header/HeaderContainer'
 import { useTranslation } from 'react-i18next'
 import { contact } from '../../contact'
+import { Header } from '../../components/Header'
 
 export default function ImpressumPage() {
   const { t } = useTranslation()
   return (
     <Page>
-      <HeaderContainer />
+      <Header />
       <Content restrictMaxWidth scrollable>
         <H1Title>{t('impressum')}</H1Title>
         <FormattedHtml>
