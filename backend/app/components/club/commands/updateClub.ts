@@ -2,6 +2,8 @@ import { AppContext } from '../../../infrastructure/appContext'
 import { ClubModel } from '../orm/club'
 import { FileUpload } from 'graphql-upload'
 import { ClubImageModel } from '../../image/orm/clubImage'
+import { LinkType } from '../../link/orm/link'
+import { setLinksForClub } from '../../link/commands/setLinksForClub'
 
 export type UpdateClubInput = {
     address?: string
@@ -11,7 +13,7 @@ export type UpdateClubInput = {
     id: number
     image?: Promise<FileUpload>
     imageUrls?: string[]
-    link?: string
+    links?: LinkType[]
     name: string
     region?: string
     specials?: string
@@ -25,6 +27,12 @@ export function updateClub(appContext: AppContext, input: UpdateClubInput) {
         try {
             await clubModel.updateClub(input)
             await clubImageModel.setImageUrlsForClub(input.id, input.imageUrls)
+            if (input.links) {
+                await setLinksForClub(appContext, {
+                    clubId: input.id,
+                    links: input.links,
+                })
+            }
             resolve()
         } catch (err) {
             console.error(err)

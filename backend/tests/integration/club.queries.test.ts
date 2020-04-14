@@ -1,4 +1,8 @@
-import { clubFragment, ApolloTestServer, createApolloTestServer } from './utils'
+import {
+    clubFragment,
+    ApolloTestServer,
+    createApolloTestServer,
+} from '../utils'
 import { ClubModel } from '../../app/components/club/orm/club'
 import { EventModel } from '../../app/components/event/orm/event'
 import moment = require('moment')

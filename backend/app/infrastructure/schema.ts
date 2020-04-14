@@ -13,7 +13,7 @@ export const typeDefs = gql`
         events(fromDay: String): [Event!]!
         id: Int!
         imageUrls: [String]!
-        link: String
+        links: [Link!]
         name: String!
         region: String
         specials: String
@@ -25,7 +25,7 @@ export const typeDefs = gql`
         description: String
         email: String
         imageUrls: [String!]
-        link: String
+        links: [LinkInput!]
         name: String!
         region: String
         specials: String
@@ -41,7 +41,7 @@ export const typeDefs = gql`
         email: String
         id: Int!
         imageUrls: [String!]
-        link: String
+        links: [LinkInput!]
         name: String!
         region: String
         specials: String
@@ -68,7 +68,7 @@ export const typeDefs = gql`
         genres: [Genre]!
         id: Int!
         imageUrls: [String!]
-        link: String
+        links: [Link!]
         minimumAge: Int
         name: String!
         priceCategory: Int
@@ -84,7 +84,7 @@ export const typeDefs = gql`
         description: String
         genreIds: [Int]
         imageUrls: [String!]
-        link: String
+        links: [LinkInput!]
         minimumAge: Int
         name: String!
         priceCategory: Int
@@ -104,7 +104,7 @@ export const typeDefs = gql`
         genreIds: [Int]
         id: Int!
         imageUrls: [String!]
-        link: String
+        links: [LinkInput!]
         minimumAge: Int
         name: String!
         priceCategory: Int
@@ -151,6 +151,26 @@ export const typeDefs = gql`
 
     type UploadImagePayload {
         imageUrl: String!
+    }
+
+    ###
+    # link types
+    ###
+
+    enum LinkType {
+        FACEBOOK
+        HOMEPAGE
+    }
+
+    type Link {
+        id: Int!
+        type: LinkType!
+        href: String!
+    }
+
+    input LinkInput {
+        type: LinkType!
+        href: String!
     }
 
     ###

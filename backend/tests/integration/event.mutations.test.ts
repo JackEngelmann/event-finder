@@ -3,7 +3,7 @@ import {
     ApolloHttpTestServer,
     ApolloTestServer,
     createApolloTestServer,
-} from './utils'
+} from '../utils'
 import { CreateEventInput } from '../../app/components/event/commands/createEvent'
 import { UpdateEventInput } from '../../app/components/event/commands/updateEvent'
 import { queryEvent } from '../../app/components/event/queries/event'
@@ -122,7 +122,7 @@ describe('event mutations: ', () => {
                 admissionFee: 10.0,
                 admissionFeeWithDiscount: 4.0,
                 minimumAge: 18,
-                link: 'http://www.some-link.de',
+                links: [{ href: 'link', type: 'FACEBOOK' }],
                 amountOfFloors: 3,
             }
             const result = await apolloTestServer.client.mutate({
@@ -265,7 +265,7 @@ describe('event mutations: ', () => {
                 admissionFeeWithDiscount: 3.0,
                 minimumAge: 16,
                 amountOfFloors: 2,
-                link: 'http://www.some-link.de',
+                links: [{ href: 'updated-link', type: 'FACEBOOK' }],
             }
 
             // act

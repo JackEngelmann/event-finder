@@ -1,12 +1,12 @@
 import express from 'express'
 import http from 'http'
-import { AppContext } from '../../app/infrastructure/appContext'
+import { AppContext } from '../app/infrastructure/appContext'
 import { ApolloServer } from 'apollo-server-express'
-import { typeDefs } from '../../app/infrastructure/schema'
-import { resolvers } from '../../app/infrastructure/resolvers'
+import { typeDefs } from '../app/infrastructure/schema'
+import { resolvers } from '../app/infrastructure/resolvers'
 import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
 import { Connection, getConnection } from 'typeorm'
-import { createDbConnection } from '../../app/infrastructure/database'
+import { createDbConnection } from '../app/infrastructure/database'
 
 /**
  * GraphQL utils
@@ -30,7 +30,10 @@ export const eventFragment = `
     priceCategory
     admissionFee
     admissionFeeWithDiscount
-    link
+    links {
+        href
+        type
+    }
     special,
     minimumAge,
     amountOfFloors
@@ -45,7 +48,10 @@ export const clubFragment = `
     description
     email
     id
-    link
+    links {
+        href
+        type
+    }
     imageUrls
     name
     region
@@ -61,8 +67,7 @@ export async function insertTestData(connection: Connection) {
             contact,
             email,
             specials,
-            description,
-            link
+            description
         ) VALUES (
             'name',
             'address',
@@ -70,8 +75,7 @@ export async function insertTestData(connection: Connection) {
             'contact',
             'email',
             'specials',
-            'description',
-            'link'
+            'description'
         )
     `)
     await connection.query(`
@@ -82,8 +86,7 @@ export async function insertTestData(connection: Connection) {
             contact,
             email,
             specials,
-            description,
-            link
+            description
         ) VALUES (
             'name',
             'address',
@@ -91,8 +94,7 @@ export async function insertTestData(connection: Connection) {
             'contact',
             'email',
             'specials',
-            'description',
-            'link'
+            'description'
         )
     `)
     await connection.query(`
@@ -143,7 +145,6 @@ export type ApolloTestServer = {
     client: ApolloServerTestClient
     destroy: () => Promise<unknown>
 }
-
 
 export async function createApolloTestServer(options: {
     isAdmin: boolean

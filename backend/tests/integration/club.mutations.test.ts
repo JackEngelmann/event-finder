@@ -3,7 +3,7 @@ import {
     createApolloTestServer,
     ApolloTestServer,
     ApolloHttpTestServer,
-} from './utils'
+} from '../utils'
 import { createEvent } from '../../app/components/event/commands/createEvent'
 import { queryEvent } from '../../app/components/event/queries/event'
 import {
@@ -84,7 +84,7 @@ describe('club mutations: ', () => {
                 contact: 'contact',
                 description: 'description',
                 email: 'email',
-                link: 'link',
+                links: [{ href: 'test', type: 'FACEBOOK' }],
                 name: 'test',
                 region: 'region',
                 specials: 'speicals',
@@ -166,7 +166,7 @@ describe('club mutations: ', () => {
                 description: 'updated-description',
                 email: 'updated-email',
                 id: 1,
-                link: 'updated-link',
+                links: [{ href: 'updated-link', type: 'FACEBOOK' }],
                 name: 'updated-test',
                 region: 'updated-region',
                 specials: 'updated-speicals',

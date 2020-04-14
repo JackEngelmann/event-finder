@@ -19,6 +19,8 @@ import { uploadImage } from '../components/image/commands/uploadImages'
 import { queryImageUrlsForEvent } from '../components/image/queries/imageUrlsForEvent'
 import { queryImageUrlsForClub } from '../components/image/queries/imageUrlsForClub'
 import { queryEventsForClub } from '../components/event/queries/eventsForClub'
+import { queryLinksForEvent } from '../components/link/queries/linksForEvent'
+import { queryLinksForClub } from '../components/link/queries/linksForClub'
 
 type Source = {
     clubId: number
@@ -93,7 +95,6 @@ export const resolvers: IResolvers<Source, AppContext> = {
             await deleteClub(appContext, args.id)
             return { id: args.id }
         },
-
         uploadImage: async (obj, args, appContext, info) => {
             requireAdminPermission(appContext)
             const imageUrl = await uploadImage(appContext, args.input)
@@ -108,11 +109,15 @@ export const resolvers: IResolvers<Source, AppContext> = {
             queryGenresForEvent(appContext, event.id),
         imageUrls: (event, args, appContext, info) =>
             queryImageUrlsForEvent(appContext, event.id),
+        links: (event, args, appContext, info) =>
+            queryLinksForEvent(appContext, event.id),
     },
     Club: {
         imageUrls: (club, args, appContext, info) =>
             queryImageUrlsForClub(appContext, club.id),
         events: (club, args, appContext, info) =>
             queryEventsForClub(appContext, club.id, args.fromDay),
+        links: (club, args, appContext, info) =>
+            queryLinksForClub(appContext, club.id),
     },
 }

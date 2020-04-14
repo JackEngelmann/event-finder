@@ -29,7 +29,12 @@ Object {
           "image-url-1",
           "image-url-2",
         ],
-        "link": "http://www.some-link.de",
+        "links": Array [
+          Object {
+            "href": "link",
+            "type": "FACEBOOK",
+          },
+        ],
         "minimumAge": 18,
         "name": "event-name",
         "priceCategory": 2,
@@ -64,42 +69,7 @@ Object {
         "genres": Array [],
         "id": 2,
         "imageUrls": Array [],
-        "link": null,
-        "minimumAge": null,
-        "name": "event-name",
-        "priceCategory": null,
-        "special": null,
-      },
-    },
-  },
-  "errors": undefined,
-  "extensions": undefined,
-  "http": Object {
-    "headers": Headers {
-      Symbol(map): Object {},
-    },
-  },
-}
-`;
-
-exports[`event mutations:  create event create an event with empty genres 2`] = `
-Object {
-  "data": Object {
-    "createEvent": Object {
-      "event": Object {
-        "admissionFee": null,
-        "admissionFeeWithDiscount": null,
-        "amountOfFloors": null,
-        "club": Object {
-          "id": 1,
-          "name": "name",
-        },
-        "date": "event-date",
-        "description": null,
-        "genres": Array [],
-        "id": 6,
-        "imageUrls": Array [],
-        "link": null,
+        "links": Array [],
         "minimumAge": null,
         "name": "event-name",
         "priceCategory": null,
@@ -134,7 +104,7 @@ Object {
         "genres": Array [],
         "id": 2,
         "imageUrls": Array [],
-        "link": null,
+        "links": Array [],
         "minimumAge": null,
         "name": "event-name",
         "priceCategory": null,
@@ -181,7 +151,7 @@ Object {
         "genres": Array [],
         "id": 1,
         "imageUrls": Array [],
-        "link": null,
+        "links": Array [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
@@ -228,7 +198,12 @@ Object {
           "image-url-1",
           "image-url-2",
         ],
-        "link": "http://www.some-link.de",
+        "links": Array [
+          Object {
+            "href": "updated-link",
+            "type": "FACEBOOK",
+          },
+        ],
         "minimumAge": 16,
         "name": "updated-name",
         "priceCategory": 1,
@@ -263,7 +238,7 @@ Object {
         "genres": Array [],
         "id": 1,
         "imageUrls": Array [],
-        "link": null,
+        "links": Array [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
@@ -298,7 +273,7 @@ Object {
         "genres": Array [],
         "id": 1,
         "imageUrls": Array [],
-        "link": null,
+        "links": Array [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,

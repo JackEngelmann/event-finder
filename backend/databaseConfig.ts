@@ -2,6 +2,7 @@ import { Connection, ConnectionOptions } from 'typeorm'
 import { migration_191219_1657_imageUrls } from './migrations/191219-1657-imageUrls'
 import { migration_initialSchema } from './migrations/initialSchema'
 import { testData } from './seeds/testData'
+import { migration_200414_1824_links } from './migrations/200414-1824-links'
 
 export type DbScript = {
     name: string
@@ -17,6 +18,7 @@ export interface DatabaseConfig {
 const migrations: DbScript[] = [
     migration_initialSchema,
     migration_191219_1657_imageUrls,
+    migration_200414_1824_links,
 ]
 
 const configByMode: Record<string, DatabaseConfig> = {

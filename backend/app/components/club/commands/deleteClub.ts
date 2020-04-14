@@ -3,6 +3,7 @@ import { ClubModel } from '../orm/club'
 import { Logger } from '../../../infrastructure/logger'
 import { EventModel } from '../../event/orm/event'
 import { deleteEvent } from '../../event/commands/deleteEvent'
+import { deleteLinksForClub } from '../../link/commands/deleteLinksForClub'
 
 export function deleteClub(appContext: AppContext, clubId: number) {
     const { db } = appContext
@@ -13,6 +14,7 @@ export function deleteClub(appContext: AppContext, clubId: number) {
         try {
             await clubModel.deleteClub(clubId)
             const connectedEvents = await eventModel.getEventsFromClub(clubId)
+            await deleteLinksForClub(appContext, clubId)
             const deleteConnectedEventsPromises = connectedEvents.map(event =>
                 deleteEvent(appContext, event.id)
             )

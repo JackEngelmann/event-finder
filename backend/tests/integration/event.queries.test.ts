@@ -2,7 +2,7 @@ import {
     eventFragment,
     ApolloTestServer,
     createApolloTestServer,
-} from './utils'
+} from '../utils'
 import { EventModel } from '../../app/components/event/orm/event'
 import moment = require('moment')
 

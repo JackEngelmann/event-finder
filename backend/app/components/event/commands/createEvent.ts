@@ -3,6 +3,9 @@ import { EventModel } from '../orm/event'
 import { EventGenreModel } from '../../genre/orm/eventGenre'
 import { FileUpload } from 'graphql-upload'
 import { EventImageModel } from '../../image/orm/eventImage'
+import { setLinksForEvent } from '../../link/commands/setLinksForEvent'
+import { createLinksForEvent } from '../../link/commands/createLinksForEvent'
+import { LinkType } from '../../link/orm/link'
 
 export type CreateEventInput = {
     admissionFee?: number
@@ -14,7 +17,7 @@ export type CreateEventInput = {
     genreIds?: number[]
     image?: Promise<FileUpload>
     imageUrls?: string[]
-    link?: string
+    links?: LinkType[]
     minimumAge?: number
     name: string
     priceCategory?: number
@@ -31,6 +34,12 @@ export function createEvent(appContext: AppContext, input: CreateEventInput) {
             const eventId = await eventModel.createEvent(input)
             await eventGenreModel.setGenresForAnEvent(eventId, input.genreIds)
             await eventImageModel.setImageUrlsForEvent(eventId, input.imageUrls)
+            if (input.links) {
+                await createLinksForEvent(appContext, {
+                    eventId,
+                    links: input.links,
+                })
+            }
             resolve(eventId)
         } catch (err) {
             console.error(err)

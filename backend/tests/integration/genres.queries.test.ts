@@ -2,7 +2,7 @@ import {
     genreFragment,
     ApolloTestServer,
     createApolloTestServer,
-} from './utils'
+} from '../utils'
 
 let apolloTestServer: ApolloTestServer | undefined
 

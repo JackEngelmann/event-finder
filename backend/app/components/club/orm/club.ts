@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, Connection } from 'typeorm'
+import {
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    Connection,
+    EntityRepository,
+    Repository,
+} from 'typeorm'
 import { Logger } from '../../../infrastructure/logger'
 
 const logger = new Logger()
