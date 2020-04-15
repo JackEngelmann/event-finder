@@ -1,6 +1,7 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import { LinkRepository } from '../orm/link'
 import { ClubLinkModel } from '../orm/clubLink'
+import { getCustomRepository } from 'typeorm'
 
 export type CreateLinksForClubInput = {
     clubId: number
@@ -12,12 +13,17 @@ export async function createLinksForClub(
     input: CreateLinksForClubInput
 ) {
     const { clubId } = input
-    const inputResult = await appContext.db
-        .getCustomRepository(LinkRepository)
-        .insert(input.links)
-    const clubLinksToCreate = inputResult.identifiers.map(identifier => ({
+
+    const insertPromises = input.links.map(async l => {
+        const insertResult = await appContext.db
+            .getCustomRepository(LinkRepository)
+            .insert(l)
+        return insertResult.identifiers[0].id as number
+    })
+    const linkIds = await Promise.all(insertPromises)
+    const clubLinksToCreate = linkIds.map(linkId => ({
         clubId,
-        linkId: identifier.id,
+        linkId,
     }))
     await appContext.db
         .getCustomRepository(ClubLinkModel)

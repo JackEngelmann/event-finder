@@ -13,7 +13,7 @@ export const typeDefs = gql`
         events(fromDay: String): [Event!]!
         id: Int!
         imageUrls: [String]!
-        links: [Link!]
+        links: [Link!]!
         name: String!
         region: String
         specials: String
@@ -68,7 +68,7 @@ export const typeDefs = gql`
         genres: [Genre]!
         id: Int!
         imageUrls: [String!]
-        links: [Link!]
+        links: [Link!]!
         minimumAge: Int
         name: String!
         priceCategory: Int

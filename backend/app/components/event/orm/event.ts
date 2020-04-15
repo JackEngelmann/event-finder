@@ -28,6 +28,7 @@ export class EventDataModel {
     @PrimaryGeneratedColumn()
     id!: number
 
+    // LEGACY
     @Column({ type: 'text', nullable: true })
     link?: string | null
 
@@ -64,7 +65,6 @@ export class EventModel {
         date: string
         description?: String
         genreIds?: number[]
-        link?: string
         minimumAge?: number
         name: string
         priceCategory?: number
@@ -106,7 +106,6 @@ export class EventModel {
         description?: string
         genreIds?: number[]
         id: number
-        link?: string
         minimumAge?: number
         name: string
         priceCategory?: number
@@ -124,7 +123,6 @@ export class EventModel {
         event.clubId = input.clubId
         event.date = input.date
         event.description = input.description || null
-        event.link = input.link || null
         event.minimumAge = input.minimumAge || null
         event.name = input.name
         event.priceCategory = input.priceCategory || null

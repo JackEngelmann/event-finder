@@ -11,10 +11,7 @@ import {
 } from '../app/utils/random'
 import moment from 'moment'
 import { EventDataModel } from '../app/components/event/orm/event'
-import {
-    EventGenreModel,
-    EventGenreDataModel,
-} from '../app/components/genre/orm/eventGenre'
+import { EventGenreDataModel } from '../app/components/genre/orm/eventGenre'
 import { EventImageDataModel } from '../app/components/image/orm/eventImage'
 
 const AMOUNT_CLUBS = 20
@@ -96,7 +93,7 @@ function createEvent(idx: number) {
             .add(randomInt(0, 7), 'day')
             .toISOString(),
         description: `Description for event ${idx}`,
-        link: 'www.event.de',
+        link: `www.event-${idx}.de`,
         priceCategory: randomInt(1, 3),
         special: `Special ${idx}`,
     }

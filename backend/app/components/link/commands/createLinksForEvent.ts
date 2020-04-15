@@ -12,12 +12,17 @@ export async function createLinksForEvent(
     input: CreateLinksForEventInput
 ) {
     const { eventId } = input
-    const inputResult = await appContext.db
-        .getCustomRepository(LinkRepository)
-        .insert(input.links)
-    const eventLinksToCreate = inputResult.identifiers.map(identifier => ({
+
+    const insertPromises = input.links.map(async l => {
+        const insertResult = await appContext.db
+            .getCustomRepository(LinkRepository)
+            .insert(l)
+        return insertResult.identifiers[0].id as number
+    })
+    const linkIds = await Promise.all(insertPromises)
+    const eventLinksToCreate = linkIds.map(linkId => ({
         eventId,
-        linkId: identifier.id,
+        linkId,
     }))
     await appContext.db
         .getCustomRepository(EventLinkModel)

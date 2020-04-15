@@ -32,6 +32,7 @@ export class ClubDataModel {
     @PrimaryGeneratedColumn()
     id!: number
 
+    // LEGACY
     @Column({ type: 'text', nullable: true })
     link?: string | null
 
@@ -62,7 +63,6 @@ export class ClubModel {
         contact?: string
         description?: string
         email?: string
-        link?: string
         name: string
         region?: string
         specials?: string
@@ -79,7 +79,6 @@ export class ClubModel {
         description?: string
         email?: string
         id: number
-        link?: string
         name: string
         region?: string
         specials?: string
@@ -93,7 +92,6 @@ export class ClubModel {
         club.contact = input.contact || null
         club.description = input.description || null
         club.email = input.email || null
-        club.link = input.link || null
         club.name = input.name
         club.region = input.region || null
         club.specials = input.specials || null
