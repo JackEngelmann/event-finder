@@ -8,6 +8,7 @@ import { resetEventTables } from '../components/event/commands/resetEventTables'
 import { resetGenreTables } from '../components/genre/commands/resetGenreTables'
 import { resetImageTables } from '../components/image/commands/resetImageTables'
 import { getConnection } from 'typeorm'
+import { resetLinkTables } from '../components/link/commands/resetLinkTables'
 
 const app = express()
 
@@ -34,6 +35,7 @@ async function resetTables(appContext: AppContext) {
     await resetEventTables(appContext)
     await resetGenreTables(appContext)
     await resetImageTables(appContext)
+    await resetLinkTables(appContext)
 }
 async function applySeeds() {
     await applyDbScripts(databaseConfig.seeds || [], true)
