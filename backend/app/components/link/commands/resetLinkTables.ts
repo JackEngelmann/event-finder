@@ -19,6 +19,7 @@ export function resetLinkTables(appContext: AppContext) {
             await getConnection()
                 .getCustomRepository(ClubLinkModel)
                 .clear()
+            resolve()
         } catch (err) {
             logger.error(err)
             reject()
