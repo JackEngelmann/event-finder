@@ -157,7 +157,11 @@ export default function ClubDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={<LinksRenderer links={club.links} />}
+          fieldValue={
+            club.links && club.links.length > 0 ? (
+              <LinksRenderer links={club.links} />
+            ) : undefined
+          }
           data-cy="clubdetailpage-link-kv"
         />
       </KeyValueFields>

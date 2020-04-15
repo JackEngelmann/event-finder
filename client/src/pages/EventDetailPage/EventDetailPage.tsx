@@ -128,7 +128,11 @@ export default function EventDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={<LinksRenderer links={event.links} />}
+          fieldValue={
+            event.links && event.links.length > 0 ? (
+              <LinksRenderer links={event.links} />
+            ) : undefined
+          }
           data-cy="eventdetail-link-kv"
         />
       </KeyValueFields>
