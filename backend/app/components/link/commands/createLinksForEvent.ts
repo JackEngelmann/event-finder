@@ -13,6 +13,8 @@ export async function createLinksForEvent(
 ) {
     const { eventId } = input
 
+    if (input.links.length === 0) return
+
     const insertPromises = input.links.map(async l => {
         const insertResult = await appContext.db
             .getCustomRepository(LinkRepository)

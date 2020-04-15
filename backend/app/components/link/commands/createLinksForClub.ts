@@ -14,6 +14,8 @@ export async function createLinksForClub(
 ) {
     const { clubId } = input
 
+    if (input.links.length === 0) return
+
     const insertPromises = input.links.map(async l => {
         const insertResult = await appContext.db
             .getCustomRepository(LinkRepository)
