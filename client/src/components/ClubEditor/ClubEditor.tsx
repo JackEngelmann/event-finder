@@ -5,6 +5,7 @@ import { Input } from '../Input/Input'
 import { Textarea } from '../TextArea/Textarea'
 import { ImageUrlsInput } from '../ImageUrlsInput/ImageUrlsInput'
 import { useTranslation } from 'react-i18next'
+import { LinksInput } from '../LinksInput'
 
 export type ClubEditorState = {
   address?: string
@@ -12,7 +13,7 @@ export type ClubEditorState = {
   description?: string
   email?: string
   id?: number
-  link?: string
+  links?: { href: string; type: 'FACEBOOK' | 'HOMEPAGE' }[]
   imageUrls?: string[]
   name?: string
   region?: string
@@ -36,7 +37,7 @@ export function ClubEditor(props: Props) {
           data-cy="clubeditor-name-input"
           placeholder="name"
           value={state.name || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               name: e.target.value,
@@ -48,7 +49,7 @@ export function ClubEditor(props: Props) {
         <Input
           data-cy="clubeditor-address-input"
           value={state.address || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               address: e.target.value,
@@ -60,7 +61,7 @@ export function ClubEditor(props: Props) {
         <Input
           data-cy="clubeditor-contact-input"
           value={state.contact || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               contact: e.target.value,
@@ -73,7 +74,7 @@ export function ClubEditor(props: Props) {
           width="20em"
           data-cy="clubeditor-description-input"
           value={state.description || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               description: e.target.value,
@@ -85,7 +86,7 @@ export function ClubEditor(props: Props) {
         <Input
           data-cy="clubeditor-email-input"
           value={state.email || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               email: e.target.value,
@@ -94,13 +95,12 @@ export function ClubEditor(props: Props) {
         />
       </LabeledInput>
       <LabeledInput label={t('link')}>
-        <Input
-          data-cy="clubeditor-link-input"
-          value={state.link || ''}
-          onChange={e =>
+        <LinksInput
+          value={state.links || []}
+          onChange={(links) =>
             setState({
               ...state,
-              link: e.target.value,
+              links,
             })
           }
         />
@@ -109,7 +109,7 @@ export function ClubEditor(props: Props) {
         <Input
           data-cy="clubeditor-region-input"
           value={state.region || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               region: e.target.value,
@@ -121,7 +121,7 @@ export function ClubEditor(props: Props) {
         <Input
           data-cy="clubeditor-specials-input"
           value={state.specials || ''}
-          onChange={e =>
+          onChange={(e) =>
             setState({
               ...state,
               specials: e.target.value,
@@ -132,7 +132,7 @@ export function ClubEditor(props: Props) {
       <LabeledInput label={t('images')}>
         <ImageUrlsInput
           value={state.imageUrls}
-          onChange={imageUrls => setState({ ...state, imageUrls })}
+          onChange={(imageUrls) => setState({ ...state, imageUrls })}
         />
       </LabeledInput>
     </div>

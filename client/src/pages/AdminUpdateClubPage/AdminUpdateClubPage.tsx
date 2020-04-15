@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
 import {
@@ -30,7 +31,10 @@ const UPDATE_CLUB_MUTATION = gql`
         email
         id
         imageUrls
-        link
+        links {
+          href
+          type
+        }
         name
         region
         specials
@@ -62,7 +66,9 @@ export default function AdminUpdateClubPage() {
         email: clubEditorState.email,
         id: parseInt(clubId),
         imageUrls: clubEditorState.imageUrls,
-        link: clubEditorState.link,
+        links: clubEditorState.links
+          ? clubEditorState.links.map((l) => R.omit(['__typename'], l))
+          : undefined,
         name: clubEditorState.name,
         region: clubEditorState.region,
         specials: clubEditorState.specials,

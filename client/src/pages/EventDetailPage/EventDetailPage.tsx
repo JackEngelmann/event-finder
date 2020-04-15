@@ -13,7 +13,6 @@ import {
 import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndicator'
 import { TextWithLineBreaks } from '../../components/TextWithLineBreaks/TextWithLineBreaks'
 import { KeyValueField } from '../../components/KeyValueFields/KeyValueField/KeyValueField'
-import { LinkRenderer } from '../../components/LinkRenderer/LinkRenderer'
 import { FakeLink } from '../../components/FakeLink/FakeLink'
 import { KeyValueFields } from '../../components/KeyValueFields/KeyValueFields'
 import { H1Title } from '../../components/H1Title/H1Title'
@@ -23,6 +22,7 @@ import { useDimensions } from '../../components/utils/useDimensions'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import { Header } from '../../components/Header'
+import { LinksRenderer } from '../../components/LinksRenderer/LinksRenderer'
 
 type Props = {}
 
@@ -128,11 +128,7 @@ export default function EventDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={
-            event.link && (
-              <LinkRenderer href={event.link} text={t('linkToEvent')} />
-            )
-          }
+          fieldValue={<LinksRenderer links={event.links} />}
           data-cy="eventdetail-link-kv"
         />
       </KeyValueFields>

@@ -22,6 +22,7 @@ import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
 import { CLUB_DETAIL_QUERY, today } from '../ClubDetailPage/ClubDetailPage'
 import { Spacer } from '../../components/Layouting/Spacer'
+import { LinksInput } from '../../components/LinksInput'
 
 const CREATE_EVENT_MUTATION = gql`
   mutation CreateEvent($input: CreateEventInput!) {
@@ -49,7 +50,7 @@ type State = {
   }[]
   id?: number
   imageUrls?: string[]
-  link?: string
+  links?: { type: 'FACEBOOK' | 'HOMEPAGE'; href: string }[]
   minimumAge?: number
   name?: string
   priceCategory?: 1 | 2 | 3
@@ -88,7 +89,7 @@ export default function AdminAddEventPage() {
             date,
             description: state.description,
             genreIds: state.genres ? state.genres.map((g) => g.id) : undefined,
-            link: state.link,
+            links: state.links,
             minimumAge: state.minimumAge,
             name: state.name,
             priceCategory: state.priceCategory,
@@ -287,15 +288,9 @@ export default function AdminAddEventPage() {
             />
           </LabeledInput>
           <LabeledInput label={t('link')}>
-            <Input
-              data-cy="adminaddevent-link-input"
-              value={state.link || ''}
-              onChange={(e) =>
-                setState({
-                  ...state,
-                  link: e.target.value,
-                })
-              }
+            <LinksInput
+              value={state.links || []}
+              onChange={(links) => setState({ ...state, links })}
             />
           </LabeledInput>
           <LabeledInput label={t('images')}>

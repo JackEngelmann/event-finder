@@ -11,7 +11,7 @@ export type Club = {
   email?: string
   id: number
   imageUrls?: string[]
-  link?: string
+  links?: { href: string; type: 'FACEBOOK' | 'HOMEPAGE' }[]
   name: string
   region?: string
   specials?: string
@@ -32,7 +32,7 @@ export type Event = {
   genres: Genre[]
   id: number
   imageUrls?: string[]
-  link?: string
+  links: { href: string; type: 'FACEBOOK' | 'HOMEPAGE' }[]
   minimumAge: number | undefined
   name: string
   priceCategory: 1 | 2 | 3 | undefined

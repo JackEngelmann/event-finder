@@ -23,6 +23,7 @@ import { EventCard } from '../../components/EventCard/EventCard'
 import { UpcomingEvents } from './UpcomingEvents/UpcomingEvents'
 import { Spacer } from '../../components/Layouting/Spacer'
 import { Header } from '../../components/Header'
+import { LinksRenderer } from '../../components/LinksRenderer/LinksRenderer'
 
 type Props = {}
 
@@ -58,7 +59,10 @@ export const CLUB_DETAIL_QUERY = gql`
       }
       id
       imageUrls
-      link
+      links {
+        href
+        type
+      }
       name
       region
       specials
@@ -87,7 +91,7 @@ type QueriedClub = {
   }[]
   id: number
   imageUrls?: string[]
-  link?: string
+  links: { href: string; type: 'FACEBOOK' | 'HOMEPAGE' }[]
   name: string
   region?: string
   specials?: string
@@ -153,11 +157,7 @@ export default function ClubDetailPage(props: Props) {
         />
         <KeyValueField
           fieldKey={t('link')}
-          fieldValue={
-            club.link && (
-              <LinkRenderer href={club.link} text={t('linkToClub')} />
-            )
-          }
+          fieldValue={<LinksRenderer links={club.links} />}
           data-cy="clubdetailpage-link-kv"
         />
       </KeyValueFields>

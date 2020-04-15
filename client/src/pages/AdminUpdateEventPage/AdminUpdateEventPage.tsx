@@ -1,3 +1,4 @@
+import * as R from 'ramda'
 import './AdminUpdateEventPage.scss'
 import React, { useState, useEffect } from 'react'
 import gql from 'graphql-tag'
@@ -23,6 +24,7 @@ import { ImageUrlsInput } from '../../components/ImageUrlsInput/ImageUrlsInput'
 import { NetworkError } from '../../components/NetworkError'
 import { useTranslation } from 'react-i18next'
 import { Spacer } from '../../components/Layouting/Spacer'
+import { LinksInput } from '../../components/LinksInput'
 
 type Params = {
   eventId: string
@@ -44,7 +46,7 @@ type State = {
   }[]
   id?: number
   imageUrls?: string[]
-  link?: string
+  links?: { type: 'FACEBOOK' | 'HOMEPAGE'; href: string }[]
   minimumAge?: number
   name?: string
   priceCategory?: 1 | 2 | 3
@@ -100,7 +102,9 @@ export default function AdminUpdateEventPage(props: any) {
         description: state.description,
         genreIds: state.genres ? state.genres.map((g) => g.id) : undefined,
         imageUrls: state.imageUrls,
-        link: state.link,
+        links: state.links
+          ? state.links.map((l) => R.omit(['__typename'], l))
+          : undefined,
         minimumAge: state.minimumAge,
         name: state.name,
         priceCategory: state.priceCategory,
@@ -309,15 +313,9 @@ export default function AdminUpdateEventPage(props: any) {
             />
           </LabeledInput>
           <LabeledInput label={t('link')}>
-            <Input
-              data-cy="adminupdateevent-link-input"
-              onChange={(e) =>
-                setState({
-                  ...state,
-                  link: e.target.value,
-                })
-              }
-              value={state.link || ''}
+            <LinksInput
+              value={state.links || []}
+              onChange={(links) => setState({ ...state, links })}
             />
           </LabeledInput>
           <LabeledInput label={t('images')}>
