@@ -1,7 +1,6 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import { LinkRepository } from '../orm/link'
-import { ClubLinkModel } from '../orm/clubLink'
-import { getCustomRepository } from 'typeorm'
+import { ClubLinkRepository } from '../orm/clubLink'
 
 export type CreateLinksForClubInput = {
     clubId: number
@@ -28,6 +27,6 @@ export async function createLinksForClub(
         linkId,
     }))
     await appContext.db
-        .getCustomRepository(ClubLinkModel)
+        .getCustomRepository(ClubLinkRepository)
         .insert(clubLinksToCreate)
 }

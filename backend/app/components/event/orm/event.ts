@@ -1,4 +1,11 @@
-import { Connection, Entity, Column, PrimaryGeneratedColumn } from 'typeorm'
+import {
+    Connection,
+    Entity,
+    Column,
+    PrimaryGeneratedColumn,
+    EntityRepository,
+    Repository,
+} from 'typeorm'
 
 @Entity('event')
 export class EventDataModel {
@@ -50,54 +57,9 @@ export class EventDataModel {
     special?: string | null
 }
 
-export class EventModel {
-    private connection: Connection
-
-    constructor(connection: Connection) {
-        this.connection = connection
-    }
-
-    async createEvent(input: {
-        admissionFee?: number
-        admissionFeeWithDiscount?: number
-        amountOfFloors?: number
-        clubId: number
-        date: string
-        description?: String
-        genreIds?: number[]
-        minimumAge?: number
-        name: string
-        priceCategory?: number
-        special?: string
-    }) {
-        const event = new EventDataModel()
-        Object.assign(event, input)
-        await this.connection.manager.save(event)
-
-        return event.id
-    }
-
-    async deleteEvent(id: number) {
-        const event = await this.connection.manager.findOneOrFail(
-            EventDataModel,
-            id
-        )
-        await this.connection.manager.remove(event)
-    }
-
-    async getEvent(id: number) {
-        return await this.connection.manager.findOne(EventDataModel, id)
-    }
-
-    async getEvents() {
-        return await this.connection.manager.find(EventDataModel)
-    }
-
-    async getEventsFromClub(clubId: number) {
-        return await this.connection.manager.find(EventDataModel, { clubId })
-    }
-
-    async updateEvent(input: {
+@EntityRepository(EventDataModel)
+export class EventRepository extends Repository<EventDataModel> {
+    async createAndSave(input: {
         admissionFee?: number
         admissionFeeWithDiscount?: number
         amountOfFloors?: number
@@ -105,33 +67,16 @@ export class EventModel {
         date: string
         description?: string
         genreIds?: number[]
-        id: number
         minimumAge?: number
         name: string
         priceCategory?: number
         special?: string
     }) {
-        const event = await this.connection.manager.findOne(
-            EventDataModel,
-            input.id
-        )
-        if (!event) return undefined
-
-        event.admissionFee = input.admissionFee || null
-        event.admissionFeeWithDiscount = input.admissionFeeWithDiscount || null
-        event.amountOfFloors = input.amountOfFloors || null
-        event.clubId = input.clubId
-        event.date = input.date
-        event.description = input.description || null
-        event.minimumAge = input.minimumAge || null
-        event.name = input.name
-        event.priceCategory = input.priceCategory || null
-        event.special = input.special || null
-
-        await this.connection.manager.save(event)
+        const event = this.create(input)
+        return await this.save(event)
     }
 
-    async clear() {
-        await this.connection.manager.clear(EventDataModel)
+    async findEventsForClub(clubId: number) {
+        return await this.find({ clubId })
     }
 }

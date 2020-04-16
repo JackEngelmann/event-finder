@@ -1,23 +1,35 @@
 import 'reflect-metadata'
 import { databaseConfig } from '../../databaseConfig'
 import { createConnection, getConnectionManager } from 'typeorm'
-import { ClubDataModel, ClubModel } from '../components/club/orm/club'
-import { EventDataModel } from '../components/event/orm/event'
-import { EventGenreDataModel } from '../components/genre/orm/eventGenre'
-import { GenreDataModel } from '../components/genre/orm/genre'
-import { ImageDataModel } from '../components/image/orm/image'
-import { UserDataModel } from '../components/auth/orm/user'
-import { AppliedScriptDataModel } from '../components/scripts/orm/appliedScripts'
-import { EventImageDataModel } from '../components/image/orm/eventImage'
-import { ClubImageDataModel } from '../components/image/orm/clubImage'
+import { ClubDataModel, ClubRepository } from '../components/club/orm/club'
+import { EventDataModel, EventRepository } from '../components/event/orm/event'
+import {
+    EventGenreDataModel,
+    EventGenreRepository,
+} from '../components/genre/orm/eventGenre'
+import { GenreDataModel, GenreRepository } from '../components/genre/orm/genre'
+import { ImageDataModel, ImageRepository } from '../components/image/orm/image'
+import { UserDataModel, UserRepository } from '../components/auth/orm/user'
+import {
+    AppliedScriptDataModel,
+    AppliedScriptRepository,
+} from '../components/scripts/orm/appliedScripts'
+import {
+    EventImageDataModel,
+    EventImageRepository,
+} from '../components/image/orm/eventImage'
+import {
+    ClubImageDataModel,
+    ClubImageRepository,
+} from '../components/image/orm/clubImage'
 import { LinkDataModel, LinkRepository } from '../components/link/orm/link'
 import {
     EventLinkDataModel,
-    EventLinkModel,
+    EventLinkRepository,
 } from '../components/link/orm/eventLink'
 import {
     ClubLinkDataModel,
-    ClubLinkModel,
+    ClubLinkRepository,
 } from '../components/link/orm/clubLink'
 
 export async function createDbConnection(dbName?: any) {
@@ -40,9 +52,19 @@ export async function createDbConnection(dbName?: any) {
             LinkDataModel,
             LinkRepository,
             EventLinkDataModel,
-            EventLinkModel,
+            EventLinkRepository,
             ClubLinkDataModel,
-            ClubLinkModel,
+            ClubRepository,
+            UserRepository,
+            EventGenreRepository,
+            EventRepository,
+            GenreRepository,
+            ClubImageRepository,
+            EventImageRepository,
+            ImageRepository,
+            ClubLinkRepository,
+            EventLinkRepository,
+            AppliedScriptRepository,
         ],
         ...databaseConfig.connectionOptions,
         logger: 'file',

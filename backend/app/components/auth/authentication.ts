@@ -3,7 +3,7 @@ import bodyParser from 'body-parser'
 import session from 'express-session'
 import { AppContext } from '../../infrastructure/appContext'
 import { Strategy } from 'passport-local'
-import { UserModel, UserDataModel } from './orm/user'
+import { UserDataModel, UserRepository } from './orm/user'
 import passport from 'passport'
 import { Express } from 'express'
 import { getConnection } from 'typeorm'
@@ -28,10 +28,10 @@ async function isSamePassword(password1: string, password2: string) {
 
 const createAuthenticationStrategy = () =>
     new Strategy(async function(userName, password, done) {
-        const connection = getConnection()
-        const userModel = new UserModel(connection)
         try {
-            const user = await userModel.getUserByName(userName)
+            const user = await getConnection()
+                .getCustomRepository(UserRepository)
+                .findUserByName(userName)
             if (!user) {
                 return done(null, false, { message: 'Incorrect username' })
             }
@@ -54,9 +54,9 @@ export function initializePassportAuthentication(app: Express) {
     passport.serializeUser((user: UserDataModel, done) => done(null, user.id))
     passport.deserializeUser(async (id: number, done) => {
         try {
-            const connection = getConnection()
-            const userModel = new UserModel(connection)
-            const user = await userModel.getUser(id)
+            const user = await getConnection()
+                .getCustomRepository(UserRepository)
+                .findOneOrFail(id)
             done(null, user)
         } catch (err) {
             done(err, null)

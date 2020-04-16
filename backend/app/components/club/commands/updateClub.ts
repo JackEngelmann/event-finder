@@ -1,9 +1,9 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { ClubModel } from '../orm/club'
+import { ClubRepository } from '../orm/club'
 import { FileUpload } from 'graphql-upload'
-import { ClubImageModel } from '../../image/orm/clubImage'
 import { LinkType } from '../../link/orm/link'
 import { setLinksForClub } from '../../link/commands/setLinksForClub'
+import { setImageUrlsForClub } from '../../image/commands/setImageUrlsForClub'
 
 export type UpdateClubInput = {
     address?: string
@@ -21,12 +21,25 @@ export type UpdateClubInput = {
 
 export function updateClub(appContext: AppContext, input: UpdateClubInput) {
     const { db } = appContext
-    const clubModel = new ClubModel(db)
-    const clubImageModel = new ClubImageModel(db)
+    const clubRepository = db.getCustomRepository(ClubRepository)
     return new Promise(async (resolve, reject) => {
         try {
-            await clubModel.updateClub(input)
-            await clubImageModel.setImageUrlsForClub(input.id, input.imageUrls)
+            await clubRepository.update(input.id, {
+                address: input.address || null,
+                contact: input.contact || null,
+                description: input.description || null,
+                email: input.email || null,
+                id: input.id,
+                name: input.name,
+                region: input.region || null,
+                specials: input.specials || null,
+            })
+            if (input.imageUrls) {
+                await setImageUrlsForClub(appContext, {
+                    clubId: input.id,
+                    imageUrls: input.imageUrls,
+                })
+            }
             if (input.links) {
                 await setLinksForClub(appContext, {
                     clubId: input.id,

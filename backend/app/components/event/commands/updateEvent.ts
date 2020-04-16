@@ -1,9 +1,9 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventModel } from '../orm/event'
-import { EventGenreModel } from '../../genre/orm/eventGenre'
-import { EventImageModel } from '../../image/orm/eventImage'
 import { LinkType } from '../../link/orm/link'
 import { setLinksForEvent } from '../../link/commands/setLinksForEvent'
+import { EventRepository } from '../orm/event'
+import { setGenresForEvent } from '../../genre/commands/setGenresForEvent'
+import { setImageUrlsForEvent } from '../../image/commands/setImageUrlsForEvent'
 
 export type UpdateEventInput = {
     admissionFee?: number
@@ -24,17 +24,33 @@ export type UpdateEventInput = {
 
 export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
-    const eventGenreModel = new EventGenreModel(db)
-    const eventImageModel = new EventImageModel(db)
+    const eventRepository = db.getCustomRepository(EventRepository)
     return new Promise(async (resolve, reject) => {
         try {
-            await eventModel.updateEvent(input)
-            await eventGenreModel.setGenresForAnEvent(input.id, input.genreIds)
-            await eventImageModel.setImageUrlsForEvent(
-                input.id,
-                input.imageUrls
-            )
+            await eventRepository.update(input.id, {
+                admissionFee: input.admissionFee || null,
+                admissionFeeWithDiscount:
+                    input.admissionFeeWithDiscount || null,
+                amountOfFloors: input.amountOfFloors || null,
+                clubId: input.clubId,
+                date: input.date,
+                description: input.description || null,
+                id: input.id,
+                minimumAge: input.minimumAge || null,
+                name: input.name,
+                priceCategory: input.priceCategory || null,
+                special: input.special || null,
+            })
+            await setGenresForEvent(appContext, {
+                eventId: input.id,
+                genreIds: input.genreIds,
+            })
+            if (input.imageUrls) {
+                setImageUrlsForEvent(appContext, {
+                    eventId: input.id,
+                    imageUrls: input.imageUrls,
+                })
+            }
             if (input.links) {
                 await setLinksForEvent(appContext, {
                     eventId: input.id,

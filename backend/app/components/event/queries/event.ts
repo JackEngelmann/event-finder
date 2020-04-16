@@ -1,8 +1,7 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventModel } from '../orm/event'
+import { EventRepository } from '../orm/event'
 
-export function queryEvent(appContext: AppContext, id: number) {
+export async function queryEvent(appContext: AppContext, id: number) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
-    return eventModel.getEvent(id)
+    return await db.getCustomRepository(EventRepository).findOne({ id })
 }

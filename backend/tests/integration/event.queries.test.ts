@@ -3,8 +3,8 @@ import {
     ApolloTestServer,
     createApolloTestServer,
 } from '../utils'
-import { EventModel } from '../../app/components/event/orm/event'
-import moment = require('moment')
+import moment from 'moment'
+import { createTestEvent } from '../utils/testBuilders'
 
 const DB_NAME = 'eventquerydb'
 
@@ -57,27 +57,22 @@ describe('event queries: ', () => {
             dbName: DB_NAME,
             insertTestData: false,
         })
-        const eventModel = new EventModel(apolloTestServer.appContext.db)
-        await eventModel.createEvent({
-            clubId: 1,
-            name: 'club-1-1',
-            date: moment().toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: 1,
-            name: 'club-1-2',
-            date: moment().toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: 2,
-            name: 'club-2-1',
-            date: moment().toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: 2,
-            name: 'club-2-2',
-            date: moment().toISOString(),
-        })
+        await createTestEvent()
+            .setClubId(1)
+            .setName('club-1-1')
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(1)
+            .setName('club-1-2')
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(2)
+            .setName('club-2-1')
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(2)
+            .setName('club-2-2')
+            .build(DB_NAME)
         const result = await apolloTestServer.client.query({
             query: `
                 query eventsQuery($clubId: Int!) {

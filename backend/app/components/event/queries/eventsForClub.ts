@@ -1,5 +1,5 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventModel, EventDataModel } from '../orm/event'
+import { EventDataModel, EventRepository } from '../orm/event'
 import moment from 'moment'
 
 export function queryEventsForClub(
@@ -8,10 +8,9 @@ export function queryEventsForClub(
     fromDay: string | undefined
 ) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
     return new Promise(async (resolve, reject) => {
         try {
-            const events = await eventModel.getEvents()
+            const events = await db.getCustomRepository(EventRepository).find()
             const filteredEvents = events.filter(
                 event =>
                     matchesClubId(event, clubId) &&

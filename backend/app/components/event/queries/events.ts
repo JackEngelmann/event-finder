@@ -1,6 +1,6 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import moment from 'moment'
-import { EventModel, EventDataModel } from '../orm/event'
+import { EventDataModel, EventRepository } from '../orm/event'
 
 type Filter = {
     date?: string
@@ -9,10 +9,9 @@ type Filter = {
 
 export function queryEvents(appContext: AppContext, filter?: Filter) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
     return new Promise(async (resolve, reject) => {
         try {
-            const events = await eventModel.getEvents()
+            const events = await db.getCustomRepository(EventRepository).find()
             if (!filter) return resolve(events)
             const filteredEvents = events.filter(
                 event =>

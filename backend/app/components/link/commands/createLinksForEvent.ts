@@ -1,6 +1,6 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import { LinkRepository } from '../orm/link'
-import { EventLinkModel } from '../orm/eventLink'
+import { EventLinkRepository } from '../orm/eventLink'
 
 export type CreateLinksForEventInput = {
     eventId: number
@@ -27,6 +27,6 @@ export async function createLinksForEvent(
         linkId,
     }))
     await appContext.db
-        .getCustomRepository(EventLinkModel)
+        .getCustomRepository(EventLinkRepository)
         .insert(eventLinksToCreate)
 }

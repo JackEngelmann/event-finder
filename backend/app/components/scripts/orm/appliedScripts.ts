@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, Connection } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    Connection,
+    EntityRepository,
+    Repository,
+} from 'typeorm'
 
 @Entity('appliedscript')
 export class AppliedScriptDataModel {
@@ -9,29 +16,12 @@ export class AppliedScriptDataModel {
     name!: string
 }
 
-export class AppliedScriptModel {
-    private connection: Connection
-
-    constructor(connection: Connection) {
-        this.connection = connection
-    }
-
-    async createAppliedScript(input: { name: string }) {
-        const appliedScript = new AppliedScriptDataModel()
-        appliedScript.name = input.name
-        await this.connection.manager.save(appliedScript)
-        return appliedScript.id
-    }
-
-    async getAppliedScripts() {
-        return await this.connection.manager.find(AppliedScriptDataModel)
-    }
-
-    async deleteAppliedScriptWithName(name: string) {
-        const appliedScript = this.connection.manager.findOne(
-            AppliedScriptDataModel,
-            { name }
-        )
-        await this.connection.manager.remove(appliedScript)
+@EntityRepository(AppliedScriptDataModel)
+export class AppliedScriptRepository extends Repository<
+    AppliedScriptDataModel
+> {
+    async createAndSave(input: { name: string }) {
+        const appliedScript = this.create(input)
+        return await this.save(appliedScript)
     }
 }

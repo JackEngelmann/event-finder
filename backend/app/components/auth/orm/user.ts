@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, Connection } from 'typeorm'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    EntityRepository,
+    Repository,
+} from 'typeorm'
 
 @Entity('user_table')
 export class UserDataModel {
@@ -12,31 +18,9 @@ export class UserDataModel {
     password!: string
 }
 
-export class UserModel {
-    private connection: Connection
-
-    constructor(connection: Connection) {
-        this.connection = connection
-    }
-
-    async getUser(id: number) {
-        return await this.connection.manager.findOne(UserDataModel, id)
-    }
-
-    async getUserByName(name: string) {
-        const users = await this.connection.manager.find(UserDataModel, {
-            name,
-        })
-        if (users.length === 0) {
-            throw new Error('user could not be found by name')
-        }
-        if (users.length > 1) {
-            throw new Error('found multipe users with the name')
-        }
-        return users[0]
-    }
-
-    async clear() {
-        return await this.connection.manager.clear(UserDataModel)
+@EntityRepository(UserDataModel)
+export class UserRepository extends Repository<UserDataModel> {
+    findUserByName(name: string) {
+        return this.findOneOrFail({ name })
     }
 }

@@ -1,5 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, Connection } from 'typeorm'
-import { EventGenreModel } from './eventGenre'
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    EntityRepository,
+    Repository,
+} from 'typeorm'
+import { EventGenreDataModel } from './eventGenre'
 
 @Entity('genre')
 export class GenreDataModel {
@@ -10,31 +16,20 @@ export class GenreDataModel {
     name!: string
 }
 
-export class GenreModel {
-    private connection: Connection
-
-    constructor(connection: Connection) {
-        this.connection = connection
+@EntityRepository(GenreDataModel)
+export class GenreRepository extends Repository<GenreDataModel> {
+    async createAndSave(input: { name: string }) {
+        const genre = this.create(input)
+        return await this.save(genre)
     }
-
-    async getGenre(id: number) {
-        return await this.connection.manager.findOne(GenreDataModel, id)
-    }
-
-    async getGenres() {
-        return await this.connection.manager.find(GenreDataModel)
-    }
-
     async getGenresForEvent(eventId: number) {
-        const eventGenreModel = new EventGenreModel(this.connection)
-        const eventGenres = await eventGenreModel.getAllEventGenresForAnEvent(
-            eventId
-        )
-        const genreIds = eventGenres.map(e => e.genreId)
-        return await this.connection.manager.findByIds(GenreDataModel, genreIds)
-    }
-
-    async clear() {
-        await this.connection.manager.clear(GenreDataModel)
+        return await this.createQueryBuilder('genre')
+            .innerJoin(
+                EventGenreDataModel,
+                'eventGenre',
+                'eventGenre.genreId = genre.id'
+            )
+            .where('eventGenre.eventId = :eventId', { eventId })
+            .getMany()
     }
 }

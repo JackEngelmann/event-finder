@@ -1,11 +1,10 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventModel } from '../orm/event'
-import { EventGenreModel } from '../../genre/orm/eventGenre'
 import { FileUpload } from 'graphql-upload'
-import { EventImageModel } from '../../image/orm/eventImage'
-import { setLinksForEvent } from '../../link/commands/setLinksForEvent'
 import { createLinksForEvent } from '../../link/commands/createLinksForEvent'
 import { LinkType } from '../../link/orm/link'
+import { EventRepository } from '../orm/event'
+import { setGenresForEvent } from '../../genre/commands/setGenresForEvent'
+import { setImageUrlsForEvent } from '../../image/commands/setImageUrlsForEvent'
 
 export type CreateEventInput = {
     admissionFee?: number
@@ -13,7 +12,7 @@ export type CreateEventInput = {
     amountOfFloors?: number
     clubId: number
     date: string
-    description?: String
+    description?: string
     genreIds?: number[]
     image?: Promise<FileUpload>
     imageUrls?: string[]
@@ -26,21 +25,28 @@ export type CreateEventInput = {
 
 export function createEvent(appContext: AppContext, input: CreateEventInput) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
-    const eventGenreModel = new EventGenreModel(db)
-    const eventImageModel = new EventImageModel(db)
     return new Promise<number>(async (resolve, reject) => {
         try {
-            const eventId = await eventModel.createEvent(input)
-            await eventGenreModel.setGenresForAnEvent(eventId, input.genreIds)
-            await eventImageModel.setImageUrlsForEvent(eventId, input.imageUrls)
+            const event = await db
+                .getCustomRepository(EventRepository)
+                .createAndSave(input)
+            await setGenresForEvent(appContext, {
+                eventId: event.id,
+                genreIds: input.genreIds,
+            })
+            if (input.imageUrls) {
+                setImageUrlsForEvent(appContext, {
+                    eventId: event.id,
+                    imageUrls: input.imageUrls,
+                })
+            }
             if (input.links) {
                 await createLinksForEvent(appContext, {
-                    eventId,
+                    eventId: event.id,
                     links: input.links,
                 })
             }
-            resolve(eventId)
+            resolve(event.id)
         } catch (err) {
             console.error(err)
             reject(err)

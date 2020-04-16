@@ -1,11 +1,12 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventImageModel } from '../orm/eventImage'
+import { EventImageRepository } from '../orm/eventImage'
 
 export async function queryImageUrlsForEvent(
     appContext: AppContext,
     eventId: number
 ) {
     const { db } = appContext
-    const eventImageModel = new EventImageModel(db)
-    return await eventImageModel.getImageUrlsForEvent(eventId)
+    const eventImageRepository = db.getCustomRepository(EventImageRepository)
+    const eventImages = await eventImageRepository.find({ eventId })
+    return eventImages.map(eventImage => eventImage.imageUrl)
 }

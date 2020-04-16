@@ -2,13 +2,9 @@ import {
     Entity,
     Column,
     PrimaryGeneratedColumn,
-    Connection,
     EntityRepository,
     Repository,
 } from 'typeorm'
-import { Logger } from '../../../infrastructure/logger'
-
-const logger = new Logger()
 
 @Entity('club')
 export class ClubDataModel {
@@ -51,14 +47,9 @@ export class ClubDataModel {
     specials?: string | null
 }
 
-export class ClubModel {
-    private connection: Connection
-
-    constructor(db: Connection) {
-        this.connection = db
-    }
-
-    async createClub(input: {
+@EntityRepository(ClubDataModel)
+export class ClubRepository extends Repository<ClubDataModel> {
+    async createAndSave(input: {
         address?: string
         contact?: string
         description?: string
@@ -67,62 +58,7 @@ export class ClubModel {
         region?: string
         specials?: string
     }) {
-        const club = new ClubDataModel()
-        Object.assign(club, input)
-        await this.connection.manager.save(club)
-        return club.id
-    }
-
-    async updateClub(input: {
-        address?: string
-        contact?: string
-        description?: string
-        email?: string
-        id: number
-        name: string
-        region?: string
-        specials?: string
-    }) {
-        const club = await this.connection.manager.findOneOrFail<ClubDataModel>(
-            'club',
-            input.id
-        )
-
-        club.address = input.address || null
-        club.contact = input.contact || null
-        club.description = input.description || null
-        club.email = input.email || null
-        club.name = input.name
-        club.region = input.region || null
-        club.specials = input.specials || null
-
-        await this.connection.manager.save(club)
-    }
-
-    async getClub(id: number) {
-        const club = await this.connection.manager.findOne<ClubDataModel>(
-            'club',
-            id
-        )
-        return club
-    }
-
-    async getClubs() {
-        logger.info('club model: getClubs')
-        const clubs = await this.connection.manager.find<ClubDataModel>('club')
-        logger.info(JSON.stringify(clubs))
-        return clubs
-    }
-
-    async deleteClub(id: number) {
-        const club = await this.connection.manager.findOne<ClubDataModel>(
-            'club',
-            id
-        )
-        await this.connection.manager.remove(club)
-    }
-
-    async clear() {
-        await this.connection.manager.clear(ClubDataModel)
+        const club = this.create(input)
+        return await this.save(club)
     }
 }

@@ -1,8 +1,7 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { ClubModel } from '../orm/club'
+import { ClubRepository } from '../orm/club'
 
-export function queryClubs(appContext: AppContext) {
+export async function queryClubs(appContext: AppContext) {
     const { db } = appContext
-    const clubModel = new ClubModel(db)
-    return clubModel.getClubs()
+    return await db.getCustomRepository(ClubRepository).find()
 }

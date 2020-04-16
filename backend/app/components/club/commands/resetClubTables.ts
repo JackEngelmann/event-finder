@@ -1,15 +1,13 @@
-import { Logger } from "../../../infrastructure/logger";
-import { AppContext } from "../../../infrastructure/appContext";
-import { ClubModel } from "../orm/club";
+import { Logger } from '../../../infrastructure/logger'
+import { AppContext } from '../../../infrastructure/appContext'
+import { ClubRepository } from '../orm/club'
 
 const logger = new Logger()
 
 export function resetClubTables(appContext: AppContext) {
-    const { db } = appContext
-    const clubModel = new ClubModel(db)
     return new Promise<void>(async (resolve, reject) => {
         try {
-            await clubModel.clear()
+            await appContext.db.getCustomRepository(ClubRepository).clear()
             resolve()
         } catch (err) {
             logger.error(err)

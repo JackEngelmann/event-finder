@@ -1,5 +1,5 @@
 import { Logger } from '../infrastructure/logger'
-import { ImageModel } from '../components/image/orm/image'
+import { ImageRepository } from '../components/image/orm/image'
 import express from 'express'
 import { getConnection } from 'typeorm'
 
@@ -12,15 +12,13 @@ const app = express()
 const logger = new Logger()
 
 app.get('/:imageId', async (req, res) => {
-    const connection = getConnection()
     const imageId = parseInt(req.params.imageId, 10)
 
     logger.info(`requesting image with id ${imageId}`)
-    const imageModel = new ImageModel(connection)
 
     if (Number.isNaN(imageId)) return null
 
-    const file = await readFile(imageModel, imageId)
+    const file = await readFile(imageId)
     if (!file) return res.send(undefined)
 
     res.type(file.type)
@@ -29,11 +27,10 @@ app.get('/:imageId', async (req, res) => {
 
 export default app
 
-async function readFile(
-    imageModel: ImageModel,
-    id: number
-): Promise<File | undefined> {
-    const image = await imageModel.getImage(id)
+async function readFile(id: number): Promise<File | undefined> {
+    const image = await getConnection()
+        .getCustomRepository(ImageRepository)
+        .findOne(id)
     if (!image) return undefined
     logger.info(`read file with id ${id}, its not undefined`)
     return decodeBase64Image(image.dataUrl)

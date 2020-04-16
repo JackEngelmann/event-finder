@@ -1,8 +1,8 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { GenreModel } from '../orm/genre'
+import { GenreRepository } from '../orm/genre'
 
-export function queryGenres(appContext: AppContext) {
+export async function queryGenres(appContext: AppContext) {
     const { db } = appContext
-    const genreModel = new GenreModel(db)
-    return genreModel.getGenres()
+    const genreRepository = db.getCustomRepository(GenreRepository)
+    return await genreRepository.find()
 }

@@ -1,11 +1,6 @@
-import {
-    clubFragment,
-    ApolloTestServer,
-    createApolloTestServer,
-} from '../utils'
-import { ClubModel } from '../../app/components/club/orm/club'
-import { EventModel } from '../../app/components/event/orm/event'
-import moment = require('moment')
+import { clubFragment, createApolloTestServer } from '../utils'
+import moment from 'moment'
+import { createTestClub, createTestEvent } from '../utils/testBuilders'
 
 const DB_NAME = 'clubquerydb'
 
@@ -68,24 +63,20 @@ describe('club queries', () => {
             dbName: DB_NAME,
             insertTestData: false,
         })
-        const clubModel = new ClubModel(apolloTestServer.appContext.db)
-        const firstClubId = await clubModel.createClub({
-            name: 'club-1',
-        })
-        const secondClubId = await clubModel.createClub({
-            name: 'club-2',
-        })
-        const eventModel = new EventModel(apolloTestServer.appContext.db)
-        await eventModel.createEvent({
-            clubId: firstClubId,
-            name: 'event-club-1',
-            date: moment().toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: secondClubId,
-            name: 'event-club-2',
-            date: moment().toISOString(),
-        })
+        const firstClub = await createTestClub()
+            .setName('club-1')
+            .build(DB_NAME)
+        const secondClub = await createTestClub()
+            .setName('club-2')
+            .build(DB_NAME)
+        await createTestEvent()
+            .setName('event-club-1')
+            .setClubId(firstClub.id)
+            .build(DB_NAME)
+        await createTestEvent()
+            .setName('event-club-2')
+            .setClubId(secondClub.id)
+            .build(DB_NAME)
 
         const result = await apolloTestServer.client.query({
             query: `
@@ -98,7 +89,7 @@ describe('club queries', () => {
                 }
             `,
             variables: {
-                id: firstClubId,
+                id: firstClub.id,
             },
         })
         expect(result.errors).toBeUndefined()
@@ -118,31 +109,31 @@ describe('club queries', () => {
             dbName: DB_NAME,
             insertTestData: false,
         })
-        const clubModel = new ClubModel(apolloTestServer.appContext.db)
-        const firstClubId = await clubModel.createClub({
-            name: 'club-1',
-        })
-        const secondClubId = await clubModel.createClub({
-            name: 'club-2',
-        })
-        const eventModel = new EventModel(apolloTestServer.appContext.db)
-        await eventModel.createEvent({
-            clubId: firstClubId,
-            name: 'event-club-1-1',
-            date: moment()
-                .subtract(1, 'day')
-                .toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: firstClubId,
-            name: 'event-club-1-2',
-            date: moment().toISOString(),
-        })
-        await eventModel.createEvent({
-            clubId: secondClubId,
-            name: 'event-club-2',
-            date: moment().toISOString(),
-        })
+        const firstClub = await createTestClub()
+            .setName('club-1')
+            .build(DB_NAME)
+        const secondClub = await createTestClub()
+            .setName('club-2')
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(firstClub.id)
+            .setName('event-club-1-1')
+            .setDate(
+                moment()
+                    .subtract(1, 'day')
+                    .toISOString()
+            )
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(firstClub.id)
+            .setName('event-club-1-2')
+            .setDate(moment().toISOString())
+            .build(DB_NAME)
+        await createTestEvent()
+            .setClubId(secondClub.id)
+            .setName('event-club-2')
+            .setDate(moment().toISOString())
+            .build(DB_NAME)
 
         const result = await apolloTestServer.client.query({
             query: `
@@ -155,7 +146,7 @@ describe('club queries', () => {
                 }
             `,
             variables: {
-                id: firstClubId,
+                id: firstClub.id,
                 fromDay: moment().toISOString(),
             },
         })

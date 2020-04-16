@@ -1,24 +1,18 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { getConnection } from 'typeorm'
 import { LinkRepository } from '../orm/link'
-import { EventLinkModel } from '../orm/eventLink'
-import { ClubLinkModel } from '../orm/clubLink'
+import { EventLinkRepository } from '../orm/eventLink'
+import { ClubLinkRepository } from '../orm/clubLink'
 import { Logger } from '../../../infrastructure/logger'
 
 const logger = new Logger()
 
 export function resetLinkTables(appContext: AppContext) {
+    const { db } = appContext
     return new Promise<void>(async (resolve, reject) => {
         try {
-            await getConnection()
-                .getCustomRepository(LinkRepository)
-                .clear()
-            await getConnection()
-                .getCustomRepository(EventLinkModel)
-                .clear()
-            await getConnection()
-                .getCustomRepository(ClubLinkModel)
-                .clear()
+            await db.getCustomRepository(LinkRepository).clear()
+            await db.getCustomRepository(EventLinkRepository).clear()
+            await db.getCustomRepository(ClubLinkRepository).clear()
             resolve()
         } catch (err) {
             logger.error(err)

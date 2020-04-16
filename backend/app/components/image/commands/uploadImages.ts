@@ -1,6 +1,6 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import { FileUpload } from 'graphql-upload'
-import { ImageModel } from '../orm/image'
+import { ImageRepository } from '../orm/image'
 
 export type UpladImageInput = {
     upload: Promise<FileUpload>
@@ -8,7 +8,6 @@ export type UpladImageInput = {
 
 export function uploadImage(appContext: AppContext, input: UpladImageInput) {
     const { db } = appContext
-    const imageModel = new ImageModel(db)
     return new Promise(async (resolve, reject) => {
         try {
             const { createReadStream, mimetype } = await input.upload
@@ -23,8 +22,10 @@ export function uploadImage(appContext: AppContext, input: UpladImageInput) {
                     resolve(`data:${mimetype};base64,${base64}`)
                 })
             })
-            const id = await imageModel.createImage({ dataUrl })
-            const imageUrl = `images/${id}`
+            const image = await db
+                .getCustomRepository(ImageRepository)
+                .createAndSave({ dataUrl })
+            const imageUrl = `images/${image.id}`
             resolve(imageUrl)
         } catch (err) {
             console.error(err)

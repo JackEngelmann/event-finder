@@ -19,4 +19,4 @@ export class ClubLinkDataModel {
 }
 
 @EntityRepository(ClubLinkDataModel)
-export class ClubLinkModel extends Repository<ClubLinkDataModel> {}
+export class ClubLinkRepository extends Repository<ClubLinkDataModel> {}

@@ -19,4 +19,4 @@ export class EventLinkDataModel {
 }
 
 @EntityRepository(EventLinkDataModel)
-export class EventLinkModel extends Repository<EventLinkDataModel> {}
+export class EventLinkRepository extends Repository<EventLinkDataModel> {}

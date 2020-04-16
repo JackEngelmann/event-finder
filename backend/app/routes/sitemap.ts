@@ -1,7 +1,7 @@
 import express from 'express'
 import { Connection, getConnection } from 'typeorm'
-import { EventModel } from '../components/event/orm/event'
-import { ClubModel } from '../components/club/orm/club'
+import { ClubRepository } from '../components/club/orm/club'
+import { EventRepository } from '../components/event/orm/event'
 
 const app = express()
 
@@ -15,10 +15,12 @@ app.get('/sitemap.xml', async (req, res) => {
 export default app
 
 async function generateSitemapXml(connection: Connection) {
-    const eventModel = new EventModel(connection)
-    const clubModel = new ClubModel(connection)
-    const events = await eventModel.getEvents()
-    const clubs = await clubModel.getClubs()
+    const events = await getConnection()
+        .getCustomRepository(EventRepository)
+        .find()
+    const clubs = await getConnection()
+        .getCustomRepository(ClubRepository)
+        .find()
     const eventEntries = events.map(event =>
         createUrlEntry(`/#/event/${event.id}`)
     )

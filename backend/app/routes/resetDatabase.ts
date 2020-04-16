@@ -16,10 +16,11 @@ if (process.env.NODE_ENV !== 'production') {
     app.get('/', async (req, res) => {
         try {
             console.log('reset tables')
-            await resetTables({
+            const appContext = {
                 isAdmin: true,
                 db: getConnection(),
-            })
+            }
+            await resetTables(appContext)
             console.log('apply seeds')
             await applySeeds()
             res.send('Done')

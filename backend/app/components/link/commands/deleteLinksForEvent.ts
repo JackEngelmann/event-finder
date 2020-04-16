@@ -1,5 +1,5 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventLinkModel } from '../orm/eventLink'
+import { EventLinkRepository } from '../orm/eventLink'
 import { queryLinksForEvent } from '../queries/linksForEvent'
 import { LinkRepository } from '../orm/link'
 
@@ -8,7 +8,7 @@ export async function deleteLinksForEvent(
     eventId: number
 ) {
     const linksToRemove = await queryLinksForEvent(appContext, eventId)
-    await appContext.db.getCustomRepository(EventLinkModel).delete({
+    await appContext.db.getCustomRepository(EventLinkRepository).delete({
         eventId,
     })
     await appContext.db

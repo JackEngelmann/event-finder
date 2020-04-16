@@ -1,15 +1,14 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { EventModel } from '../orm/event'
 import { Logger } from '../../../infrastructure/logger'
 import { deleteLinksForEvent } from '../../link/commands/deleteLinksForEvent'
+import { EventRepository } from '../orm/event'
 
 export function deleteEvent(appContext: AppContext, id: number) {
     const { db } = appContext
-    const eventModel = new EventModel(db)
     const logger = new Logger()
     return new Promise(async (resolve, reject) => {
         try {
-            await eventModel.deleteEvent(id)
+            await db.getCustomRepository(EventRepository).delete({ id })
             // TODO: comment in
             // await eventGenreModel.clearGenresForEvent(id);
             await deleteLinksForEvent(appContext, id)
