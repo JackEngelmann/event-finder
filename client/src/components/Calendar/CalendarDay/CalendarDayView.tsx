@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { Moment } from 'moment'
 import './CalendarDay.scss'
+import { HandwrittenCircle } from './HandwrittenCircle'
 
 type Props = {
   day: Moment
@@ -24,6 +25,7 @@ export function CalendarDayView(props: Props) {
       onClick={onClick}
       data-cy={`calendar-day-${day.date()}`}
     >
+      {isSelected && <HandwrittenCircle />}
       {isInMonth && day.date()}
     </div>
   )

@@ -5,21 +5,23 @@
   align-items: center;
   justify-content: center;
   color: white;
+  position: relative;
+  overflow: visible;
+
+  svg {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 2.3em;
+    height: 2.8em;
+    position: absolute;
+  }
 
   &:hover {
-    background-color: #eee;
+    background-color: #264653;
   }
 
   &--weekend {
     color: darkgrey;
-  }
-
-  &--selected {
-    background-color: #264653;
-    color: white;
-  }
-
-  &--selected:hover {
-    background-color: darken(#264653, 5%);
   }
 }

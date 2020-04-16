@@ -1,4 +1,6 @@
 .calendar {
+  overflow: visible;
+
   &__header {
     display: flex;
     justify-content: space-between;
