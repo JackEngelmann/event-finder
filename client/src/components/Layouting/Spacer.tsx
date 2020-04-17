@@ -27,9 +27,11 @@ type Props = {
   paddingLeft?: number
   paddingRight?: number
   paddingTop?: number
+  inline?: boolean
 } & ComponentProps<'div'>
 
 export function Spacer(props: Props) {
+  const { inline, ...restProps } = props
   const style = useMemo(() => {
     const style: CSSProperties = {}
     for (let attribute of attributes) {
@@ -39,9 +41,10 @@ export function Spacer(props: Props) {
     }
     return style
   }, [props])
+  const Component = props.inline ? 'span' : 'div'
   return (
-    <div style={style} {...R.omit(attributes, props)}>
+    <Component style={style} {...R.omit(attributes, restProps)}>
       {props.children}
-    </div>
+    </Component>
   )
 }

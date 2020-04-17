@@ -11,7 +11,6 @@ import { LoadingIndicator } from '../../components/LoadingIndicator/LoadingIndic
 import { H1Title } from '../../components/H1Title/H1Title'
 import { KeyValueFields } from '../../components/KeyValueFields/KeyValueFields'
 import { KeyValueField } from '../../components/KeyValueFields/KeyValueField/KeyValueField'
-import { LinkRenderer } from '../../components/LinkRenderer/LinkRenderer'
 import { TextWithLineBreaks } from '../../components/TextWithLineBreaks/TextWithLineBreaks'
 import { Icon } from '../../components/Icon/Icon'
 import { useDimensions } from '../../components/utils/useDimensions'

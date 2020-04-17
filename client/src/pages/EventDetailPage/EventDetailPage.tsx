@@ -4,8 +4,6 @@ import React from 'react'
 import { useParams, useHistory } from 'react-router'
 import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
-import { OnlyVisibleForAdmins } from '../../components/OnlyVisibleForAdmins/OnlyVisibleForAdmins'
-import { Button } from '../../components/Button/Button'
 import {
   useEventWithDetails,
   EventWithDetails,
@@ -16,13 +14,16 @@ import { KeyValueField } from '../../components/KeyValueFields/KeyValueField/Key
 import { FakeLink } from '../../components/FakeLink/FakeLink'
 import { KeyValueFields } from '../../components/KeyValueFields/KeyValueFields'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { Icon } from '../../components/Icon/Icon'
 import { Carousel } from '../../components/Carousel'
 import { useDimensions } from '../../components/utils/useDimensions'
 import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 import { Header } from '../../components/Header'
 import { LinksRenderer } from '../../components/LinksRenderer/LinksRenderer'
+import { EditButton } from './EditButton'
+import { OnlyVisibleForAdmins } from '../../components/OnlyVisibleForAdmins/OnlyVisibleForAdmins'
+import { Spacer } from '../../components/Layouting/Spacer'
+import { DeleteButton } from './DeleteButton'
 
 type Props = {}
 
@@ -43,20 +44,6 @@ export default function EventDetailPage(props: Props) {
   if (!eventId) return null
   if (event === undefined) return <LoadingIndicator />
   const onClubClick = () => history.push(`/club/${event.club.id}`)
-
-  function renderEditButton() {
-    return (
-      <OnlyVisibleForAdmins>
-        <Button
-          className={`${cn}__edit-button`}
-          data-cy="eventdetailpage-edit-button"
-          onClick={() => history.push(`/admin/event/${eventId}`)}
-        >
-          <Icon icon="pen" />
-        </Button>
-      </OnlyVisibleForAdmins>
-    )
-  }
 
   function renderKeyValueFields(event: EventWithDetails) {
     return (
@@ -159,7 +146,11 @@ export default function EventDetailPage(props: Props) {
         )}
         <H1Title hideDivider>
           {event.name}
-          {renderEditButton()}
+          <OnlyVisibleForAdmins>
+            <Spacer inline marginRight={3} />
+            <EditButton eventId={event.id} />
+            <DeleteButton eventId={event.id} />
+          </OnlyVisibleForAdmins>
         </H1Title>
         {renderKeyValueFields(event)}
         {renderDescription(event)}
@@ -172,7 +163,11 @@ export default function EventDetailPage(props: Props) {
       <div className={cn}>
         <H1Title>
           {event.name}
-          {renderEditButton()}
+          <OnlyVisibleForAdmins>
+            <Spacer inline marginRight={3} />
+            <EditButton eventId={event.id} />
+            <DeleteButton eventId={event.id} />
+          </OnlyVisibleForAdmins>
         </H1Title>
         <div className={`${cn}__picture-and-short-info`}>
           {event.imageUrls && event.imageUrls.length > 0 && (

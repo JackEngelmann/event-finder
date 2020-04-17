@@ -15,7 +15,7 @@ export function LinksRenderer(props: Props) {
   return (
     <div className={cn}>
       {links.map((l) => (
-        <Spacer marginRight={1}>
+        <Spacer marginRight={1} key={l.href}>
           <a
             href={prependProtocoll(l.href)}
             target="_blank"
