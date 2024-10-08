@@ -23,6 +23,9 @@ const AMOUNT_CLUBS = 20
 const AMOUNT_EVENTS = 20
 const AMOUNT_GENRES = 20
 const AMOUNT_EVENT_GENRES = 40
+const TEST_IMAGE_1_URL = 'https://images.pexels.com/photos/3249760/pexels-photo-3249760.jpeg'
+const TEST_IMAGE_2_URL = 'https://i2.pickpik.com/photos/952/329/306/night-club-silhouette-party-club-preview.jpg'
+
 
 export const testData: DbScript = {
     name: 'testData3',
@@ -111,13 +114,11 @@ async function createEventImages(connection: Connection) {
         return [
             {
                 eventId,
-                imageUrl:
-                    'https://cdn.pixabay.com/photo/2015/03/17/14/05/sparkler-677774_960_720.jpg',
+                imageUrl: TEST_IMAGE_1_URL,
             },
             {
                 eventId,
-                imageUrl:
-                    'https://cdn.pixabay.com/photo/2015/07/10/17/53/cheers-839865_960_720.jpg',
+                imageUrl: TEST_IMAGE_2_URL,
             },
         ]
     })
