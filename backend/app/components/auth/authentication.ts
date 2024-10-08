@@ -8,6 +8,8 @@ import passport from 'passport'
 import { Express } from 'express'
 import { getConnection } from 'typeorm'
 
+// TODO: The secrets should not be in the code.
+// For development, it is alright for now.
 const BCRYPT_SALT_ROUNDS = 11
 const ADMIN_PASSWORD_PLAINTEXT = 'alexfalcojack'
 const SECRET = 'wJK[>PDG8n|tuRd'
