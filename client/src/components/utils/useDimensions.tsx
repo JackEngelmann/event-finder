@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 type Dimensions = {
   width: number | undefined
@@ -8,7 +8,7 @@ type Dimensions = {
 export function useDimensions() {
   const [dimensions, setDimensions] = useState<Dimensions>({ width: undefined, height: undefined })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     function updateDimensions() {
       const width = window.innerWidth;
       const height = window.innerHeight;
