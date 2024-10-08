@@ -18,6 +18,7 @@ import { Connection } from 'typeorm'
 import { LinkDataModel } from '../app/components/link/orm/link'
 import { EventLinkDataModel } from '../app/components/link/orm/eventLink'
 import { ClubLinkDataModel } from '../app/components/link/orm/clubLink'
+import { ClubImageDataModel } from '../app/components/image/orm/clubImage'
 
 const AMOUNT_CLUBS = 20
 const AMOUNT_EVENTS = 20
@@ -38,6 +39,7 @@ export const testData: DbScript = {
         await createEventImages(connection)
         await createEventLinks(connection)
         await createClubLinks(connection)
+        await createClubImages(connection)
     },
 }
 
@@ -210,4 +212,26 @@ async function createClubLinks(connection: Connection) {
                 .execute()
         })
     }
+}
+
+async function createClubImages(connection: Connection) {
+    const clubIds = R.range(1, AMOUNT_CLUBS + 1)
+    const values = clubIds.flatMap(clubId => {
+        return [
+            {
+                clubId,
+                imageUrl: TEST_IMAGE_1_URL,
+            },
+            {
+                clubId,
+                imageUrl: TEST_IMAGE_2_URL,
+            },
+        ]
+    })
+    await connection
+        .createQueryBuilder()
+        .insert()
+        .into(ClubImageDataModel)
+        .values(values)
+        .execute()
 }
