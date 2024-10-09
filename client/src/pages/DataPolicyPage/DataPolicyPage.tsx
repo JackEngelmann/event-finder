@@ -3,7 +3,6 @@ import { Page } from '../../components/Page/Page'
 import { Content } from '../../components/Content/Content'
 import { FormattedHtml } from '../../components/FormattedHtml/FormattedHtml'
 import { H1Title } from '../../components/H1Title/H1Title'
-import { contact } from '../../contact'
 import { useTranslation } from 'react-i18next'
 import { Button } from '../../components/Button/Button'
 import { stopGoogleAnalytics } from '../../googleAnalytics'
@@ -70,24 +69,6 @@ export default function DataPolicyPage() {
           Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken
           aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch
           Dritte ist nicht möglich.
-          <h3>Hinweis zur verantwortlichen Stelle</h3>
-          Die verantwortliche Stelle für die Datenverarbeitung auf dieser
-          Website ist:
-          <br />
-          Falco Huhold
-          <br />
-          Kreuzsur. 3<br />
-          01067 Dresden
-          <br />
-          Telefon: 0162-2326045
-          <br />
-          E-Mail: {contact.email}
-          <br />
-          <br />
-          Verantwortliche Stelle ist die natürliche oder juristische Person, die
-          allein oder gemeinsam mit anderen über die Zwecke und Mittel der
-          Verarbeitung von personenbezogenen Daten (z.B. Namen, E-Mail-Adressen
-          o. Ä.) entscheidet.
           <h3>Widerruf Ihrer Einwilligung zur Datenverarbeitung</h3>
           Viele Datenverarbeitungsvorgänge sind nur mit Ihrer ausdrücklichen
           Einwilligung möglich. Sie können eine bereits erteilte Einwilligung
