@@ -19,37 +19,34 @@ export type UpdateClubInput = {
     specials?: string
 }
 
-export function updateClub(appContext: AppContext, input: UpdateClubInput) {
+export async function updateClub(appContext: AppContext, input: UpdateClubInput) {
     const { db } = appContext
     const clubRepository = db.getCustomRepository(ClubRepository)
-    return new Promise(async (resolve, reject) => {
-        try {
-            await clubRepository.update(input.id, {
-                address: input.address || null,
-                contact: input.contact || null,
-                description: input.description || null,
-                email: input.email || null,
-                id: input.id,
-                name: input.name,
-                region: input.region || null,
-                specials: input.specials || null,
+    try {
+        await clubRepository.update(input.id, {
+            address: input.address || null,
+            contact: input.contact || null,
+            description: input.description || null,
+            email: input.email || null,
+            id: input.id,
+            name: input.name,
+            region: input.region || null,
+            specials: input.specials || null,
+        })
+        if (input.imageUrls) {
+            await setImageUrlsForClub(appContext, {
+                clubId: input.id,
+                imageUrls: input.imageUrls,
             })
-            if (input.imageUrls) {
-                await setImageUrlsForClub(appContext, {
-                    clubId: input.id,
-                    imageUrls: input.imageUrls,
-                })
-            }
-            if (input.links) {
-                await setLinksForClub(appContext, {
-                    clubId: input.id,
-                    links: input.links,
-                })
-            }
-            resolve()
-        } catch (err) {
-            console.error(err)
-            reject(err)
         }
-    })
+        if (input.links) {
+            await setLinksForClub(appContext, {
+                clubId: input.id,
+                links: input.links,
+            })
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 }

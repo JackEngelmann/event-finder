@@ -23,33 +23,31 @@ export type CreateEventInput = {
     special?: string
 }
 
-export function createEvent(appContext: AppContext, input: CreateEventInput) {
+export async function createEvent(appContext: AppContext, input: CreateEventInput) {
     const { db } = appContext
-    return new Promise<number>(async (resolve, reject) => {
-        try {
-            const event = await db
-                .getCustomRepository(EventRepository)
-                .createAndSave(input)
-            await setGenresForEvent(appContext, {
+    try {
+        const event = await db
+            .getCustomRepository(EventRepository)
+            .createAndSave(input)
+        await setGenresForEvent(appContext, {
+            eventId: event.id,
+            genreIds: input.genreIds,
+        })
+        if (input.imageUrls) {
+            await setImageUrlsForEvent(appContext, {
                 eventId: event.id,
-                genreIds: input.genreIds,
+                imageUrls: input.imageUrls,
             })
-            if (input.imageUrls) {
-                setImageUrlsForEvent(appContext, {
-                    eventId: event.id,
-                    imageUrls: input.imageUrls,
-                })
-            }
-            if (input.links) {
-                await createLinksForEvent(appContext, {
-                    eventId: event.id,
-                    links: input.links,
-                })
-            }
-            resolve(event.id)
-        } catch (err) {
-            console.error(err)
-            reject(err)
         }
-    })
+        if (input.links) {
+            await createLinksForEvent(appContext, {
+                eventId: event.id,
+                links: input.links,
+            })
+        }
+        return event.id
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 }

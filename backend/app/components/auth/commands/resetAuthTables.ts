@@ -4,14 +4,11 @@ import { Logger } from '../../../infrastructure/logger'
 
 const logger = new Logger()
 
-export function resetAuthTables(appContext: AppContext) {
-    return new Promise<void>(async (resolve, reject) => {
-        try {
-            appContext.db.getCustomRepository(UserRepository).clear()
-            resolve()
-        } catch (err) {
-            logger.error(err)
-            reject()
-        }
-    })
+export async function resetAuthTables(appContext: AppContext) {
+    try {
+        await appContext.db.getCustomRepository(UserRepository).clear()
+    } catch (err) {
+        logger.error(err)
+        throw err
+    }
 }

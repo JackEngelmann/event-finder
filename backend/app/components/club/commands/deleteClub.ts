@@ -5,25 +5,22 @@ import { deleteEvent } from '../../event/commands/deleteEvent'
 import { deleteLinksForClub } from '../../link/commands/deleteLinksForClub'
 import { ClubRepository } from '../orm/club'
 
-export function deleteClub(appContext: AppContext, clubId: number) {
+export async function deleteClub(appContext: AppContext, clubId: number) {
     const { db } = appContext
     const logger = new Logger()
-    return new Promise(async (resolve, reject) => {
-        try {
-            await db.getCustomRepository(ClubRepository).delete(clubId)
-            // TODO: refactor
-            const connectedEvents = await appContext.db
-                .getCustomRepository(EventRepository)
-                .findEventsForClub(clubId)
-            await deleteLinksForClub(appContext, clubId)
-            const deleteConnectedEventsPromises = connectedEvents.map(event =>
-                deleteEvent(appContext, event.id)
-            )
-            await Promise.all(deleteConnectedEventsPromises)
-            resolve()
-        } catch (err) {
-            logger.error(err)
-            reject(err)
-        }
-    })
+    try {
+        await db.getCustomRepository(ClubRepository).delete(clubId)
+        // TODO: refactor
+        const connectedEvents = await appContext.db
+            .getCustomRepository(EventRepository)
+            .findEventsForClub(clubId)
+        await deleteLinksForClub(appContext, clubId)
+        const deleteConnectedEventsPromises = connectedEvents.map(event =>
+            deleteEvent(appContext, event.id)
+        )
+        await Promise.all(deleteConnectedEventsPromises)
+    } catch (error) {
+        logger.error(error)
+        throw error
+    }
 }

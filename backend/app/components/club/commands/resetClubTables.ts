@@ -4,14 +4,11 @@ import { ClubRepository } from '../orm/club'
 
 const logger = new Logger()
 
-export function resetClubTables(appContext: AppContext) {
-    return new Promise<void>(async (resolve, reject) => {
-        try {
-            await appContext.db.getCustomRepository(ClubRepository).clear()
-            resolve()
-        } catch (err) {
-            logger.error(err)
-            reject()
-        }
-    })
+export async function resetClubTables(appContext: AppContext) {
+    try {
+        await appContext.db.getCustomRepository(ClubRepository).clear()
+    } catch (error) {
+        logger.error(error)
+        throw error
+    }
 }

@@ -6,17 +6,14 @@ import { ClubImageRepository } from '../orm/clubImage'
 
 const logger = new Logger()
 
-export function resetImageTables(appContext: AppContext) {
+export async function resetImageTables(appContext: AppContext) {
     const { db } = appContext
-    return new Promise<void>(async (resolve, reject) => {
-        try {
-            await db.getCustomRepository(ClubImageRepository).clear()
-            await db.getCustomRepository(EventImageRepository).clear()
-            await db.getCustomRepository(ImageRepository).clear()
-            resolve()
-        } catch (err) {
-            logger.error(err)
-            reject()
-        }
-    })
+    try {
+        await db.getCustomRepository(ClubImageRepository).clear()
+        await db.getCustomRepository(EventImageRepository).clear()
+        await db.getCustomRepository(ImageRepository).clear()
+    } catch (error) {
+        logger.error(error)
+        throw error
+    }
 }

@@ -150,31 +150,29 @@ export async function createApolloTestServer(options: {
     isAdmin: boolean
     dbName: string
     insertTestData: boolean
-}) {
-    return new Promise<ApolloTestServer>(async (resolve, reject) => {
-        await createDbConnection(options.dbName)
-        let db = getConnection(options.dbName)
-        const appContext: AppContext = {
-            db,
-            isAdmin: options.isAdmin,
-        }
-        await db.synchronize(true)
-        if (options.insertTestData) {
-            await insertTestData(db)
-        }
-        const server = new ApolloServer({
-            typeDefs: typeDefs,
-            resolvers: resolvers,
-            context: appContext,
-        })
-        const client = createTestClient(server)
-
-        async function destroy() {
-            await server.stop()
-        }
-
-        resolve({ destroy, server, appContext, client })
+}): Promise<ApolloTestServer> {
+    await createDbConnection(options.dbName)
+    let db = getConnection(options.dbName)
+    const appContext: AppContext = {
+        db,
+        isAdmin: options.isAdmin,
+    }
+    await db.synchronize(true)
+    if (options.insertTestData) {
+        await insertTestData(db)
+    }
+    const server = new ApolloServer({
+        typeDefs: typeDefs,
+        resolvers: resolvers,
+        context: appContext,
     })
+    const client = createTestClient(server)
+
+    async function destroy() {
+        await server.stop()
+    }
+
+    return { destroy, server, appContext, client }
 }
 
 /**
@@ -193,38 +191,36 @@ export async function createApolloHttpTestServer(options: {
     isAdmin: boolean
     insertTestData: boolean
     dbName: string
-}) {
-    return new Promise<ApolloHttpTestServer>(async (resolve, reject) => {
-        await createDbConnection(options.dbName)
-        const db = getConnection(options.dbName)
-        await db.createQueryRunner().dropDatabase('lieblingsclubtest')
-        await db.createQueryRunner().createDatabase('lieblingsclubtest')
-        const appContext: AppContext = {
-            db,
-            isAdmin: options.isAdmin,
-        }
-        if (options.insertTestData) {
-            await insertTestData(db)
-        }
-        const server = new ApolloServer({
-            typeDefs: typeDefs,
-            resolvers: resolvers,
-            context: appContext,
-        })
-        const app = express()
-        server.applyMiddleware({ app })
-        const httpServer = await new Promise<http.Server>(resolve => {
-            const l: http.Server = app.listen({ port: 0 }, () => resolve(l))
-        })
-        const port = (httpServer.address() as { port: number }).port
-
-        async function destroy() {
-            if (server) await server.stop()
-            if (httpServer) {
-                await new Promise(resolve => httpServer.close(() => resolve()))
-            }
-        }
-
-        resolve({ destroy, httpServer, appContext, port, server })
+}): Promise<ApolloHttpTestServer> {
+    await createDbConnection(options.dbName)
+    const db = getConnection(options.dbName)
+    await db.createQueryRunner().dropDatabase('lieblingsclubtest')
+    await db.createQueryRunner().createDatabase('lieblingsclubtest')
+    const appContext: AppContext = {
+        db,
+        isAdmin: options.isAdmin,
+    }
+    if (options.insertTestData) {
+        await insertTestData(db)
+    }
+    const server = new ApolloServer({
+        typeDefs: typeDefs,
+        resolvers: resolvers,
+        context: appContext,
     })
+    const app = express()
+    server.applyMiddleware({ app })
+    const httpServer = await new Promise<http.Server>(resolve => {
+        const l: http.Server = app.listen({ port: 0 }, () => resolve(l))
+    })
+    const port = (httpServer.address() as { port: number }).port
+
+    async function destroy() {
+        if (server) await server.stop()
+        if (httpServer) {
+            await new Promise(resolve => httpServer.close(() => resolve()))
+        }
+    }
+
+    return { destroy, httpServer, appContext, port, server }
 }

@@ -18,29 +18,27 @@ export type CreateClubInput = {
     specials?: string
 }
 
-export function createClub(appContext: AppContext, input: CreateClubInput) {
-    return new Promise<number>(async (resolve, reject) => {
-        try {
-            const club = await appContext.db
-                .getCustomRepository(ClubRepository)
-                .createAndSave(input)
-            const clubId = club.id
-            if (input.imageUrls) {
-                await setImageUrlsForClub(appContext, {
-                    clubId,
-                    imageUrls: input.imageUrls,
-                })
-            }
-            if (input.links) {
-                await createLinksForClub(appContext, {
-                    links: input.links,
-                    clubId,
-                })
-            }
-            resolve(clubId)
-        } catch (err) {
-            console.error(err)
-            reject(err)
+export async function createClub(appContext: AppContext, input: CreateClubInput): Promise<number> {
+    try {
+        const club = await appContext.db
+            .getCustomRepository(ClubRepository)
+            .createAndSave(input)
+        const clubId = club.id
+        if (input.imageUrls) {
+            await setImageUrlsForClub(appContext, {
+                clubId,
+                imageUrls: input.imageUrls,
+            })
         }
-    })
+        if (input.links) {
+            await createLinksForClub(appContext, {
+                links: input.links,
+                clubId,
+            })
+        }
+        return clubId
+    } catch (err) {
+        console.error(err)
+        throw err
+    }
 }

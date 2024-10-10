@@ -7,22 +7,20 @@ type Filter = {
     clubId?: number
 }
 
-export function queryEvents(appContext: AppContext, filter?: Filter) {
+export async function queryEvents(appContext: AppContext, filter?: Filter) {
     const { db } = appContext
-    return new Promise(async (resolve, reject) => {
-        try {
-            const events = await db.getCustomRepository(EventRepository).find()
-            if (!filter) return resolve(events)
-            const filteredEvents = events.filter(
-                event =>
-                    matchesDateFilter(event, filter.date) &&
-                    matchesClubFilter(event, filter.clubId)
-            )
-            return resolve(filteredEvents)
-        } catch (err) {
-            reject(err)
-        }
-    })
+    try {
+        const events = await db.getCustomRepository(EventRepository).find()
+        if (!filter) return events
+        const filteredEvents = events.filter(
+            event =>
+                matchesDateFilter(event, filter.date) &&
+                matchesClubFilter(event, filter.clubId)
+        )
+        return filteredEvents
+    } catch (err) {
+        throw err
+    }
 }
 
 function matchesDateFilter(event: EventDataModel, date: string | undefined) {

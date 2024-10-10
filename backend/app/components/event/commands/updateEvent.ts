@@ -22,45 +22,42 @@ export type UpdateEventInput = {
     special?: string
 }
 
-export function updateEvent(appContext: AppContext, input: UpdateEventInput) {
+export async function updateEvent(appContext: AppContext, input: UpdateEventInput) {
     const { db } = appContext
     const eventRepository = db.getCustomRepository(EventRepository)
-    return new Promise(async (resolve, reject) => {
-        try {
-            await eventRepository.update(input.id, {
-                admissionFee: input.admissionFee || null,
-                admissionFeeWithDiscount:
-                    input.admissionFeeWithDiscount || null,
-                amountOfFloors: input.amountOfFloors || null,
-                clubId: input.clubId,
-                date: input.date,
-                description: input.description || null,
-                id: input.id,
-                minimumAge: input.minimumAge || null,
-                name: input.name,
-                priceCategory: input.priceCategory || null,
-                special: input.special || null,
-            })
-            await setGenresForEvent(appContext, {
+    try {
+        await eventRepository.update(input.id, {
+            admissionFee: input.admissionFee || null,
+            admissionFeeWithDiscount:
+                input.admissionFeeWithDiscount || null,
+            amountOfFloors: input.amountOfFloors || null,
+            clubId: input.clubId,
+            date: input.date,
+            description: input.description || null,
+            id: input.id,
+            minimumAge: input.minimumAge || null,
+            name: input.name,
+            priceCategory: input.priceCategory || null,
+            special: input.special || null,
+        })
+        await setGenresForEvent(appContext, {
+            eventId: input.id,
+            genreIds: input.genreIds,
+        })
+        if (input.imageUrls) {
+            await setImageUrlsForEvent(appContext, {
                 eventId: input.id,
-                genreIds: input.genreIds,
+                imageUrls: input.imageUrls,
             })
-            if (input.imageUrls) {
-                setImageUrlsForEvent(appContext, {
-                    eventId: input.id,
-                    imageUrls: input.imageUrls,
-                })
-            }
-            if (input.links) {
-                await setLinksForEvent(appContext, {
-                    eventId: input.id,
-                    links: input.links,
-                })
-            }
-            resolve()
-        } catch (err) {
-            console.error(err)
-            reject(err)
         }
-    })
+        if (input.links) {
+            await setLinksForEvent(appContext, {
+                eventId: input.id,
+                links: input.links,
+            })
+        }
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
 }

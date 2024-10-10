@@ -15,10 +15,11 @@ export async function setGenresForEvent(
 
     const eventGenreRepository = db.getCustomRepository(EventGenreRepository)
     await eventGenreRepository.delete({ eventId })
-    if (genreIds.length > 0) {
-        const eventGenres = genreIds.map(genreId =>
-            eventGenreRepository.create({ genreId, eventId })
-        )
-        await eventGenreRepository.save(eventGenres)
-    }
+
+    if (genreIds.length === 0) return
+
+    const eventGenres = genreIds.map(genreId =>
+        eventGenreRepository.create({ genreId, eventId })
+    )
+    await eventGenreRepository.save(eventGenres)
 }

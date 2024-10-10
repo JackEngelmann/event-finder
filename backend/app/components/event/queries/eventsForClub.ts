@@ -2,25 +2,23 @@ import { AppContext } from '../../../infrastructure/appContext'
 import { EventDataModel, EventRepository } from '../orm/event'
 import moment from 'moment'
 
-export function queryEventsForClub(
+export async function queryEventsForClub(
     appContext: AppContext,
     clubId: number,
     fromDay: string | undefined
 ) {
     const { db } = appContext
-    return new Promise(async (resolve, reject) => {
-        try {
-            const events = await db.getCustomRepository(EventRepository).find()
-            const filteredEvents = events.filter(
-                event =>
-                    matchesClubId(event, clubId) &&
-                    matchesFromDay(event, fromDay)
-            )
-            return resolve(filteredEvents)
-        } catch (err) {
-            reject(err)
-        }
-    })
+    try {
+        const events = await db.getCustomRepository(EventRepository).find()
+        const filteredEvents = events.filter(
+            event =>
+                matchesClubId(event, clubId) &&
+                matchesFromDay(event, fromDay)
+        )
+        return filteredEvents
+    } catch (error) {
+        throw error
+    }
 }
 
 function matchesClubId(event: EventDataModel, clubId: number) {
