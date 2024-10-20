@@ -1,13 +1,8 @@
-import { appendFile } from 'fs'
 import moment from 'moment'
 
 export class Logger {
     writeToLog(message: any, mode: string) {
-        appendFile(
-            './log.txt',
-            `[${moment().toISOString()}][${mode}] ${message}\n`,
-            err => {}
-        )
+        console.log(`[${moment().toISOString()}][${mode}] ${message}`)
     }
     error(message: any) {
         this.writeToLog(message, 'error')

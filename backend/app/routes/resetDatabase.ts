@@ -1,6 +1,6 @@
 import express from 'express'
 import { applyDbScripts } from '../components/scripts/commands/applyDbScripts'
-import { databaseConfig } from '../../databaseConfig'
+import { getDatabaseConfig } from '../../databaseConfig'
 import { resetAuthTables } from '../components/auth/commands/resetAuthTables'
 import { AppContext } from '../infrastructure/appContext'
 import { resetClubTables } from '../components/club/commands/resetClubTables'
@@ -39,6 +39,7 @@ async function resetTables(appContext: AppContext) {
     await resetLinkTables(appContext)
 }
 async function applySeeds() {
+    const databaseConfig = getDatabaseConfig()
     await applyDbScripts(databaseConfig.seeds || [], true)
 }
 

@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import express from 'express'
 import { initializePassportAuthentication } from './components/auth/authentication'
 import { applyDbScripts } from './components/scripts/commands/applyDbScripts'
-import { databaseConfig } from '../databaseConfig'
 import routes from './routes'
 import { ApolloServer } from 'apollo-server-express'
 import { typeDefs } from './infrastructure/schema'
@@ -11,12 +10,14 @@ import { AppContext } from './infrastructure/appContext'
 import { UserDataModel } from './components/auth/orm/user'
 import { getConnection } from 'typeorm'
 import { createDbConnection } from './infrastructure/database'
+import { getDatabaseConfig } from '../databaseConfig'
 
 let app = express()
- 
+
 initializePassportAuthentication(app)
 
 app.use(routes)
+app.use(express.static("public"))
 
 export const apolloServer = new ApolloServer({
     typeDefs,
@@ -37,10 +38,11 @@ export const apolloServer = new ApolloServer({
 
 apolloServer.applyMiddleware({ app })
 
-createDbConnection().then(() => {
-    applyDbScripts(databaseConfig.migrations || [])
-    applyDbScripts(databaseConfig.seeds || [])
-})
+const databaseConfig = getDatabaseConfig()
+createDbConnection()
+    .then(() => applyDbScripts(databaseConfig.migrations || []))
+    .then(() => applyDbScripts(databaseConfig.seeds || []))
+    .catch(err => console.error(err))
 
 export default app
 

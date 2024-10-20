@@ -21,52 +21,19 @@ const migrations: DbScript[] = [
     migration_200414_1824_links,
 ]
 
-const configByMode: Record<string, DatabaseConfig> = {
-    production: {
+export function getDatabaseConfig(): DatabaseConfig {
+    const isProduction = process.env.NODE_ENV === 'production'
+    return {
         migrations,
-        seeds: [],
+        seeds: isProduction ? [] : [testData],
         connectionOptions: {
             type: 'mysql',
-            database: process.env.DATABASE!,
-            username: process.env.DBUSERNAME!,
-            host: process.env.DBHOST!,
-            port: parseInt(process.env.DBPORT!, 10),
-            password: process.env.DBPASSWORD,
+            database: process.env.DB_NAME!,
+            host: process.env.DB_HOST!,
+            username: process.env.DB_USER!,
+            port: parseInt(process.env.DB_PORT!, 10),
+            password: process.env.DB_PASSWORD!,
             charset: 'utf8mb4',
-        },
-    },
-    development: {
-        migrations,
-        seeds: [testData],
-        connectionOptions: {
-            type: 'mysql',
-            database: 'lieblingsclub',
-            host: 'localhost',
-            username: 'lieblingsclub',
-            port: 3306,
-            charset: 'utf8mb4',
-        },
-    },
-    test: {
-        migrations,
-        seeds: [testData],
-        connectionOptions: {
-            type: 'mysql',
-            host: 'localhost',
-            database: 'lieblingsclubtest',
-            username: 'lieblingsclub',
-            port: 3306,
-            charset: 'utf8mb4',
-        },
-    },
+        }
+    }
 }
-
-const configForMode = configByMode[process.env.NODE_ENV!]
-
-if (!configForMode) {
-    throw new Error(
-        `no database configuration found for the NODE_ENV mode "${process.env.NODE_ENV}"`
-    )
-}
-
-export const databaseConfig = configForMode

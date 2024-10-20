@@ -1,9 +1,7 @@
 import { DbScript } from '../../../../databaseConfig'
 import { AppliedScriptRepository } from '../orm/appliedScripts'
-import { Logger } from '../../../infrastructure/logger'
 import { getConnection } from 'typeorm'
 
-const logger = new Logger()
 
 export async function applyDbScripts(
     scripts: DbScript[],
@@ -26,7 +24,6 @@ export async function applyDbScripts(
         if (appliedScriptNames.includes(script.name) && !ignoreAppliedScripts) {
             continue
         }
-        logger.info(`will run db script: ${script.name}`)
         await script.up(connection)
         await appliedScriptRepository.createAndSave({ name: script.name })
     }

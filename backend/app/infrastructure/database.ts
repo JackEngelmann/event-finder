@@ -1,5 +1,4 @@
 import 'reflect-metadata'
-import { databaseConfig } from '../../databaseConfig'
 import { createConnection, getConnectionManager } from 'typeorm'
 import { ClubDataModel, ClubRepository } from '../components/club/orm/club'
 import { EventDataModel, EventRepository } from '../components/event/orm/event'
@@ -66,7 +65,13 @@ export async function createDbConnection(dbName?: any) {
             EventLinkRepository,
             AppliedScriptRepository,
         ],
-        ...databaseConfig.connectionOptions,
+        type: 'mysql',
+        database: process.env.DB_NAME!,
+        host: process.env.DB_HOST!,
+        username: process.env.DB_USER!,
+        port: parseInt(process.env.DB_PORT!, 10),
+        password: process.env.DB_PASSWORD!,
+        charset: 'utf8mb4',
         logger: 'file',
     })
 }

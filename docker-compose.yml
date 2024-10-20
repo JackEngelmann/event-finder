@@ -1,0 +1,35 @@
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+      - PORT=8080
+      - DB_NAME=lieblingsclub
+      - DB_HOST=db
+      - DB_USER=lieblingsclub
+      - DB_PORT=3306
+      - DB_PASSWORD=lieblingsclub
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8.0
+    restart: always
+    container_name: db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=lieblingsclub
+      - MYSQL_USER=lieblingsclub
+      - MYSQL_PASSWORD=lieblingsclub
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "lieblingsclub", "--password=lieblingsclub"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
