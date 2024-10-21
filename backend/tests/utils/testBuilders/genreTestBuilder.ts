@@ -1,5 +1,5 @@
 import { getConnection } from 'typeorm'
-import { GenreRepository } from '../../../app/components/genre/orm/genre'
+import { GenreRepository } from '../../../app/genre/orm/genre'
 
 export class GenreTestBuilder {
     name: string | undefined

@@ -1,7 +1,7 @@
 import express from 'express'
 import { Connection, getConnection } from 'typeorm'
-import { ClubRepository } from '../components/club/orm/club'
-import { EventRepository } from '../components/event/orm/event'
+import { ClubRepository } from '../club/orm/club'
+import { EventRepository } from '../event/orm/event'
 
 const app = express()
 

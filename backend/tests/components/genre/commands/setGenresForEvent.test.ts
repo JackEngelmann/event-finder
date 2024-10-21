@@ -1,9 +1,9 @@
 import { createDbConnection } from '../../../../app/infrastructure/database'
 import { getConnection } from 'typeorm'
 import { createTestEvent } from '../../../utils/testBuilders'
-import { setGenresForEvent } from '../../../../app/components/genre/commands/setGenresForEvent'
+import { setGenresForEvent } from '../../../../app/genre/commands/setGenresForEvent'
 import { createTestGenre } from '../../../utils/testBuilders/genreTestBuilder'
-import { EventGenreRepository } from '../../../../app/components/genre/orm/eventGenre'
+import { EventGenreRepository } from '../../../../app/genre/orm/eventGenre'
 
 const CONNECTION_NAME = 'setGenresForEvent-test'
 

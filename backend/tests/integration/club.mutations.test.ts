@@ -4,14 +4,14 @@ import {
     ApolloTestServer,
     ApolloHttpTestServer,
 } from '../utils'
-import { createEvent } from '../../app/components/event/commands/createEvent'
-import { queryEvent } from '../../app/components/event/queries/event'
+import { createEvent } from '../../app/event/commands/createEvent'
+import { queryEvent } from '../../app/event/queries/event'
 import {
     CreateClubInput,
     createClub,
-} from '../../app/components/club/commands/createClub'
-import { UpdateClubInput } from '../../app/components/club/commands/updateClub'
-import { queryClub } from '../../app/components/club/queries/club'
+} from '../../app/club/commands/createClub'
+import { UpdateClubInput } from '../../app/club/commands/updateClub'
+import { queryClub } from '../../app/club/queries/club'
 
 const DB_NAME = 'clubmutationdb'
 

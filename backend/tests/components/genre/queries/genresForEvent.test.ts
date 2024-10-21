@@ -1,10 +1,10 @@
 import { createDbConnection } from '../../../../app/infrastructure/database'
 import { getConnection } from 'typeorm'
 import { createTestEvent } from '../../../utils/testBuilders'
-import { setGenresForEvent } from '../../../../app/components/genre/commands/setGenresForEvent'
+import { setGenresForEvent } from '../../../../app/genre/commands/setGenresForEvent'
 import { createTestGenre } from '../../../utils/testBuilders/genreTestBuilder'
-import { EventGenreRepository } from '../../../../app/components/genre/orm/eventGenre'
-import { queryGenresForEvent } from '../../../../app/components/genre/queries/genresForEvent'
+import { EventGenreRepository } from '../../../../app/genre/orm/eventGenre'
+import { queryGenresForEvent } from '../../../../app/genre/queries/genresForEvent'
 
 const CONNECTION_NAME = 'getGenresForEvent-test'
 

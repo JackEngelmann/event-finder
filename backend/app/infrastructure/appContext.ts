@@ -1,4 +1,4 @@
-import { UserDataModel } from '../components/auth/orm/user'
+import { UserDataModel } from '../auth/orm/user'
 import { Connection } from 'typeorm'
 
 export type AppContext = {

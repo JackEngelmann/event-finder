@@ -1,4 +1,4 @@
-import server from './bin/www/server'
+import server from './server'
 
 server
 

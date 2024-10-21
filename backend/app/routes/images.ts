@@ -1,5 +1,5 @@
 import logger from '../infrastructure/logger'
-import { ImageRepository } from '../components/image/orm/image'
+import { ImageRepository } from '../image/orm/image'
 import express from 'express'
 import { getConnection } from 'typeorm'
 

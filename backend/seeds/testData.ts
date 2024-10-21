@@ -1,9 +1,9 @@
 import * as R from 'ramda'
 import { DbScript } from '../app/infrastructure/database'
-import { ClubDataModel } from '../app/components/club/orm/club'
-import { UserDataModel } from '../app/components/auth/orm/user'
-import { getAdminPassword } from '../app/components/auth/authentication'
-import { GenreDataModel } from '../app/components/genre/orm/genre'
+import { ClubDataModel } from '../app/club/orm/club'
+import { UserDataModel } from '../app/auth/orm/user'
+import { getAdminPassword } from '../app/auth/authentication'
+import { GenreDataModel } from '../app/genre/orm/genre'
 import {
     randomInt,
     sampleMultipleWithoutRepition,
@@ -11,14 +11,14 @@ import {
     sample,
 } from '../app/utils/random'
 import moment from 'moment'
-import { EventDataModel } from '../app/components/event/orm/event'
-import { EventGenreDataModel } from '../app/components/genre/orm/eventGenre'
-import { EventImageDataModel } from '../app/components/image/orm/eventImage'
+import { EventDataModel } from '../app/event/orm/event'
+import { EventGenreDataModel } from '../app/genre/orm/eventGenre'
+import { EventImageDataModel } from '../app/image/orm/eventImage'
 import { Connection } from 'typeorm'
-import { LinkDataModel } from '../app/components/link/orm/link'
-import { EventLinkDataModel } from '../app/components/link/orm/eventLink'
-import { ClubLinkDataModel } from '../app/components/link/orm/clubLink'
-import { ClubImageDataModel } from '../app/components/image/orm/clubImage'
+import { LinkDataModel } from '../app/link/orm/link'
+import { EventLinkDataModel } from '../app/link/orm/eventLink'
+import { ClubLinkDataModel } from '../app/link/orm/clubLink'
+import { ClubImageDataModel } from '../app/image/orm/clubImage'
 
 const AMOUNT_CLUBS = 20
 const AMOUNT_EVENTS = 20

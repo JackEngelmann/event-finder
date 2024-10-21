@@ -1,5 +1,5 @@
 import { getConnection } from 'typeorm'
-import { ClubRepository } from '../../../app/components/club/orm/club'
+import { ClubRepository } from '../../../app/club/orm/club'
 
 export class ClubTestBuilder {
     name: string | undefined

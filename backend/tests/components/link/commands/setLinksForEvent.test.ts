@@ -1,8 +1,8 @@
 import { createDbConnection } from '../../../../app/infrastructure/database'
 import { getConnection } from 'typeorm'
 import { EventTestBuilder } from '../../../utils/testBuilders'
-import { setLinksForEvent } from '../../../../app/components/link/commands/setLinksForEvent'
-import { queryLinksForEvent } from '../../../../app/components/link/queries/linksForEvent'
+import { setLinksForEvent } from '../../../../app/link/commands/setLinksForEvent'
+import { queryLinksForEvent } from '../../../../app/link/queries/linksForEvent'
 
 const CONNECTION_NAME = 'setLinksForEvent-test'
 

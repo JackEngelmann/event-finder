@@ -4,9 +4,9 @@ import {
     ApolloTestServer,
     createApolloTestServer,
 } from '../utils'
-import { CreateEventInput } from '../../app/components/event/commands/createEvent'
-import { UpdateEventInput } from '../../app/components/event/commands/updateEvent'
-import { queryEvent } from '../../app/components/event/queries/event'
+import { CreateEventInput } from '../../app/event/commands/createEvent'
+import { UpdateEventInput } from '../../app/event/commands/updateEvent'
+import { queryEvent } from '../../app/event/queries/event'
 
 const DB_NAME = 'eventmutationdb'
 const createEventMutation = `

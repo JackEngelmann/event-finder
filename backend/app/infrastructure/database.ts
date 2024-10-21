@@ -1,35 +1,35 @@
 import 'reflect-metadata'
 import { Connection, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
-import { ClubDataModel, ClubRepository } from '../components/club/orm/club'
-import { EventDataModel, EventRepository } from '../components/event/orm/event'
+import { ClubDataModel, ClubRepository } from '../club/orm/club'
+import { EventDataModel, EventRepository } from '../event/orm/event'
 import {
     EventGenreDataModel,
     EventGenreRepository,
-} from '../components/genre/orm/eventGenre'
-import { GenreDataModel, GenreRepository } from '../components/genre/orm/genre'
-import { ImageDataModel, ImageRepository } from '../components/image/orm/image'
-import { UserDataModel, UserRepository } from '../components/auth/orm/user'
+} from '../genre/orm/eventGenre'
+import { GenreDataModel, GenreRepository } from '../genre/orm/genre'
+import { ImageDataModel, ImageRepository } from '../image/orm/image'
+import { UserDataModel, UserRepository } from '../auth/orm/user'
 import {
     AppliedScriptDataModel,
     AppliedScriptRepository,
-} from '../components/scripts/orm/appliedScripts'
+} from '../scripts/orm/appliedScripts'
 import {
     EventImageDataModel,
     EventImageRepository,
-} from '../components/image/orm/eventImage'
+} from '../image/orm/eventImage'
 import {
     ClubImageDataModel,
     ClubImageRepository,
-} from '../components/image/orm/clubImage'
-import { LinkDataModel, LinkRepository } from '../components/link/orm/link'
+} from '../image/orm/clubImage'
+import { LinkDataModel, LinkRepository } from '../link/orm/link'
 import {
     EventLinkDataModel,
     EventLinkRepository,
-} from '../components/link/orm/eventLink'
+} from '../link/orm/eventLink'
 import {
     ClubLinkDataModel,
     ClubLinkRepository,
-} from '../components/link/orm/clubLink'
+} from '../link/orm/clubLink'
 import { migration_initialSchema } from '../../migrations/initialSchema'
 import { migration_191219_1657_imageUrls } from '../../migrations/191219-1657-imageUrls'
 import { migration_200414_1824_links } from '../../migrations/200414-1824-links'
