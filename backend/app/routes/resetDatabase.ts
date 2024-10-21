@@ -1,6 +1,5 @@
 import express from 'express'
 import { applyDbScripts } from '../components/scripts/commands/applyDbScripts'
-import { getDatabaseConfig } from '../../databaseConfig'
 import { resetAuthTables } from '../components/auth/commands/resetAuthTables'
 import { AppContext } from '../infrastructure/appContext'
 import { resetClubTables } from '../components/club/commands/resetClubTables'
@@ -10,6 +9,7 @@ import { resetImageTables } from '../components/image/commands/resetImageTables'
 import { getConnection } from 'typeorm'
 import { resetLinkTables } from '../components/link/commands/resetLinkTables'
 import logger from '../infrastructure/logger'
+import { getSeeds } from '../infrastructure/database'
 
 const app = express()
 
@@ -40,8 +40,7 @@ async function resetTables(appContext: AppContext) {
     await resetLinkTables(appContext)
 }
 async function applySeeds() {
-    const databaseConfig = getDatabaseConfig()
-    await applyDbScripts(databaseConfig.seeds || [], true)
+    await applyDbScripts(getSeeds(), true)
 }
 
 export default app

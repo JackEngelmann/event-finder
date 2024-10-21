@@ -1,4 +1,4 @@
-import { DbScript } from '../../../../databaseConfig'
+import { DbScript } from '../../../infrastructure/database'
 import { AppliedScriptRepository } from '../orm/appliedScripts'
 import { getConnection } from 'typeorm'
 

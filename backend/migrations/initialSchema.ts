@@ -1,4 +1,4 @@
-import { DbScript } from '../databaseConfig'
+import { DbScript } from '../app/infrastructure/database'
 
 export const migration_initialSchema: DbScript = {
     name: 'initialSchema',

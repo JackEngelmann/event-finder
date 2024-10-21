@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import { createConnection, getConnectionManager } from 'typeorm'
+import { Connection, ConnectionOptions, createConnection, getConnectionManager } from 'typeorm'
 import { ClubDataModel, ClubRepository } from '../components/club/orm/club'
 import { EventDataModel, EventRepository } from '../components/event/orm/event'
 import {
@@ -30,6 +30,39 @@ import {
     ClubLinkDataModel,
     ClubLinkRepository,
 } from '../components/link/orm/clubLink'
+import { migration_initialSchema } from '../../migrations/initialSchema'
+import { migration_191219_1657_imageUrls } from '../../migrations/191219-1657-imageUrls'
+import { migration_200414_1824_links } from '../../migrations/200414-1824-links'
+import { testData } from '../../seeds/testData'
+
+
+export type DbScript = {
+    name: string
+    up(connection: Connection): Promise<any>
+}
+
+export interface DatabaseConfig {
+    migrations?: DbScript[]
+    seeds?: DbScript[]
+    connectionOptions: ConnectionOptions
+}
+
+const migrations: DbScript[] = [
+    migration_initialSchema,
+    migration_191219_1657_imageUrls,
+    migration_200414_1824_links,
+]
+
+export function getMigrations(): DbScript[] {
+    return migrations
+}
+
+export function getSeeds(): DbScript[] {
+    if (process.env.NODE_ENV === 'production') {
+        return []
+    }
+    return [testData]
+}
 
 export async function createDbConnection(dbName?: any) {
     if (getConnectionManager().has(dbName || 'default')) {

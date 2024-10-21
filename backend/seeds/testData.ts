@@ -1,5 +1,5 @@
 import * as R from 'ramda'
-import { DbScript } from '../databaseConfig'
+import { DbScript } from '../app/infrastructure/database'
 import { ClubDataModel } from '../app/components/club/orm/club'
 import { UserDataModel } from '../app/components/auth/orm/user'
 import { getAdminPassword } from '../app/components/auth/authentication'

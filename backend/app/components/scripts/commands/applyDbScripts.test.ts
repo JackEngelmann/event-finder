@@ -1,4 +1,4 @@
-import { DbScript } from '../../../../databaseConfig'
+import { DbScript } from '../../../infrastructure/database'
 import { validateUniqScriptNames } from './applyDbScripts'
 
 describe('validateUniqNames', () => {

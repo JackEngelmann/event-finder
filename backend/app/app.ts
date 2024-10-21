@@ -9,8 +9,7 @@ import { resolvers } from './infrastructure/resolvers'
 import { AppContext } from './infrastructure/appContext'
 import { UserDataModel } from './components/auth/orm/user'
 import { getConnection } from 'typeorm'
-import { createDbConnection } from './infrastructure/database'
-import { getDatabaseConfig } from '../databaseConfig'
+import { createDbConnection, getMigrations, getSeeds } from './infrastructure/database'
 import logger from './infrastructure/logger'
 
 let app = express()
@@ -39,10 +38,9 @@ export const apolloServer = new ApolloServer({
 
 apolloServer.applyMiddleware({ app })
 
-const databaseConfig = getDatabaseConfig()
 createDbConnection()
-    .then(() => applyDbScripts(databaseConfig.migrations || []))
-    .then(() => applyDbScripts(databaseConfig.seeds || []))
+    .then(() => applyDbScripts(getMigrations()))
+    .then(() => applyDbScripts(getSeeds()))
     .catch(err => logger.error(err))
 
 export default app

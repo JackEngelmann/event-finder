@@ -1,4 +1,4 @@
-import { DbScript } from '../databaseConfig'
+import { DbScript } from '../app/infrastructure/database'
 
 export const migration_200414_1824_links: DbScript = {
     name: '200414_1824_links-b',
