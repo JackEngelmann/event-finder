@@ -2,7 +2,6 @@ import {
     clubFragment,
     createApolloTestServer,
     ApolloTestServer,
-    ApolloHttpTestServer,
 } from '../utils'
 import { createEvent } from '../../src/event/commands/createEvent'
 import { queryEvent } from '../../src/event/queries/event'
@@ -37,13 +36,10 @@ const deleteClubMutation = `
     }
 `
 let apolloTestServer: ApolloTestServer | undefined
-let apolloHttpTestServer: ApolloHttpTestServer | undefined
 
 afterEach(async () => {
-    if (apolloHttpTestServer) await apolloHttpTestServer.destroy()
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
-    apolloHttpTestServer = undefined
 })
 
 describe('club mutations: ', () => {

@@ -1,6 +1,5 @@
 import {
     eventFragment,
-    ApolloHttpTestServer,
     ApolloTestServer,
     createApolloTestServer,
 } from '../utils'
