@@ -1,14 +1,14 @@
 import React, { ReactNode } from 'react'
 import * as R from 'ramda'
-import { weekdaysMin, Moment } from 'moment'
+import moment from 'moment'
 import './Calendar.scss'
 
 type Props = {
   currentMonth: string
   nextMonth: () => void
   previousMonth: () => void
-  renderDay: (day: Moment) => ReactNode
-  weeksInMonth: Moment[][]
+  renderDay: (day: moment.Moment) => ReactNode
+  weeksInMonth: moment.Moment[][]
 }
 
 const cn = 'calendar'
@@ -39,7 +39,7 @@ export function CalendarView(props: Props) {
   function renderWeekdayHeader() {
     const renderWeekDay = (weekday: number) => (
       <div className={`${cn}__weekday`} key={weekday}>
-        {weekdaysMin(true)[weekday]}
+        {moment.weekdaysMin(true)[weekday]}
       </div>
     )
     return (
@@ -47,7 +47,7 @@ export function CalendarView(props: Props) {
     )
   }
 
-  function renderWeek(week: Moment[]) {
+  function renderWeek(week: moment.Moment[]) {
     return (
       <div className={`${cn}__week`} key={'week-from-' + week[0].toISOString()}>
         {week.map(renderDay)}

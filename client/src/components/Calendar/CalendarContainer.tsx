@@ -22,6 +22,7 @@ export function CalendarContainer(props: Props) {
 
   // rerenders component when locale changes -> has influence on moment.js
   useTranslation()
+  console.log('CalendarContainer', monthSelection.locale())
 
   const weeksInMonth = getWeeksInMonth(
     monthSelection.year(),

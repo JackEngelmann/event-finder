@@ -14,7 +14,7 @@ export function ClubListContainer() {
             clubs={clubs || []}
             renderClub={club => (
                 <ClubListItem
-                    key={club.name}
+                    key={club.id}
                     club={club}
                     onClick={() => history.push(`/club/${club.id}`)}
                 />

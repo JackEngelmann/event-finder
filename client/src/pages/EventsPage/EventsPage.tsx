@@ -64,6 +64,7 @@ const cn = 'events-page'
 
 export default function EventsPage(props: Props) {
   const dimensions = useDimensions()
+  console.log('EventsPage')
 
   // rerenders component when locale changes -> has influence on moment.js
   const { t } = useTranslation()
@@ -73,12 +74,15 @@ export default function EventsPage(props: Props) {
     selectedDate || currentDate
   )
   const locale = t('locale').toString()
+  console.log('locale', locale)
 
   useEffect(() => {
+    console.log('useEffect', monthSelection.locale(), locale)
     if (monthSelection.locale() !== locale) {
-      setMonthSelection(moment(monthSelection.locale(locale)))
+      console.log('setMonthSelection', locale)
+      setMonthSelection(monthSelection => moment(monthSelection.locale(locale)))
     }
-  }, [locale, monthSelection])
+  }, [locale])
 
   const eventsQueryResult = useQuery<EventsQueryData>(EVENTS_QUERY, {
     variables: {
@@ -137,6 +141,7 @@ export default function EventsPage(props: Props) {
               setMonthSelection={setMonthSelection}
               selectedDate={selectedDate}
               setSelectedDate={setSelectedDate}
+              key={monthSelection.locale()}
             />
           </div>
         </div>
