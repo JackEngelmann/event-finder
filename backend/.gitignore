@@ -1,7 +1,7 @@
 db.sqlite
-log.txt
+error.log
 ormlogs.log
-
+combined.log
 yarn.lock
 
 /public/

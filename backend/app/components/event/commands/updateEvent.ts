@@ -4,6 +4,7 @@ import { setLinksForEvent } from '../../link/commands/setLinksForEvent'
 import { EventRepository } from '../orm/event'
 import { setGenresForEvent } from '../../genre/commands/setGenresForEvent'
 import { setImageUrlsForEvent } from '../../image/commands/setImageUrlsForEvent'
+import logger from '../../../infrastructure/logger'
 
 export type UpdateEventInput = {
     admissionFee?: number
@@ -57,7 +58,7 @@ export async function updateEvent(appContext: AppContext, input: UpdateEventInpu
             })
         }
     } catch (error) {
-        console.error(error)
+        logger.error(error)
         throw error
     }
 }

@@ -4,6 +4,7 @@ import { FileUpload } from 'graphql-upload'
 import { LinkType } from '../../link/orm/link'
 import { createLinksForClub } from '../../link/commands/createLinksForClub'
 import { setImageUrlsForClub } from '../../image/commands/setImageUrlsForClub'
+import logger from '../../../infrastructure/logger'
 
 export type CreateClubInput = {
     address?: string
@@ -38,7 +39,7 @@ export async function createClub(appContext: AppContext, input: CreateClubInput)
         }
         return clubId
     } catch (err) {
-        console.error(err)
+        logger.error(err)
         throw err
     }
 }

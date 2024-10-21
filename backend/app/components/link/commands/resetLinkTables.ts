@@ -2,9 +2,7 @@ import { AppContext } from '../../../infrastructure/appContext'
 import { LinkRepository } from '../orm/link'
 import { EventLinkRepository } from '../orm/eventLink'
 import { ClubLinkRepository } from '../orm/clubLink'
-import { Logger } from '../../../infrastructure/logger'
-
-const logger = new Logger()
+import logger from '../../../infrastructure/logger'
 
 export async function resetLinkTables(appContext: AppContext) {
     const { db } = appContext

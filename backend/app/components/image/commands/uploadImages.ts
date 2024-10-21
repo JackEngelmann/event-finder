@@ -1,6 +1,7 @@
 import { AppContext } from '../../../infrastructure/appContext'
 import { FileUpload } from 'graphql-upload'
 import { ImageRepository } from '../orm/image'
+import logger from '../../../infrastructure/logger'
 
 export type UpladImageInput = {
     upload: Promise<FileUpload>
@@ -27,7 +28,7 @@ export async function uploadImage(appContext: AppContext, input: UpladImageInput
         const imageUrl = `images/${image.id}`
         return imageUrl
     } catch (error) {
-        console.error(error)
+        logger.error(error)
         throw error
     }
 }

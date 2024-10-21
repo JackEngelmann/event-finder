@@ -1,5 +1,5 @@
 import { AppContext } from '../../../infrastructure/appContext'
-import { Logger } from '../../../infrastructure/logger'
+import logger from '../../../infrastructure/logger'
 import { EventRepository } from '../../event/orm/event'
 import { deleteEvent } from '../../event/commands/deleteEvent'
 import { deleteLinksForClub } from '../../link/commands/deleteLinksForClub'
@@ -7,7 +7,6 @@ import { ClubRepository } from '../orm/club'
 
 export async function deleteClub(appContext: AppContext, clubId: number) {
     const { db } = appContext
-    const logger = new Logger()
     try {
         await db.getCustomRepository(ClubRepository).delete(clubId)
         // TODO: refactor

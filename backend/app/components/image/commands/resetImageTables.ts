@@ -1,10 +1,8 @@
-import { Logger } from '../../../infrastructure/logger'
+import logger from '../../../infrastructure/logger'
 import { AppContext } from '../../../infrastructure/appContext'
 import { ImageRepository } from '../orm/image'
 import { EventImageRepository } from '../orm/eventImage'
 import { ClubImageRepository } from '../orm/clubImage'
-
-const logger = new Logger()
 
 export async function resetImageTables(appContext: AppContext) {
     const { db } = appContext

@@ -5,6 +5,7 @@ import { LinkType } from '../../link/orm/link'
 import { EventRepository } from '../orm/event'
 import { setGenresForEvent } from '../../genre/commands/setGenresForEvent'
 import { setImageUrlsForEvent } from '../../image/commands/setImageUrlsForEvent'
+import logger from '../../../infrastructure/logger'
 
 export type CreateEventInput = {
     admissionFee?: number
@@ -47,7 +48,7 @@ export async function createEvent(appContext: AppContext, input: CreateEventInpu
         }
         return event.id
     } catch (error) {
-        console.error(error)
+        logger.error(error)
         throw error
     }
 }

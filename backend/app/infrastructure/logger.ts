@@ -1,19 +1,25 @@
-import moment from 'moment'
+import { createLogger, format, transports } from 'winston'
 
-export class Logger {
-    writeToLog(message: any, mode: string) {
-        console.log(`[${moment().toISOString()}][${mode}] ${message}`)
-    }
-    error(message: any) {
-        this.writeToLog(message, 'error')
-        if (process.env.NODE_ENV !== 'test') {
-            console.error(message)
-        }
-    }
-    info(message: any) {
-        this.writeToLog(message, 'info')
-        if (process.env.NODE_ENV !== 'test') {
-            console.info(message)
-        }
-    }
-}
+const logger = createLogger({
+  level: 'info',
+  format: format.combine(
+    format.timestamp({
+      format: 'YYYY-MM-DD HH:mm:ss'
+    }),
+    format.errors({ stack: true }),
+    format.splat(),
+    format.json()
+  ),
+  transports: [
+    new transports.File({ filename: 'error.log', level: 'error' }),
+    new transports.File({ filename: 'combined.log' }),
+    new transports.Console({
+      format: format.combine(
+        format.colorize(),
+        format.simple()
+      )
+    })
+  ]
+});
+
+export default logger

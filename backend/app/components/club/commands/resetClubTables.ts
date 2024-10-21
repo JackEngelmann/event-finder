@@ -1,8 +1,6 @@
-import { Logger } from '../../../infrastructure/logger'
 import { AppContext } from '../../../infrastructure/appContext'
 import { ClubRepository } from '../orm/club'
-
-const logger = new Logger()
+import logger from '../../../infrastructure/logger'
 
 export async function resetClubTables(appContext: AppContext) {
     try {

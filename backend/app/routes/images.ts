@@ -1,4 +1,4 @@
-import { Logger } from '../infrastructure/logger'
+import logger from '../infrastructure/logger'
 import { ImageRepository } from '../components/image/orm/image'
 import express from 'express'
 import { getConnection } from 'typeorm'
@@ -9,7 +9,6 @@ type File = {
 }
 
 const app = express()
-const logger = new Logger()
 
 app.get('/:imageId', async (req, res) => {
     const imageId = parseInt(req.params.imageId, 10)

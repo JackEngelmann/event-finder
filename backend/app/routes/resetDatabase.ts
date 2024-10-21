@@ -9,19 +9,20 @@ import { resetGenreTables } from '../components/genre/commands/resetGenreTables'
 import { resetImageTables } from '../components/image/commands/resetImageTables'
 import { getConnection } from 'typeorm'
 import { resetLinkTables } from '../components/link/commands/resetLinkTables'
+import logger from '../infrastructure/logger'
 
 const app = express()
 
 if (process.env.NODE_ENV !== 'production') {
     app.get('/', async (req, res) => {
         try {
-            console.log('reset tables')
+            logger.info('reset tables')
             const appContext = {
                 isAdmin: true,
                 db: getConnection(),
             }
             await resetTables(appContext)
-            console.log('apply seeds')
+            logger.info('apply seeds')
             await applySeeds()
             res.send('Done')
         } catch (err) {

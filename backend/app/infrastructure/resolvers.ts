@@ -14,7 +14,7 @@ import { updateClub } from '../components/club/commands/updateClub'
 import { deleteClub } from '../components/club/commands/deleteClub'
 import { AppContext } from './appContext'
 import { requireAdminPermission } from '../components/auth/authentication'
-import { Logger } from './logger'
+import logger from './logger'
 import { uploadImage } from '../components/image/commands/uploadImages'
 import { queryImageUrlsForEvent } from '../components/image/queries/imageUrlsForEvent'
 import { queryImageUrlsForClub } from '../components/image/queries/imageUrlsForClub'
@@ -26,8 +26,6 @@ type Source = {
     clubId: number
     id: number
 }
-
-const logger = new Logger()
 
 export const resolvers: IResolvers<Source, AppContext> = {
     Query: {

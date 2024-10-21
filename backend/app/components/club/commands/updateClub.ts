@@ -4,6 +4,7 @@ import { FileUpload } from 'graphql-upload'
 import { LinkType } from '../../link/orm/link'
 import { setLinksForClub } from '../../link/commands/setLinksForClub'
 import { setImageUrlsForClub } from '../../image/commands/setImageUrlsForClub'
+import logger from '../../../infrastructure/logger'
 
 export type UpdateClubInput = {
     address?: string
@@ -46,7 +47,7 @@ export async function updateClub(appContext: AppContext, input: UpdateClubInput)
             })
         }
     } catch (error) {
-        console.error(error)
+        logger.error(error)
         throw error
     }
 }

@@ -26,7 +26,6 @@ export const migration_200414_1824_links: DbScript = {
         `)
         const events = await connection.query(`SELECT id, link from event`)
         for (let event of events) {
-            console.log(event.link)
             await connection.query(`
                 INSERT INTO link (href, type) VALUES ("${event.link}", "FACEBOOK")
             `)

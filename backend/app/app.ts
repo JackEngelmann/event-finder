@@ -11,6 +11,7 @@ import { UserDataModel } from './components/auth/orm/user'
 import { getConnection } from 'typeorm'
 import { createDbConnection } from './infrastructure/database'
 import { getDatabaseConfig } from '../databaseConfig'
+import logger from './infrastructure/logger'
 
 let app = express()
 
@@ -42,7 +43,7 @@ const databaseConfig = getDatabaseConfig()
 createDbConnection()
     .then(() => applyDbScripts(databaseConfig.migrations || []))
     .then(() => applyDbScripts(databaseConfig.seeds || []))
-    .catch(err => console.error(err))
+    .catch(err => logger.error(err))
 
 export default app
 
