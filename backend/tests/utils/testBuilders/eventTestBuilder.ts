@@ -1,5 +1,5 @@
 import { getConnection } from 'typeorm'
-import { EventRepository } from '../../../app/event/orm/event'
+import { EventRepository } from '../../../src/event/orm/event'
 import { ClubTestBuilder } from '../testBuilders'
 
 export class EventTestBuilder {

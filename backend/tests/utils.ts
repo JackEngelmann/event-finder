@@ -1,12 +1,12 @@
 import express from 'express'
 import http from 'http'
-import { AppContext } from '../app/infrastructure/appContext'
+import { AppContext } from '../src/infrastructure/appContext'
 import { ApolloServer } from 'apollo-server-express'
-import { typeDefs } from '../app/infrastructure/schema'
-import { resolvers } from '../app/infrastructure/resolvers'
+import { typeDefs } from '../src/infrastructure/schema'
+import { resolvers } from '../src/infrastructure/resolvers'
 import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
 import { Connection, getConnection } from 'typeorm'
-import { createDbConnection } from '../app/infrastructure/database'
+import { createDbConnection } from '../src/infrastructure/database'
 
 /**
  * GraphQL utils
@@ -218,7 +218,7 @@ export async function createApolloHttpTestServer(options: {
     async function destroy() {
         if (server) await server.stop()
         if (httpServer) {
-            await new Promise(resolve => httpServer.close(() => resolve()))
+            await new Promise<void>(resolve => httpServer.close(() => resolve()))
         }
     }
 

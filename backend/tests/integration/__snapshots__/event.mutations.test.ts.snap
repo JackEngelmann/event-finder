@@ -1,36 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`event mutations:  create event create an event with all fields 1`] = `
-Object {
-  "data": Object {
-    "createEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "createEvent": {
+      "event": {
         "admissionFee": 10,
         "admissionFeeWithDiscount": 4,
         "amountOfFloors": 3,
-        "club": Object {
+        "club": {
           "id": 1,
           "name": "name",
         },
         "date": "event-date",
         "description": "event-description",
-        "genres": Array [
-          Object {
+        "genres": [
+          {
             "id": 1,
             "name": "genre1",
           },
-          Object {
+          {
             "id": 2,
             "name": "genre2",
           },
         ],
         "id": 2,
-        "imageUrls": Array [
+        "imageUrls": [
           "image-url-1",
           "image-url-2",
         ],
-        "links": Array [
-          Object {
+        "links": [
+          {
             "href": "link",
             "type": "FACEBOOK",
           },
@@ -44,32 +44,32 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  create event create an event with empty genres 1`] = `
-Object {
-  "data": Object {
-    "createEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "createEvent": {
+      "event": {
         "admissionFee": null,
         "admissionFeeWithDiscount": null,
         "amountOfFloors": null,
-        "club": Object {
+        "club": {
           "id": 1,
           "name": "name",
         },
         "date": "event-date",
         "description": null,
-        "genres": Array [],
+        "genres": [],
         "id": 2,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "minimumAge": null,
         "name": "event-name",
         "priceCategory": null,
@@ -79,32 +79,32 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  create event create an event with only required information 1`] = `
-Object {
-  "data": Object {
-    "createEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "createEvent": {
+      "event": {
         "admissionFee": null,
         "admissionFeeWithDiscount": null,
         "amountOfFloors": null,
-        "club": Object {
+        "club": {
           "id": 1,
           "name": "name",
         },
         "date": "event-date",
         "description": null,
-        "genres": Array [],
+        "genres": [],
         "id": 2,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "minimumAge": null,
         "name": "event-name",
         "priceCategory": null,
@@ -114,44 +114,44 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  create event create an event without permission shoul yield error 1`] = `
-Array [
+[
   [GraphQLError: You need to be logged in as admin to mutate data],
 ]
 `;
 
 exports[`event mutations:  delte event without permission should yield error 1`] = `
-Array [
+[
   [GraphQLError: You need to be logged in as admin to mutate data],
 ]
 `;
 
 exports[`event mutations:  update event to only have required fields 1`] = `
-Object {
-  "data": Object {
-    "updateEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "updateEvent": {
+      "event": {
         "admissionFee": null,
         "admissionFeeWithDiscount": null,
         "amountOfFloors": null,
-        "club": Object {
+        "club": {
           "id": 2,
           "name": "name",
         },
         "date": "updated-date",
         "description": null,
-        "genres": Array [],
+        "genres": [],
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
@@ -161,45 +161,45 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  update event with all fields 1`] = `
-Object {
-  "data": Object {
-    "updateEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "updateEvent": {
+      "event": {
         "admissionFee": 20,
         "admissionFeeWithDiscount": 3,
         "amountOfFloors": 2,
-        "club": Object {
+        "club": {
           "id": 2,
           "name": "name",
         },
         "date": "updated-date",
         "description": "updated-description",
-        "genres": Array [
-          Object {
+        "genres": [
+          {
             "id": 2,
             "name": "genre2",
           },
-          Object {
+          {
             "id": 3,
             "name": "genre3",
           },
         ],
         "id": 1,
-        "imageUrls": Array [
+        "imageUrls": [
           "image-url-1",
           "image-url-2",
         ],
-        "links": Array [
-          Object {
+        "links": [
+          {
             "href": "updated-link",
             "type": "FACEBOOK",
           },
@@ -213,32 +213,32 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  update event with emojis in description 1`] = `
-Object {
-  "data": Object {
-    "updateEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "updateEvent": {
+      "event": {
         "admissionFee": null,
         "admissionFeeWithDiscount": null,
         "amountOfFloors": null,
-        "club": Object {
+        "club": {
           "id": 2,
           "name": "name",
         },
         "date": "updated-date",
         "description": "🍃🔝🎉📢👉🌵🎵",
-        "genres": Array [],
+        "genres": [],
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
@@ -248,32 +248,32 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  update event with empty genre list 1`] = `
-Object {
-  "data": Object {
-    "updateEvent": Object {
-      "event": Object {
+{
+  "data": {
+    "updateEvent": {
+      "event": {
         "admissionFee": null,
         "admissionFeeWithDiscount": null,
         "amountOfFloors": null,
-        "club": Object {
+        "club": {
           "id": 2,
           "name": "name",
         },
         "date": "updated-date",
         "description": null,
-        "genres": Array [],
+        "genres": [],
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "minimumAge": null,
         "name": "updated-name",
         "priceCategory": null,
@@ -283,24 +283,24 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`event mutations:  update event without permission should yield error 1`] = `
-Object {
+{
   "data": null,
-  "errors": Array [
+  "errors": [
     [GraphQLError: You need to be logged in as admin to mutate data],
   ],
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }

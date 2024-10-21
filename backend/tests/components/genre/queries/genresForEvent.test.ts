@@ -1,15 +1,15 @@
-import { createDbConnection } from '../../../../app/infrastructure/database'
+import { createDbConnection } from '../../../../src/infrastructure/database'
 import { getConnection } from 'typeorm'
 import { createTestEvent } from '../../../utils/testBuilders'
-import { setGenresForEvent } from '../../../../app/genre/commands/setGenresForEvent'
+import { setGenresForEvent } from '../../../../src/genre/commands/setGenresForEvent'
 import { createTestGenre } from '../../../utils/testBuilders/genreTestBuilder'
-import { EventGenreRepository } from '../../../../app/genre/orm/eventGenre'
-import { queryGenresForEvent } from '../../../../app/genre/queries/genresForEvent'
+import { EventGenreRepository } from '../../../../src/genre/orm/eventGenre'
+import { queryGenresForEvent } from '../../../../src/genre/queries/genresForEvent'
 
 const CONNECTION_NAME = 'getGenresForEvent-test'
 
 describe('getGenresForEvent', () => {
-    test('', async done => {
+    test('', async () => {
         await createDbConnection(CONNECTION_NAME)
         const connection = getConnection(CONNECTION_NAME)
         await connection.synchronize(true)
@@ -58,7 +58,5 @@ describe('getGenresForEvent', () => {
         expect(actualGenres).toHaveLength(2)
         expect(actualGenres.some(g => g.id === genre2.id)).toBe(true)
         expect(actualGenres.some(g => g.id === genre3.id)).toBe(true)
-
-        done()
     })
 })

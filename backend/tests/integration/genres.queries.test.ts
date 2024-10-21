@@ -8,23 +8,21 @@ let apolloTestServer: ApolloTestServer | undefined
 
 const DB_NAME = 'genresquerydb'
 
-beforeEach(async done => {
+beforeEach(async () => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
         insertTestData: true,
     })
-    done()
 })
 
-afterEach(async done => {
+afterEach(async () => {
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
-    done()
 })
 
 describe('club queries', () => {
-    test('genres correctly', async done => {
+    test('genres correctly', async () => {
         const result = await apolloTestServer!.client.query({
             query: `
             {
@@ -34,6 +32,5 @@ describe('club queries', () => {
         })
         expect(result.data).toBeDefined()
         expect(result).toMatchSnapshot()
-        done()
     })
 })

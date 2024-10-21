@@ -5,7 +5,7 @@ import { createTestClub, createTestEvent } from '../utils/testBuilders'
 const DB_NAME = 'clubquerydb'
 
 describe('club queries', () => {
-    test('clubs correctly', async done => {
+    test('clubs correctly', async () => {
         // arrange
         const apolloTestServer = await createApolloTestServer({
             isAdmin: false,
@@ -26,9 +26,8 @@ describe('club queries', () => {
 
         // cleanup
         await apolloTestServer.destroy()
-        done()
     })
-    test('existing club correctly', async done => {
+    test('existing club correctly', async () => {
         // arrange
         const apolloTestServer = await createApolloTestServer({
             isAdmin: false,
@@ -54,9 +53,8 @@ describe('club queries', () => {
 
         // cleanup
         await apolloTestServer.destroy()
-        done()
     })
-    test('query events for a club', async done => {
+    test('query events for a club', async () => {
         // arrange
         const apolloTestServer = await createApolloTestServer({
             isAdmin: false,
@@ -100,9 +98,8 @@ describe('club queries', () => {
 
         // cleanup
         await apolloTestServer.destroy()
-        done()
     })
-    test('query events for a club from a certain day', async done => {
+    test('query events for a club from a certain day', async () => {
         // arrange
         const apolloTestServer = await createApolloTestServer({
             isAdmin: false,
@@ -160,6 +157,5 @@ describe('club queries', () => {
 
         // cleanup
         await apolloTestServer.destroy()
-        done()
     })
 })

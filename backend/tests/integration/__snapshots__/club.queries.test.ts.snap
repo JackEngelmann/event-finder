@@ -1,29 +1,29 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`club queries clubs correctly 1`] = `
-Object {
-  "data": Object {
-    "clubs": Array [
-      Object {
+{
+  "data": {
+    "clubs": [
+      {
         "address": "address",
         "contact": "contact",
         "description": "description",
         "email": "email",
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "name": "name",
         "region": "region",
         "specials": "specials",
       },
-      Object {
+      {
         "address": "address",
         "contact": "contact",
         "description": "description",
         "email": "email",
         "id": 2,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "name": "name",
         "region": "region",
         "specials": "specials",
@@ -32,25 +32,25 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`club queries existing club correctly 1`] = `
-Object {
-  "data": Object {
-    "club": Object {
+{
+  "data": {
+    "club": {
       "address": "address",
       "contact": "contact",
       "description": "description",
       "email": "email",
       "id": 1,
-      "imageUrls": Array [],
-      "links": Array [],
+      "imageUrls": [],
+      "links": [],
       "name": "name",
       "region": "region",
       "specials": "specials",
@@ -58,9 +58,9 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }

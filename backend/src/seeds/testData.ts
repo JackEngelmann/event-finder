@@ -1,24 +1,24 @@
 import * as R from 'ramda'
-import { DbScript } from '../app/infrastructure/database'
-import { ClubDataModel } from '../app/club/orm/club'
-import { UserDataModel } from '../app/auth/orm/user'
-import { getAdminPassword } from '../app/auth/authentication'
-import { GenreDataModel } from '../app/genre/orm/genre'
+import { DbScript } from '../infrastructure/database'
+import { ClubDataModel } from '../club/orm/club'
+import { UserDataModel } from '../auth/orm/user'
+import { getAdminPassword } from '../auth/authentication'
+import { GenreDataModel } from '../genre/orm/genre'
 import {
     randomInt,
     sampleMultipleWithoutRepition,
     crossProduct,
     sample,
-} from '../app/utils/random'
+} from '../utils/random'
 import moment from 'moment'
-import { EventDataModel } from '../app/event/orm/event'
-import { EventGenreDataModel } from '../app/genre/orm/eventGenre'
-import { EventImageDataModel } from '../app/image/orm/eventImage'
+import { EventDataModel } from '../event/orm/event'
+import { EventGenreDataModel } from '../genre/orm/eventGenre'
+import { EventImageDataModel } from '../image/orm/eventImage'
 import { Connection } from 'typeorm'
-import { LinkDataModel } from '../app/link/orm/link'
-import { EventLinkDataModel } from '../app/link/orm/eventLink'
-import { ClubLinkDataModel } from '../app/link/orm/clubLink'
-import { ClubImageDataModel } from '../app/image/orm/clubImage'
+import { LinkDataModel } from '../link/orm/link'
+import { EventLinkDataModel } from '../link/orm/eventLink'
+import { ClubLinkDataModel } from '../link/orm/clubLink'
+import { ClubImageDataModel } from '../image/orm/clubImage'
 
 const AMOUNT_CLUBS = 20
 const AMOUNT_EVENTS = 20

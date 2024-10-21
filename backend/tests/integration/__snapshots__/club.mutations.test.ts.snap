@@ -1,18 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`club mutations:  create create club with all information 1`] = `
-Object {
-  "data": Object {
-    "createClub": Object {
-      "club": Object {
+{
+  "data": {
+    "createClub": {
+      "club": {
         "address": "address",
         "contact": "contact",
         "description": "description",
         "email": "email",
         "id": 3,
-        "imageUrls": Array [],
-        "links": Array [
-          Object {
+        "imageUrls": [],
+        "links": [
+          {
             "href": "test",
             "type": "FACEBOOK",
           },
@@ -25,26 +25,26 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`club mutations:  create create club with only required information 1`] = `
-Object {
-  "data": Object {
-    "createClub": Object {
-      "club": Object {
+{
+  "data": {
+    "createClub": {
+      "club": {
         "address": null,
         "contact": null,
         "description": null,
         "email": null,
         "id": 3,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "name": "test",
         "region": null,
         "specials": null,
@@ -53,33 +53,33 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`club mutations:  create create club without being admin should result in error 1`] = `
-Array [
+[
   [GraphQLError: You need to be logged in as admin to mutate data],
 ]
 `;
 
 exports[`club mutations:  update update club with all information 1`] = `
-Object {
-  "data": Object {
-    "updateClub": Object {
-      "club": Object {
+{
+  "data": {
+    "updateClub": {
+      "club": {
         "address": "updated-address",
         "contact": "updated-contact",
         "description": "updated-description",
         "email": "updated-email",
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [
-          Object {
+        "imageUrls": [],
+        "links": [
+          {
             "href": "updated-link",
             "type": "FACEBOOK",
           },
@@ -92,26 +92,26 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`club mutations:  update update club with only required information 1`] = `
-Object {
-  "data": Object {
-    "updateClub": Object {
-      "club": Object {
+{
+  "data": {
+    "updateClub": {
+      "club": {
         "address": null,
         "contact": null,
         "description": null,
         "email": null,
         "id": 1,
-        "imageUrls": Array [],
-        "links": Array [],
+        "imageUrls": [],
+        "links": [],
         "name": "updated-name",
         "region": null,
         "specials": null,
@@ -120,16 +120,16 @@ Object {
   },
   "errors": undefined,
   "extensions": undefined,
-  "http": Object {
+  "http": {
     "headers": Headers {
-      Symbol(map): Object {},
+      Symbol(map): {},
     },
   },
 }
 `;
 
 exports[`club mutations:  update update club without being admin should result in error 1`] = `
-Array [
+[
   [GraphQLError: You need to be logged in as admin to mutate data],
 ]
 `;

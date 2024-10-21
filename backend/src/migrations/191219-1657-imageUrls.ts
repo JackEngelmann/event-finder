@@ -1,4 +1,4 @@
-import { DbScript } from '../app/infrastructure/database'
+import { DbScript } from '../infrastructure/database'
 
 export const migration_191219_1657_imageUrls: DbScript = {
     name: '191219_1657_imageUrls',

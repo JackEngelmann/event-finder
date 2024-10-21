@@ -10,23 +10,21 @@ const DB_NAME = 'eventquerydb'
 
 let apolloTestServer: ApolloTestServer | undefined
 
-beforeEach(async done => {
+beforeEach(async () => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
         insertTestData: true,
     })
-    done()
 })
 
-afterEach(async done => {
+afterEach(async () => {
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
-    done()
 })
 
 describe('event queries: ', () => {
-    test('events correctly', async done => {
+    test('events correctly', async () => {
         const result = await apolloTestServer!.client.query({
             query: `{
                 events { ${eventFragment} }
@@ -34,9 +32,8 @@ describe('event queries: ', () => {
         })
         expect(result.data).toBeDefined()
         expect(result).toMatchSnapshot()
-        done()
     })
-    test('existing event correctly', async done => {
+    test('existing event correctly', async () => {
         const result = await apolloTestServer!.client.query({
             query: `
                 query eventQuery($id: Int!) {
@@ -49,9 +46,8 @@ describe('event queries: ', () => {
         })
         expect(result.data).toBeDefined()
         expect(result).toMatchSnapshot()
-        done()
     })
-    test('filter events by club', async done => {
+    test('filter events by club', async () => {
         const apolloTestServer = await createApolloTestServer({
             isAdmin: false,
             dbName: DB_NAME,
@@ -89,9 +85,8 @@ describe('event queries: ', () => {
         expect(result.data!.events.length).toBe(2)
         expect(result.data!.events.some((e: any) => (e.name = 'club-1-1')))
         expect(result.data!.events.some((e: any) => (e.name = 'club-1-2')))
-        done()
     })
-    test('not existing event and return undefined', async done => {
+    test('not existing event and return undefined', async () => {
         const result = await apolloTestServer!.client.query({
             query: `
                 query eventQuery($id: Int!) {
@@ -103,6 +98,5 @@ describe('event queries: ', () => {
             },
         })
         expect(result.data!.event).toBeNull()
-        done()
     })
 })

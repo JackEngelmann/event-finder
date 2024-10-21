@@ -1,14 +1,14 @@
-import { createDbConnection } from '../../../../app/infrastructure/database'
+import { createDbConnection } from '../../../../src/infrastructure/database'
 import { getConnection } from 'typeorm'
 import { createTestEvent } from '../../../utils/testBuilders'
-import { setGenresForEvent } from '../../../../app/genre/commands/setGenresForEvent'
+import { setGenresForEvent } from '../../../../src/genre/commands/setGenresForEvent'
 import { createTestGenre } from '../../../utils/testBuilders/genreTestBuilder'
-import { EventGenreRepository } from '../../../../app/genre/orm/eventGenre'
+import { EventGenreRepository } from '../../../../src/genre/orm/eventGenre'
 
 const CONNECTION_NAME = 'setGenresForEvent-test'
 
 describe('setGenresForEvent', () => {
-    test('create', async done => {
+    test('create', async () => {
         await createDbConnection(CONNECTION_NAME)
         const connection = getConnection(CONNECTION_NAME)
         await connection.synchronize(true)
@@ -47,9 +47,8 @@ describe('setGenresForEvent', () => {
                 a => a.genreId === genre2.id && a.eventId === event.id
             )
         ).toBe(true)
-        done()
     })
-    test('delete', async done => {
+    test('delete', async () => {
         await createDbConnection(CONNECTION_NAME)
         const connection = getConnection(CONNECTION_NAME)
         await connection.synchronize(true)
@@ -81,6 +80,5 @@ describe('setGenresForEvent', () => {
             .getCustomRepository(EventGenreRepository)
             .find({ eventId: event.id })
         expect(actualEventGenres.length).toBe(0)
-        done()
     })
 })

@@ -4,14 +4,14 @@ import {
     ApolloTestServer,
     ApolloHttpTestServer,
 } from '../utils'
-import { createEvent } from '../../app/event/commands/createEvent'
-import { queryEvent } from '../../app/event/queries/event'
+import { createEvent } from '../../src/event/commands/createEvent'
+import { queryEvent } from '../../src/event/queries/event'
 import {
     CreateClubInput,
     createClub,
-} from '../../app/club/commands/createClub'
-import { UpdateClubInput } from '../../app/club/commands/updateClub'
-import { queryClub } from '../../app/club/queries/club'
+} from '../../src/club/commands/createClub'
+import { UpdateClubInput } from '../../src/club/commands/updateClub'
+import { queryClub } from '../../src/club/queries/club'
 
 const DB_NAME = 'clubmutationdb'
 
@@ -39,17 +39,16 @@ const deleteClubMutation = `
 let apolloTestServer: ApolloTestServer | undefined
 let apolloHttpTestServer: ApolloHttpTestServer | undefined
 
-afterEach(async done => {
+afterEach(async () => {
     if (apolloHttpTestServer) await apolloHttpTestServer.destroy()
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
     apolloHttpTestServer = undefined
-    done()
 })
 
 describe('club mutations: ', () => {
     describe('create', () => {
-        test('create club with only required information', async done => {
+        test('create club with only required information', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -69,10 +68,9 @@ describe('club mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('create club with all information', async done => {
+        test('create club with all information', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -99,10 +97,9 @@ describe('club mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('create club without being admin should result in error', async done => {
+        test('create club without being admin should result in error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
@@ -123,12 +120,11 @@ describe('club mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result.errors).toMatchSnapshot()
-            done()
         })
     })
 
     describe('update', () => {
-        test('update club with only required information', async done => {
+        test('update club with only required information', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -150,10 +146,9 @@ describe('club mutations: ', () => {
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('update club with all information', async done => {
+        test('update club with all information', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -182,10 +177,9 @@ describe('club mutations: ', () => {
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('update club without being admin should result in error', async done => {
+        test('update club without being admin should result in error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
@@ -207,12 +201,11 @@ describe('club mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result.errors).toMatchSnapshot()
-            done()
         })
     })
 
     describe('delete', () => {
-        test('delete club', async done => {
+        test('delete club', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -236,10 +229,9 @@ describe('club mutations: ', () => {
             expect(result.errors).toBeUndefined()
             const deletedClub = await queryClub(appContext, clubId)
             expect(deletedClub).toBeUndefined()
-            done()
         })
 
-        test('delete club without permission should yield error', async done => {
+        test('delete club without permission should yield error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
@@ -257,10 +249,9 @@ describe('club mutations: ', () => {
             // assert
             expect(result.errors).toBeDefined()
             expect(result.data).toBeNull()
-            done()
         })
 
-        test('when deleting an event, the events the club did should be deleted too', async done => {
+        test('when deleting an event, the events the club did should be deleted too', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -296,7 +287,6 @@ describe('club mutations: ', () => {
             expect(deletedClub).toBeUndefined()
             const deletedEvent = await queryEvent(appContext, connectedEventId)
             expect(deletedEvent).toBeUndefined()
-            done()
         })
     })
 })

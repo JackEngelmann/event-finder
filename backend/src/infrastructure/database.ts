@@ -30,10 +30,10 @@ import {
     ClubLinkDataModel,
     ClubLinkRepository,
 } from '../link/orm/clubLink'
-import { migration_initialSchema } from '../../migrations/initialSchema'
-import { migration_191219_1657_imageUrls } from '../../migrations/191219-1657-imageUrls'
-import { migration_200414_1824_links } from '../../migrations/200414-1824-links'
-import { testData } from '../../seeds/testData'
+import { migration_initialSchema } from '../migrations/initialSchema'
+import { migration_191219_1657_imageUrls } from '../migrations/191219-1657-imageUrls'
+import { migration_200414_1824_links } from '../migrations/200414-1824-links'
+import { testData } from '../seeds/testData'
 
 
 export type DbScript = {

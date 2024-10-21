@@ -1,6 +1,6 @@
-import { ClubRepository } from '../../app/club/orm/club'
+import { ClubRepository } from '../../src/club/orm/club'
 import { getConnection } from 'typeorm'
-import { EventRepository } from '../../app/event/orm/event'
+import { EventRepository } from '../../src/event/orm/event'
 
 export class ClubTestBuilder {
     name: string | undefined

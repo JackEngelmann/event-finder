@@ -4,9 +4,9 @@ import {
     ApolloTestServer,
     createApolloTestServer,
 } from '../utils'
-import { CreateEventInput } from '../../app/event/commands/createEvent'
-import { UpdateEventInput } from '../../app/event/commands/updateEvent'
-import { queryEvent } from '../../app/event/queries/event'
+import { CreateEventInput } from '../../src/event/commands/createEvent'
+import { UpdateEventInput } from '../../src/event/commands/updateEvent'
+import { queryEvent } from '../../src/event/queries/event'
 
 const DB_NAME = 'eventmutationdb'
 const createEventMutation = `
@@ -37,24 +37,22 @@ const deleteEventMutation = `
 
 let apolloTestServer: ApolloTestServer | undefined
 
-beforeEach(async done => {
+beforeEach(async () => {
     apolloTestServer = await createApolloTestServer({
         isAdmin: false,
         dbName: DB_NAME,
         insertTestData: true,
     })
-    done()
 })
 
-afterEach(async done => {
+afterEach(async () => {
     if (apolloTestServer) await apolloTestServer.destroy()
     apolloTestServer = undefined
-    done()
 })
 
 describe('event mutations: ', () => {
     describe('create event', () => {
-        test('create an event with only required information', async done => {
+        test('create an event with only required information', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -75,10 +73,9 @@ describe('event mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('create an event with empty genres', async done => {
+        test('create an event with empty genres', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -101,10 +98,9 @@ describe('event mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('create an event with all fields', async done => {
+        test('create an event with all fields', async () => {
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
                 dbName: DB_NAME,
@@ -132,10 +128,9 @@ describe('event mutations: ', () => {
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('create an event without permission shoul yield error', async done => {
+        test('create an event without permission shoul yield error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
@@ -158,12 +153,11 @@ describe('event mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result.errors).toMatchSnapshot()
-            done()
         })
     })
 
     describe('update event', () => {
-        test('to only have required fields', async done => {
+        test('to only have required fields', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -186,10 +180,9 @@ describe('event mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('return null for event when updating a non-existent event', async done => {
+        test('return null for event when updating a non-existent event', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -214,10 +207,9 @@ describe('event mutations: ', () => {
             expect(result.data).toBeDefined()
             expect(result.data!.updateEvent).toBeDefined()
             expect(result.data!.updateEvent.event).toBeNull()
-            done()
         })
 
-        test('with empty genre list', async done => {
+        test('with empty genre list', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -241,10 +233,9 @@ describe('event mutations: ', () => {
             // assert
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('with all fields', async done => {
+        test('with all fields', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
@@ -278,10 +269,9 @@ describe('event mutations: ', () => {
             expect(result.errors).toBeUndefined()
             expect(result.data).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('without permission should yield error', async done => {
+        test('without permission should yield error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: false,
@@ -305,10 +295,9 @@ describe('event mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result).toMatchSnapshot()
-            done()
         })
 
-        test('with emojis in description', async done => {
+        test('with emojis in description', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 isAdmin: true,
@@ -336,12 +325,11 @@ describe('event mutations: ', () => {
                 emojiDescription
             )
             expect(result).toMatchSnapshot()
-            done()
         })
     })
 
     describe('delte event', () => {
-        test('delete an event', async done => {
+        test('delete an event', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
@@ -363,10 +351,9 @@ describe('event mutations: ', () => {
 
             // assert
             expect(deletedEvent).toBeUndefined()
-            done()
         })
 
-        test('without permission should yield error', async done => {
+        test('without permission should yield error', async () => {
             // arrange
             apolloTestServer = await createApolloTestServer({
                 dbName: DB_NAME,
@@ -385,7 +372,6 @@ describe('event mutations: ', () => {
             expect(result.data).toBeNull()
             expect(result.errors).toBeDefined()
             expect(result.errors).toMatchSnapshot()
-            done()
         })
     })
 })
