@@ -7,7 +7,7 @@
         "build-develop": "webpack --config webpack.development.js",
         "build": "webpack --config webpack.production.js",
         "start": "node dist/server",
-        "test": "jest --runInBand"
+        "test": "DOTENV_CONFIG_PATH=.env.test jest --setupFiles=dotenv/config jest --runInBand"
     },
     "dependencies": {
         "@types/bcrypt": "^3.0.0",
